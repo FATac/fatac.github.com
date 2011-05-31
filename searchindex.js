@@ -1,0 +1,1 @@
+Search.setIndex({objects:{},terms:{index:0,search:0,art:0,welcom:0,modul:0,fat:0,content:0,"combinat\u00f2ri":0,indic:0,tabl:0,document:0,page:0},objtypes:{},titles:["Welcome to FAT Arts Combinat\u00f2ries&#8217;s documentation!"],objnames:{},filenames:["index"]})

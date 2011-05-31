@@ -1,0 +1,15 @@
+
+{% extends "sphinxdoc/layout.html" %}
+
+{% block extrahead %}
+<link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+<div class="header">
+    <a href="#">
+        <img alt="Logo" src="_static/logo.jpg" class="logo" />
+    </a>
+</div>
+    {{ super() }}
+{% endblock %}
