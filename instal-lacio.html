@@ -1,0 +1,260 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; FAT Arts Combinatòries v1.0a1 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0a1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FAT Arts Combinatòries v1.0a1 documentation" href="index.html" />
+    <link rel="prev" title="Benvinguts a la documentació de desenvolupament del projecte FAT Arts Combinatòries" href="index.html" />
+<link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
+
+  </head>
+  <body>
+<div class="header">
+    <a href="#">
+        <img alt="Logo" src="_static/logo.jpg" class="logo" />
+    </a>
+</div>
+    
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Benvinguts a la documentació de desenvolupament del projecte FAT Arts Combinatòries"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries v1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction</a></li>
+<li><a class="reference internal" href="#prerequisitements">Prerequisitements</a></li>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#creating-plone-4-buildout-installation">Creating Plone 4 buildout installation</a></li>
+<li><a class="reference internal" href="#next-steps">Next steps</a><ul>
+<li><a class="reference internal" href="#creating-your-first-add-on">Creating your first add-on</a></li>
+<li><a class="reference internal" href="#managing-source-code-checkouts-with-buildout">Managing source code checkouts with buildout</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#operating-system-specific-instructions">Operating system specific instructions</a><ul>
+<li><a class="reference internal" href="#ubuntu-debian">Ubuntu/Debian</a></li>
+<li><a class="reference internal" href="#osx">OSX</a></li>
+<li><a class="reference internal" href="#windows">Windows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#other">Other</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Benvinguts a la documentació de desenvolupament del projecte FAT Arts Combinatòries</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/instal-lacio.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://www.buildout.org">Buildout</a> is a tool which automatically downloads, installs and configures Python software.
+Plone developers prefer uses buildout based installation method - it makes it easy to work with source code and developing your own Plone add-ons.</p>
+<p>For production site installations please use <a class="reference external" href="http://plone.org/download">standard Plone installer</a>.</p>
+</div>
+<div class="section" id="prerequisitements">
+<h1>Prerequisitements<a class="headerlink" href="#prerequisitements" title="Permalink to this headline">¶</a></h1>
+<p>What you need in order to use developer buildout with Plone 4</p>
+<ul class="simple">
+<li>Experience using command line tools</li>
+<li>Experience using a text editor to work with configuration files (<tt class="docutils literal"><span class="pre">buildout.cfg</span></tt>)</li>
+<li>GCC compiler suite to build native Python extensions (Zope contains C code for optimized parts)</li>
+<li>Python 2.6 (other versions are <em>not</em> ok for Plone 4)</li>
+<li>Python Imaging Library installed for your Python interpreter (more below)</li>
+<li>Python <a class="reference external" href="http://pypi.python.org/pypi/distribute">Distribute</a> installation tool, provided by your operating system
+or installed by hand</li>
+</ul>
+<p>Read below from operating system specific instructions how to install these dependencies.</p>
+</div>
+<div class="section" id="features">
+<h1>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h1>
+<p>This buildout provides</p>
+<ul class="simple">
+<li>Zope start up scripts (one instance)</li>
+<li><tt class="docutils literal"><span class="pre">paster</span></tt> command for creating Plone add-ons (different from system-wide installation)</li>
+<li><a class="reference external" href="http://plone.org/documentation/manual/plone-community-developer-documentation/testing-and-debugging/unit-testing">test</a> command for running automatic test suites</li>
+<li><a class="reference external" href="http://pypi.python.org/pypi/i18ndude">i18ndude</a>  for managing text string translations in Python source code</li>
+<li><a class="reference external" href="http://pypi.python.org/pypi/collective.recipe.omelette">omelette</a> buildout recipe which makes Python egg source code more browseable by using symlinks</li>
+<li><a class="reference external" href="http://pypi.python.org/pypi/mr.developer">mr.developer</a> command for managing source code checkouts and updates with buildout repeatable manner</li>
+<li><a class="reference external" href="http://plone.org/documentation/manual/plone-community-developer-documentation">collective.developermanual</a> - community managed developer manual for Plone
+in source code form, ready for contributions</li>
+</ul>
+</div>
+<div class="section" id="creating-plone-4-buildout-installation">
+<h1>Creating Plone 4 buildout installation<a class="headerlink" href="#creating-plone-4-buildout-installation" title="Permalink to this headline">¶</a></h1>
+<p>Install ZopeSkel template package for your system-wide Python using Distribute:</p>
+<div class="highlight-python"><pre>easy_install ZopeSkel</pre>
+</div>
+<p>... or upgrade existing installation:</p>
+<div class="highlight-python"><pre>easy_install -U ZopeSkel</pre>
+</div>
+<p>You probably got here by running something like (replace <em>myplonefoldername</em> with the target folder where you want to Plone to be installed):</p>
+<div class="highlight-python"><pre>zopeskel plone4_buildout myplonefoldername</pre>
+</div>
+<p>Now, you need to run (please see remarks regarding your operating system below):</p>
+<div class="highlight-python"><pre>python bootstrap.py</pre>
+</div>
+<p>This will create <tt class="docutils literal"><span class="pre">bin</span></tt> folder and <tt class="docutils literal"><span class="pre">bin/buildout</span></tt> script. If you any time want to change Python interpreter
+associated with buildout, or you need to update <tt class="docutils literal"><span class="pre">buildout</span></tt> script itself to newer version please rerun <tt class="docutils literal"><span class="pre">bootsrap.py</span></tt>.</p>
+<p>Now you can run buildout script which will download all Python packages
+(.egg files) and create <tt class="docutils literal"><span class="pre">parts/</span></tt> and <tt class="docutils literal"><span class="pre">var/</span></tt> folder structure</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">bin</span><span class="o">/</span><span class="n">buildout</span>
+</pre></div>
+</div>
+<p>If this succesfully completes you can start buildout in foreground mode (Press <em>CTRL+C</em> to terminate):</p>
+<div class="highlight-python"><pre>bin/instance fg</pre>
+</div>
+<p>Now you can login to your site</p>
+<blockquote>
+<div><a class="reference external" href="http://localhost:8080">http://localhost:8080</a></div></blockquote>
+<p>The default user is <tt class="docutils literal"><span class="pre">admin</span></tt> with password <tt class="docutils literal"><span class="pre">admin</span></tt>.
+After initial start-up admin password is stored in Data.fs databse file and value in <tt class="docutils literal"><span class="pre">buildout.cfg</span></tt> is ignored.
+Please follow <a class="reference external" href="http://manage.plone.org/documentation/kb/changing-the-admin-password">these instructions to change admin password</a>.</p>
+</div>
+<div class="section" id="next-steps">
+<h1>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="creating-your-first-add-on">
+<h2>Creating your first add-on<a class="headerlink" href="#creating-your-first-add-on" title="Permalink to this headline">¶</a></h2>
+<p>Plone 4 buildout comes with <tt class="docutils literal"><span class="pre">bin/paster</span></tt> command for creating Plone add-ons.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When working with Plone add-ons, use paster command from buildout bin folder, not the system wide paster command.</p>
+</div>
+<p>Create theme (applies for Plone 4 also):</p>
+<div class="highlight-python"><pre>bin/zopeskel plone3_theme plonetheme.mythemeid</pre>
+</div>
+<p>Create Archetypes based content types package:</p>
+<div class="highlight-python"><pre>bin/zopeskel archetype mycompanyid.content</pre>
+</div>
+<p>Create other Plone customizations:</p>
+<div class="highlight-python"><pre>bin/zopeskel plone mycompanyid.mypackageid</pre>
+</div>
+<p>More info</p>
+<ul class="simple">
+<li><a class="reference external" href="http://collective-docs.plone.org/tutorials/paste.html">Instructions how to use Paster command to create your own add-ons</a></li>
+</ul>
+</div>
+<div class="section" id="managing-source-code-checkouts-with-buildout">
+<h2>Managing source code checkouts with buildout<a class="headerlink" href="#managing-source-code-checkouts-with-buildout" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://pypi.python.org/pypi/mr.developer">mr.developer buildout extension</a> command which can be used with buildout to manage your source code repositories
+<em>mr.developer</em> makes source code checkout from multiple repositores a repeatable task.</p>
+</div>
+</div>
+<div class="section" id="operating-system-specific-instructions">
+<h1>Operating system specific instructions<a class="headerlink" href="#operating-system-specific-instructions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ubuntu-debian">
+<h2>Ubuntu/Debian<a class="headerlink" href="#ubuntu-debian" title="Permalink to this headline">¶</a></h2>
+<p>Tested for Ubuntu 10.10.</p>
+<p>Install prerequisitements:</p>
+<div class="highlight-python"><pre>sudo apt-get install python2.6 python-imaging wget build-essential python2.6-dev python-setuptools
+easy_install ZopeSkel</pre>
+</div>
+</div>
+<div class="section" id="osx">
+<h2>OSX<a class="headerlink" href="#osx" title="Permalink to this headline">¶</a></h2>
+<p>Install <a class="reference external" href="http://developer.apple.com/">OSX development tools (XCode)</a> from Apple.</p>
+<p>Install <a class="reference external" href="http://www.macports.org/">Macports</a>.</p>
+<p>Then the following installs dependencies:</p>
+<div class="highlight-python"><pre>sudo port install python26 py26-pil py26-distribute wget
+easy_install ZopeSkel</pre>
+</div>
+<p>When you run <a href="#id1"><span class="problematic" id="id2">``</span></a>bootstrap.py``use the following command to make sure you are using Python interpreter from Macports:</p>
+<div class="highlight-python"><pre>python2.6 bootstrap.py</pre>
+</div>
+</div>
+<div class="section" id="windows">
+<h2>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
+<p>Microsoft Windows systems is problematic because
+it does not provide to Microsoft Visual C compiler (commercial) which is
+required to build native Python extensions.</p>
+<p>Please read</p>
+<ul class="simple">
+<li><a class="reference external" href="http://plone.org/documentation/kb/using-buildout-on-windows">http://plone.org/documentation/kb/using-buildout-on-windows</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="other">
+<h1>Other<a class="headerlink" href="#other" title="Permalink to this headline">¶</a></h1>
+<p>The orignal copy of these instructions is available at</p>
+<ul class="simple">
+<li><a class="reference external" href="https://svn.plone.org/svn/collective/ZopeSkel/trunk/zopeskel/templates/plone4_buildout/README.txt">https://svn.plone.org/svn/collective/ZopeSkel/trunk/zopeskel/templates/plone4_buildout/README.txt</a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Benvinguts a la documentació de desenvolupament del projecte FAT Arts Combinatòries"
+             >previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries v1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, FAT - UPCnet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
