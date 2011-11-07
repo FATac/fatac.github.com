@@ -27,6 +27,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
+    <link rel="next" title="Managing data" href="managing_data.html" />
     <link rel="prev" title="Introduction" href="introduction.html" />
 <link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
 
@@ -45,6 +46,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="managing_data.html" title="Managing data"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="introduction.html" title="Introduction"
              accesskey="P">previous</a> |</li>
@@ -67,6 +71,9 @@
   <h4>Previous topic</h4>
   <p class="topless"><a href="introduction.html"
                         title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="managing_data.html"
+                        title="next chapter">Managing data</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/configuration.txt"
@@ -152,7 +159,7 @@
 </div>
 <div class="section" id="step-2-legal-script">
 <h2>Step 2: Legal script<a class="headerlink" href="#step-2-legal-script" title="Permalink to this headline">¶</a></h2>
-<p>AC provides capabilities for assigning legal rights to media objects. The right assignation is an user assisted process that can be scripted and fully customized. (If you have no intention to apply this feature you can of course skip this step).</p>
+<p>AC provides capabilities for assigning legal rights to media objects. The right assignation is an user assisted process that can be scripted and fully customized. (If you have no intention to apply this feature you may skip this step).</p>
 <p>There is a self-explanatory sample named &#8216;legal.json&#8217; in json directory, &#8216;legal&#8217; subfolder. &#8216;legal.json&#8217; is the name of the script file that will assist the user, the main parts of the script are:</p>
 <ul class="simple">
 <li>Start Block: starting block of the script</li>
@@ -166,8 +173,8 @@
 </div>
 <div class="section" id="step-3-data-mapping">
 <h2>Step 3: Data mapping<a class="headerlink" href="#step-3-data-mapping" title="Permalink to this headline">¶</a></h2>
-<p>Data &#8220;mapping.json&#8221; (placed in json/mapping folder) is a must-have specification file that defines what ontology data must be indexed in solr, and how it must be done. Data mapping is not a simple direct Owl to Solr mapping. It must be defined in a way that it later can be used for specific object domain searches (See Step 4), and provide additional information of the field nature to get Solr treating the data properly.</p>
-<p>Let&#8217;s say we have the Person class defined in our Ontology, and that we want to indexate a couple of useful person data such as: name, biography, date of birth and birth place. Person indexation should be specified this way:</p>
+<p>Data &#8220;mapping.json&#8221; (placed in json/mapping folder) is a must-have specification file that defines what ontology data must be indexed in Solr, and how this must be done. Data mapping is not a simple direct Owl to Solr mapping. It must be defined in a way that it later can be used for specific object domain searches (See Step 4), and provide additional information of the field nature to get Solr treating the data properly.</p>
+<p>Let&#8217;s say we have the Person class defined in our Ontology, and that we want to indexate several useful person data such as: name, biography, date of birth and birth place. Person indexation should be specified this way:</p>
 <div class="highlight-python"><pre>{
         "data":
         [
@@ -254,7 +261,7 @@
 <h2>Step 4: Object template<a class="headerlink" href="#step-4-object-template" title="Permalink to this headline">¶</a></h2>
 <p>Any object search will finally lead to individual object visualization. This makes it necessary to build templates for any Ontology object that should be visualizable. Object view is organized in sections, and each section contains a list of mapped data, in a similar way we used it in previous step.</p>
 <p>Going back to Person object class example: name, birth date, and birth place should be placed at header. Biography can be placed at body, we can also use a &#8216;knows&#8217; relation to get related Persons and we can place this at footer section. (Note that sections are totally customizable).</p>
-<p>The resulting template must be placed as Person.json (generally, (Class-name).json) in json/mapping directory. Code should look as follows:</p>
+<p>The resulting template file must be placed as &#8220;Person.json&#8221; (generally, (Class-name).json) in json/mapping directory. Code should look as follows:</p>
 <div class="highlight-python"><pre>{
         "className":"Person",
 
@@ -304,7 +311,7 @@
                                         "name":"Related",
                                         "type":"search",
                     "path":["Person.id"],
-                    "value":["Person.knows:"],
+                    "value":["RelatedPeople:"],
                     "categories":["Year", "Location"]
                                 }
                         ]
@@ -316,8 +323,8 @@
 <ul class="simple">
 <li><strong>text</strong>: suitable for most cases, it shows data as it&#8217;s resolved with no modification.</li>
 <li><strong>linkedObject</strong>: it shows resolved data path along with the referenced object id, separated by &#8216;&#64;&#8217;. For example: <a class="reference external" href="mailto:London&#37;&#52;&#48;my_london_id">London<span>&#64;</span>my_london_id</a>, this allows to create an hyperlink to the referenced object, which would be <a class="reference external" href="http://internetdomain.org/rest-path/resource/my_london_id/">http://internetdomain.org/rest-path/resource/my_london_id/</a>...</li>
-<li><strong>date</strong>: and its parts (<strong>date.year</strong>, <strong>date.day</strong>, <strong>date.month</strong>). Same effect with date defined at step 3.</li>
-<li><strong>search</strong>: this is a quite sophisticated object that comprises Solr searching feature from indexed data filtered by the specified constraint defined as combination of value and path. In this example: the search will only result to persons (&#8220;Person.knows:&#8221;) that know current person (&#8220;Person.id&#8221;). For detailed information about searches please see the Search page.</li>
+<li><strong>date</strong>: and its parts (<strong>date.year</strong>, <strong>date.day</strong>, <strong>date.month</strong>). Same effect as date defined at step 3.</li>
+<li><strong>search</strong>: this is a quite sophisticated object that comprises Solr searching feature from indexed data filtered by the specified constraint defined as combination of value and path. In this example: the search will only result to persons (&#8220;Person.knows:&#8221;) that know current person (&#8220;Person.id&#8221;). For detailed information about searches please see Visualization page.</li>
 </ul>
 </div>
 </div>
@@ -334,6 +341,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="managing_data.html" title="Managing data"
+             >next</a> |</li>
         <li class="right" >
           <a href="introduction.html" title="Introduction"
              >previous</a> |</li>

@@ -68,7 +68,7 @@ Once installed (see Installation), the first thing we have to do is to configure
 Step 2: Legal script
 -----------------------------
 
-AC provides capabilities for assigning legal rights to media objects. The right assignation is an user assisted process that can be scripted and fully customized. (If you have no intention to apply this feature you can of course skip this step).
+AC provides capabilities for assigning legal rights to media objects. The right assignation is an user assisted process that can be scripted and fully customized. (If you have no intention to apply this feature you may skip this step).
 
 There is a self-explanatory sample named 'legal.json' in json directory, 'legal' subfolder. 'legal.json' is the name of the script file that will assist the user, the main parts of the script are:
 
@@ -84,9 +84,9 @@ There are four "trafic light" colors that can be assigned to any object as a res
 Step 3: Data mapping
 ------------------------------
 
-Data "mapping.json" (placed in json/mapping folder) is a must-have specification file that defines what ontology data must be indexed in solr, and how it must be done. Data mapping is not a simple direct Owl to Solr mapping. It must be defined in a way that it later can be used for specific object domain searches (See Step 4), and provide additional information of the field nature to get Solr treating the data properly.
+Data "mapping.json" (placed in json/mapping folder) is a must-have specification file that defines what ontology data must be indexed in Solr, and how this must be done. Data mapping is not a simple direct Owl to Solr mapping. It must be defined in a way that it later can be used for specific object domain searches (See Step 4), and provide additional information of the field nature to get Solr treating the data properly.
 
-Let's say we have the Person class defined in our Ontology, and that we want to indexate a couple of useful person data such as: name, biography, date of birth and birth place. Person indexation should be specified this way:
+Let's say we have the Person class defined in our Ontology, and that we want to indexate several useful person data such as: name, biography, date of birth and birth place. Person indexation should be specified this way:
 
 ::
 
@@ -185,7 +185,7 @@ Any object search will finally lead to individual object visualization. This mak
 
 Going back to Person object class example: name, birth date, and birth place should be placed at header. Biography can be placed at body, we can also use a 'knows' relation to get related Persons and we can place this at footer section. (Note that sections are totally customizable).
 
-The resulting template must be placed as Person.json (generally, (Class-name).json) in json/mapping directory. Code should look as follows:
+The resulting template file must be placed as "Person.json" (generally, (Class-name).json) in json/mapping directory. Code should look as follows:
 
 ::
 
@@ -238,7 +238,7 @@ The resulting template must be placed as Person.json (generally, (Class-name).js
 					    "name":"Related",
 					    "type":"search",
                         "path":["Person.id"],
-                        "value":["Person.knows:"],
+                        "value":["RelatedPeople:"],
                         "categories":["Year", "Location"]
 				    }
 			    ]
@@ -252,4 +252,5 @@ Data 'type' clause has not much to do with 'type' defined in previous step. Prev
 - **text**: suitable for most cases, it shows data as it's resolved with no modification.
 - **linkedObject**: it shows resolved data path along with the referenced object id, separated by '@'. For example: London@my_london_id, this allows to create an hyperlink to the referenced object, which would be http://internetdomain.org/rest-path/resource/my_london_id/...
 - **date**: and its parts (**date.year**, **date.day**, **date.month**). Same effect as date defined at step 3.
-- **search**: this is a quite sophisticated object that comprises Solr searching feature from indexed data filtered by the specified constraint defined as combination of value and path. In this example: the search will only result to persons ("Person.knows:") that know current person ("Person.id"). For detailed information about searches please see the Search page.
+- **search**: this is a quite sophisticated object that comprises Solr searching feature from indexed data filtered by the specified constraint defined as combination of value and path. In this example: the search will only result to persons ("Person.knows:") that know current person ("Person.id"). For detailed information about searches please see Visualization page.
+

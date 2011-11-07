@@ -3,31 +3,22 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Benvinguts a la documentació de desenvolupament del projecte FAT Arts Combinatòries
+Welcome to Arts Combinatòries FAT project documentation
 ======================================================================================
 
-Aquesta documentació recull informació generada durant el desenvolupament del 
-projecte de la fundació Tàpies (FAT_).
+This document gathers information concerning purposes, development, reusability and configuration of Fundació Antoni Tàpies (FAT_) project.
 
-Actualment el desenvolupament del projecte es troba en fase *alpha*. Per lo
-tant, la maduresa de tot el codi del projecte en aquesta fase s'ha de tractar
-com a tal.
-
-Podreu trobar més informació sobre el projecte Arts Combinatòries a la web:
-
-Repositori de codi
+Source code
 -------------------
 
-El codi del projecte es troba a GitHub_.
+This is an open project whose code is fully-available at GitHub_.
 
-Fases, històries d'usuari i tasques (backlog)
+Development methodology and history
 -----------------------------------------------
 
-El projecte s'està desenvolupant seguint metodologies àgils amb Scrum. S'ha
-habilitat un espai de treball per fer seguiment de les fases, les històries
-d'usuari i les tasques assignades a l'eina PivotalTracker_.
+This is a PivotalTracker_ managed project, where development is divided into histories which are grouped by ordered iterations, following SCRUM agile development methodology.
 
-Index de continguts
+Contents
 -------------------
 
 .. _GitHub: https://github.com/organizations/FATac
@@ -37,6 +28,10 @@ Index de continguts
 .. toctree::
    :maxdepth: 2
 
-   requisits
-   instal-lacio
+   introduction
+   configuration
+   managing_data
+   managing_media
+   managing_solr
+   visualization
    
