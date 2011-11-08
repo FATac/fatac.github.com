@@ -1,0 +1,155 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0a1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
+    <link rel="next" title="Configuration" href="configuration.html" />
+    <link rel="prev" title="Welcome to Arts Combinatòries FAT project documentation" href="index.html" />
+<link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
+
+  </head>
+  <body>
+<div class="header">
+    <a href="#">
+        <img alt="Logo" src="_static/logo.jpg" class="logo" />
+    </a>
+</div>
+    
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="configuration.html" title="Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Arts Combinatòries FAT project documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#key-features">Key features</a></li>
+<li><a class="reference internal" href="#technical-elements">Technical elements</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Arts Combinatòries FAT project documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="configuration.html"
+                        title="next chapter">Configuration</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/introduction.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>This project is a general purpose Semantic Web (SW) focused on cultural visualizable contents (i.e media content). As such, it provides fully configurable templates to allow any user or institution store its semantic data (OWL/RDF) and link that to its media files. This documentation deeps further on template configuration and other useful parameters for customization (see Configuration).</p>
+<div class="section" id="key-features">
+<h2>Key features<a class="headerlink" href="#key-features" title="Permalink to this headline">¶</a></h2>
+<p>Other key features are:</p>
+<ul class="simple">
+<li>REST services that allow complete interaction with all project functionalities.</li>
+<li>Media (audio, video, image, text) storage and video format conversion capabilities.</li>
+<li>Scriptable legal protection for medias to accomplish with any license of cultural objects.</li>
+<li>Support for users and groups, that makes possible to grant roles and permisions.</li>
+<li>Search capabilities based on <a class="reference external" href="http://lucene.apache.org/solr/">Solr</a> engine. Fully configurable indexation, filtering and autocomplete features.</li>
+<li>User-related features such as: adding comments, text marks, personal notes, creating web presentations (yet to be implemented).</li>
+</ul>
+<p>The initial application of this SW is the Fundació Antoni Tàpies cultural archive.</p>
+</div>
+<div class="section" id="technical-elements">
+<h2>Technical elements<a class="headerlink" href="#technical-elements" title="Permalink to this headline">¶</a></h2>
+<p>This project is composed of different technology components that must be installed (see Installation) in order to get started. Here a description of each:</p>
+<ul class="simple">
+<li>Tomcat 7: Stores the core application that implements REST services, Solr search engine, and Video services.</li>
+<li>Plone 4: View layer that act as the REST services client and generates html content.</li>
+<li>Openlink Virtuoso: Triplestore database to store Ontology (OWL specification), RDF data, and to process SPARQL and reasoning.</li>
+<li>MySQL for user and group management.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="configuration.html" title="Configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Arts Combinatòries FAT project documentation"
+             >previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, FAT - UPCnet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

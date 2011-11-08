@@ -1,0 +1,272 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Managing Solr &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0a1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
+    <link rel="next" title="Visualization" href="visualization.html" />
+    <link rel="prev" title="Managing media" href="managing_media.html" />
+<link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
+
+  </head>
+  <body>
+<div class="header">
+    <a href="#">
+        <img alt="Logo" src="_static/logo.jpg" class="logo" />
+    </a>
+</div>
+    
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="visualization.html" title="Visualization"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="managing_media.html" title="Managing media"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Managing Solr</a><ul>
+<li><a class="reference internal" href="#clear">Clear</a></li>
+<li><a class="reference internal" href="#commit">Commit</a></li>
+<li><a class="reference internal" href="#schema">Schema</a></li>
+<li><a class="reference internal" href="#reload">Reload</a></li>
+<li><a class="reference internal" href="#update">Update</a></li>
+<li><a class="reference internal" href="#search">Search</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="managing_media.html"
+                        title="previous chapter">Managing media</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="visualization.html"
+                        title="next chapter">Visualization</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/managing_solr.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="managing-solr">
+<h1>Managing Solr<a class="headerlink" href="#managing-solr" title="Permalink to this headline">¶</a></h1>
+<p>Solr is a search engine that supports full-text search of indexed documents, plus features for categorization and data filtering. Managing Solr properly is critical to provide easy user access to uploaded Ontology objects. Solr should not be directly dealed with, but through REST services that read from JSON Mapping specifications (already introduced in Configuration).</p>
+<p>Solr path must be properly set in SOLR_PATH Configuration variable.</p>
+<div class="section" id="clear">
+<h2>Clear<a class="headerlink" href="#clear" title="Permalink to this headline">¶</a></h2>
+<p>Clears all indexed data (commits automatically)</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/clear
+HTTP Method: GET
+Returns: "success" or "error"</pre>
+</div>
+</div>
+<div class="section" id="commit">
+<h2>Commit<a class="headerlink" href="#commit" title="Permalink to this headline">¶</a></h2>
+<p>Commits recent indexation</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/commit
+HTTP Method: GET
+Returns: media file</pre>
+</div>
+</div>
+<div class="section" id="schema">
+<h2>Schema<a class="headerlink" href="#schema" title="Permalink to this headline">¶</a></h2>
+<p>Generates schema from mapping JSON configuration.</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/clear
+HTTP Method: GET
+Returns: "success" or "error"</pre>
+</div>
+<p>NOTE: Solr must be restarted for new schema to take effect.</p>
+</div>
+<div class="section" id="reload">
+<h2>Reload<a class="headerlink" href="#reload" title="Permalink to this headline">¶</a></h2>
+<p>Peforms an update removing any existing data index. This process may take some time.</p>
+<p>Solr indexation can be found at (SOLR_PATH)/data/data.xml</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/reload
+HTTP Method: GET
+Returns: "success" or "error"</pre>
+</div>
+</div>
+<div class="section" id="update">
+<h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
+<p>Indexates new data according to mapping JSON configuration. This process may take some time.</p>
+<p>Solr indexation can be found at (SOLR_PATH)/data/data.xml</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/update
+HTTP Method: GET
+Returns: "success" or "error"</pre>
+</div>
+</div>
+<div class="section" id="search">
+<h2>Search<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h2>
+<p>Peforms search, JSON result comes straight from Solr engine.</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/search?s=Search&amp;f=Filter&amp;start=Start&amp;rows=Rows
+HTTP Method: GET
+Returns: Solr JSON result or "error"</pre>
+</div>
+<p>&#8220;s&#8221; Search parameter, contains general text search.</p>
+<p>&#8220;f&#8221; Filter parameter, defines results filtering in a &#8220;key:value&#8221; form sepparated by comas (see example below).</p>
+<p>&#8220;start&#8221; and &#8220;rows&#8221; parameters define result scoping to provide pagination.</p>
+<p><strong>Search Example</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/rest-path/solr/search?s=James</pre>
+</div>
+<p><strong>OK Result</strong></p>
+<div class="highlight-python"><pre>{
+    + "responseHeader": { ... },                    // Not rellevant
+    - "response":
+        {
+            "numFound": 277,
+            "start": 0,
+          - "docs": [
+              - {
+                    "id": "James_Bond_ID"           // Note that search results consists in identifiers only, to get the full object data we use View services
+                },
+
+              - {
+                    "id": "James_Stewart_ID"
+                },
+
+             -  {
+                    "id": "James_Franco_ID"
+                },
+
+                // more results
+            ]
+        }
+
+    - "facet_counts": {
+
+         - "facet_fields": {                        // With adequate mapping we can get object categorization (see Configuration)
+                - "Birth": [
+                    + "1901", "3",
+                    + "1975", "2",
+                    + "1930", "2",
+                    // ...more
+                  ]
+
+                - "Country": [
+                    + "United States", "44",
+                    + "United Kingdom", "33",
+                    // ...more
+                  ]
+            }
+        }
+}</pre>
+</div>
+<p>Note that search results consists in identifiers only (they are always indexed as &#8216;id&#8217;), to get the full object data we use View services</p>
+<p><strong>How filtering works</strong></p>
+<p>Constructing filter parameter is quite simple. All we have to do is to chose what category value we want to filter from &#8220;facet_fields&#8221; section of JSON Solr result. Still in previous example, say we want to filter by Birth year and Country with specific values for each. Filter could be: &#8220;Birth:1930,Country:United Kingdom&#8221;.</p>
+<p><strong>Filtering Example</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/rest-path/solr/search?s=James&amp;f=Birth:1930,Country:United%20Kingdom   // Note that this may require URI encoding</pre>
+</div>
+<p><strong>OK Result</strong></p>
+<div class="highlight-python"><pre>{
+    + "responseHeader": { ... },
+    - "response":
+        {
+            "numFound": 1,
+            "start": 0,
+          - "docs": [
+              - {
+                    "id": "James_Bond_ID"
+                }
+            ]
+        }
+
+    - "facet_counts": {
+
+         - "facet_fields": {
+                - "Birth": [
+                    + "1930", "1",
+                  ]
+
+                - "Country": [
+                    + "United Kingdom", "1",
+                  ]
+            }
+        }
+}</pre>
+</div>
+<p>Note that you can filter by two values of the same category (for example: &#8220;Year:1930,Year:1975&#8221;). In this case the filter will be non-exclusive.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="visualization.html" title="Visualization"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="managing_media.html" title="Managing media"
+             >previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, FAT - UPCnet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

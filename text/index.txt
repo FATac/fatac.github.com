@@ -1,0 +1,47 @@
+
+Benvinguts a la documentació de desenvolupament del projecte FAT Arts Combinatòries
+***********************************************************************************
+
+Aquesta documentació recull informació generada durant el
+desenvolupament del projecte de la fundació Tàpies (FAT).
+
+Actualment el desenvolupament del projecte es troba en fase *alpha*.
+Per lo tant, la maduresa de tot el codi del projecte en aquesta fase
+s'ha de tractar com a tal.
+
+Podreu trobar més informació sobre el projecte Arts Combinatòries a la
+web:
+
+
+Repositori de codi
+==================
+
+El codi del projecte es troba a GitHub.
+
+
+Fases, històries d'usuari i tasques (backlog)
+=============================================
+
+El projecte s'està desenvolupant seguint metodologies àgils amb Scrum.
+S'ha habilitat un espai de treball per fer seguiment de les fases, les
+històries d'usuari i les tasques assignades a l'eina PivotalTracker.
+
+
+Index de continguts
+===================
+
+* Requisits
+  * Sistema operatiu
+  * Software
+* Introduction
+* Prerequisitements
+* Features
+* Creating Plone 4 buildout installation
+* Next steps
+  * Creating your first add-on
+  * Managing source code checkouts with buildout
+* Operating system specific instructions
+  * Ubuntu/Debian
+  * OSX
+  * Windows
+* Other

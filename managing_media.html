@@ -1,0 +1,155 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Managing media &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0a1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
+    <link rel="prev" title="Managing data" href="managing_data.html" />
+<link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
+
+  </head>
+  <body>
+<div class="header">
+    <a href="#">
+        <img alt="Logo" src="_static/logo.jpg" class="logo" />
+    </a>
+</div>
+    
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="managing_data.html" title="Managing data"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Managing media</a><ul>
+<li><a class="reference internal" href="#upload">Upload</a></li>
+<li><a class="reference internal" href="#get">Get</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="managing_data.html"
+                        title="previous chapter">Managing data</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/managing_media.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="managing-media">
+<h1>Managing media<a class="headerlink" href="#managing-media" title="Permalink to this headline">¶</a></h1>
+<p>AC REST services provide media storage and some format conversion cappabilities.</p>
+<div class="section" id="upload">
+<h2>Upload<a class="headerlink" href="#upload" title="Permalink to this headline">¶</a></h2>
+<p>Uploads media file and proceeds to conversion if necessary (eligible file formats for conversion are in Configuration var VIDEO_FILE_EXTENSIONS)</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/upload?fn=
+HTTP Method: POST
+Accepted content: (any media type)
+Returns: media identifier or "error"</pre>
+</div>
+<p>Http request body must contain binary file data.</p>
+<p>Parameter &#8220;fn&#8221; is required, and it is the file name including format extension.</p>
+<p><strong>POST Example</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/rest-path/media/upload?fn=myimage.jpg</pre>
+</div>
+<div class="highlight-python"><pre>[Media file binary content]</pre>
+</div>
+<p><strong>OK Result</strong></p>
+<div class="highlight-python"><pre>"_media_file_123"       // auto-generated id</pre>
+</div>
+</div>
+<div class="section" id="get">
+<h2>Get<a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h2>
+<p>Retrieves stored media</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/{id}
+HTTP Method: GET
+Returns: media file</pre>
+</div>
+<p><strong>POST Example</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/rest-path/media/_media_file_123</pre>
+</div>
+<p><strong>OK Result</strong></p>
+<div class="highlight-python"><pre>[Media file binary content]</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="managing_data.html" title="Managing data"
+             >previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, FAT - UPCnet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

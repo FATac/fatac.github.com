@@ -1,0 +1,219 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Managing data &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0a1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
+    <link rel="next" title="Managing media" href="managing_media.html" />
+    <link rel="prev" title="Configuration" href="configuration.html" />
+<link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
+
+  </head>
+  <body>
+<div class="header">
+    <a href="#">
+        <img alt="Logo" src="_static/logo.jpg" class="logo" />
+    </a>
+</div>
+    
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="managing_media.html" title="Managing media"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="configuration.html" title="Configuration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Managing data</a><ul>
+<li><a class="reference internal" href="#upload">Upload</a></li>
+<li><a class="reference internal" href="#read">Read</a></li>
+<li><a class="reference internal" href="#update">Update</a></li>
+<li><a class="reference internal" href="#delete">Delete</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="configuration.html"
+                        title="previous chapter">Configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="managing_media.html"
+                        title="next chapter">Managing media</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/managing_data.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="managing-data">
+<h1>Managing data<a class="headerlink" href="#managing-data" title="Permalink to this headline">¶</a></h1>
+<p>AC REST services provide CRUD access to data. All communication is in JSON format.</p>
+<p>Note: data service base path should correspond to Configuration var RESOURCE_URI_NS plus the actual physical domain url.</p>
+<div class="section" id="upload">
+<h2>Upload<a class="headerlink" href="#upload" title="Permalink to this headline">¶</a></h2>
+<p>Creates a new object of specific type and data</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/resource/upload
+HTTP Method: POST
+Accepted content: */json
+Returns: Identifier of uploaded object or "error"</pre>
+</div>
+<p>Http request body must contain a JSON list of key-value tuples.</p>
+<p>&#8220;type&#8221; is a required key, otherwise returns error.</p>
+<p>&#8220;about&#8221; is a recommended key in order to generate proper object identifiers.</p>
+<p>Multilingual properties can be specified with language code prefix for each value (see example).</p>
+<p><strong>POST Example</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/rest-path/resource/upload</pre>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;type&quot;</span><span class="p">:</span><span class="s">&quot;Location&quot;</span><span class="p">,</span>
+    <span class="s">&quot;about&quot;</span><span class="p">:</span><span class="s">&quot;New York City&quot;</span><span class="p">,</span>
+    <span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;New York City@en&quot;</span><span class="p">,</span>
+    <span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;Nueva York@es&quot;</span><span class="p">,</span>
+    <span class="s">&quot;abbreviation&quot;</span><span class="p">:</span><span class="s">&quot;NYC&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>OK Result</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;New_York_City&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read">
+<h2>Read<a class="headerlink" href="#read" title="Permalink to this headline">¶</a></h2>
+<p>Retrieves specific object data</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/resource/{identifier}
+HTTP Method: GET
+Returns: JSON object data</pre>
+</div>
+<p><strong>GET Example</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/rest-path/resource/New_York_City</pre>
+</div>
+<p><strong>OK Result</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;type&quot;</span><span class="p">:</span><span class="s">&quot;Location&quot;</span><span class="p">,</span>
+    <span class="s">&quot;about&quot;</span><span class="p">:</span><span class="s">&quot;New York City&quot;</span><span class="p">,</span>
+    <span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;New York City@en&quot;</span><span class="p">,</span>
+    <span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;Nueva York@es&quot;</span><span class="p">,</span>
+    <span class="s">&quot;abbreviation&quot;</span><span class="p">:</span><span class="s">&quot;NYC&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="update">
+<h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
+<p>Updates specified object data.</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/resource/{identifier}/update
+HTTP Method: PUT
+Accepted content: */json
+Returns: "success" or "error"</pre>
+</div>
+<p>Http request body must contain a JSON list of key-value tuples.</p>
+<p>In order to remove any existing property, this must be sent with empty value. Unsent properties remain unchanged.</p>
+<p>Identifier and type cannot be changed.</p>
+<p><strong>POST Example</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/rest-path/resource/New_York_City/update</pre>
+</div>
+<div class="highlight-python"><pre>{
+    "type":"Person",            // has no effect
+    "name":"City of New York"   // changes property value (and turns to a single-language property)
+    "abbrevitation":"",         // removes property
+    "population":"8175133",     // creates property
+}</pre>
+</div>
+<p><strong>OK Result</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;success&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="delete">
+<h2>Delete<a class="headerlink" href="#delete" title="Permalink to this headline">¶</a></h2>
+<p>Deletes specified object</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/resource/{identifier}/delete
+HTTP Method: DELETE
+Returns: "success" or "error"</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="managing_media.html" title="Managing media"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="configuration.html" title="Configuration"
+             >previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, FAT - UPCnet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>
