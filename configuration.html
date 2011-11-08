@@ -319,13 +319,16 @@
         ]
 }</pre>
 </div>
-<p>Data &#8216;type&#8217; clause has not much to do with &#8216;type&#8217; defined in previous step. Previous template example we use all data types available for templates:</p>
+<p>Data &#8216;type&#8217; clause has not much to do with &#8216;type&#8217; defined in previous step. The following types are all the ones available for templates:</p>
 <ul class="simple">
-<li><strong>text</strong>: suitable for most cases, it shows data as it&#8217;s resolved with no modification.</li>
+<li><strong>text</strong>: suitable for most cases, it resolves path to literal value with no modification.</li>
 <li><strong>linkedObject</strong>: it shows resolved data path along with the referenced object id, separated by &#8216;&#64;&#8217;. For example: <a class="reference external" href="mailto:London&#37;&#52;&#48;my_london_id">London<span>&#64;</span>my_london_id</a>, this allows to create an hyperlink to the referenced object, which would be <a class="reference external" href="http://internetdomain.org/rest-path/resource/my_london_id/">http://internetdomain.org/rest-path/resource/my_london_id/</a>...</li>
+<li><strong>objects</strong>: resolves path to identifier value.</li>
+<li><strong>media</strong>: resolves path to media url value.</li>
 <li><strong>date</strong>: and its parts (<strong>date.year</strong>, <strong>date.day</strong>, <strong>date.month</strong>). Same effect as date defined at step 3.</li>
 <li><strong>search</strong>: this is a quite sophisticated object that comprises Solr searching feature from indexed data filtered by the specified constraint defined as combination of value and path. In this example: the search will only result to persons (&#8220;Person.knows:&#8221;) that know current person (&#8220;Person.id&#8221;). For detailed information about searches please see Visualization page.</li>
 </ul>
+<p>Please note that <strong>text</strong>, <strong>objects</strong> and <strong>media</strong> have the same effect. They resolve the path the same way but resulting value type is supposed to be different. See Visualization Object Thumbnail section to further in <strong>media</strong> and <strong>objects</strong> types.</p>
 </div>
 </div>
 

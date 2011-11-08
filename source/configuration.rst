@@ -247,10 +247,16 @@ The resulting template file must be placed as "Person.json" (generally, (Class-n
     }
 
 
-Data 'type' clause has not much to do with 'type' defined in previous step. Previous template example we use all data types available for templates:
+Data 'type' clause has not much to do with 'type' defined in previous step. The following types are all the ones available for templates:
 
-- **text**: suitable for most cases, it shows data as it's resolved with no modification.
+- **text**: suitable for most cases, it resolves path to literal value with no modification.
 - **linkedObject**: it shows resolved data path along with the referenced object id, separated by '@'. For example: London@my_london_id, this allows to create an hyperlink to the referenced object, which would be http://internetdomain.org/rest-path/resource/my_london_id/...
+- **objects**: resolves path to identifier value.
+- **media**: resolves path to media url value.
 - **date**: and its parts (**date.year**, **date.day**, **date.month**). Same effect as date defined at step 3.
 - **search**: this is a quite sophisticated object that comprises Solr searching feature from indexed data filtered by the specified constraint defined as combination of value and path. In this example: the search will only result to persons ("Person.knows:") that know current person ("Person.id"). For detailed information about searches please see Visualization page.
+
+Please note that **text**, **objects** and **media** have the same effect. They resolve the path the same way but resulting value type is supposed to be different. See Visualization Object Thumbnail section to further in **media** and **objects** types.
+
+
 
