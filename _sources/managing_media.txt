@@ -10,7 +10,7 @@ Uploads media file and proceeds to conversion if necessary (eligible file format
 
 ::
 
-    Service path: http://{host:port}/{appname}/media/upload?fn=
+    Service path: http://{host:port}/{appname}/media/upload?fn=FILE NAME
     HTTP Method: POST
     Accepted content: (any media type)
     Returns: media identifier or "error"
@@ -43,7 +43,7 @@ Retrieves stored media
 
 ::
 
-    Service path: http://{host:port}/{appname}/media/{id}
+    Service path: http://{host:port}/{appname}/media/{identifier}
     HTTP Method: GET
     Returns: media file
 
@@ -58,6 +58,29 @@ Retrieves stored media
 ::
 
     [Media file binary content]
+
+Get format
+---------------
+
+Media file extension is also requestable
+
+::
+
+    Service path: http://{host:port}/{appname}/media/{identifier}/format
+    HTTP Method: GET
+    Returns: file extension
+
+**POST Example**
+
+::
+
+    http://internetdomain.org/rest-path/media/_media_file_123/format
+
+**OK Result**
+
+::
+
+    jpg
 
 
 

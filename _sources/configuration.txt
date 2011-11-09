@@ -60,12 +60,39 @@ Once installed (see Installation), the first thing we have to do is to configure
 	 SOLR_PATH = /mycurrentdirectory/solr/
 
      # Media directory where all uploaded media filles will be stored, it must contain 'thumbnail' subfolder, and 'classes' subsubfolder inside
-	 MEDIA_PATH = ./var/ac-project/media/
+	 MEDIA_PATH = /var/ac-project/media/
 
      # Path to OWL file containing the main Ontology. This file will be uploaded on every call to 'reset' service.
-	 ONTOLOGY_PATH = /var/ac-project/OntologiaArtsCombinatories.owl
+	 ONTOLOGY_PATH = /var/ac-project/myOntology.owl
 
-Step 2: Legal script
+Step 2: Reset
+-----------------------------
+
+Calling reset service, ALL data and media will be removed. Also last Ontology file (located in ONTOLOGY_PATH) will be loaded. 
+
+::
+
+    Service path: http://{host:port}/{appname}/reset?option=ontology&confirm=CURRENT_DATE
+    HTTP Method: GET
+    Returns: "success" or "error"
+
+Set "option=ontology" if you do not want a total reset, but only an Ontology reload.
+
+Otherwise, for safety, "confirm" must be filled with current server date and time formated as "dd/mm/yy hh:mm"
+
+**Examples**
+
+::
+
+    http://internetdomain.org/rest-path/reset?option=ontology               // ontology reload
+
+::
+
+    http://internetdomain.org/rest-path/reset?confirm=11/11/2011 23:11      // data reset and ontology upload
+
+
+
+Step 3: Legal script
 -----------------------------
 
 AC provides capabilities for assigning legal rights to media objects. The right assignation is an user assisted process that can be scripted and fully customized. (If you have no intention to apply this feature you may skip this step).
@@ -81,7 +108,7 @@ There is a self-explanatory sample named 'legal.json' in json directory, 'legal'
 
 There are four "trafic light" colors that can be assigned to any object as a result of the legal process. From less to more restrictive: "green", "yellow", "orange" and "red". Each of one corresponding to one accessing right level from 1 to 4. On every call to a service that provides media data, the accessing level must be specified. Service will fail if user accessing level is lower than object restriction level. Eg. User level = 1 , Object level = 2 --> Fail / User level = 2 , Object level = 2 --> OK.
 
-Step 3: Data mapping
+Step 4: Data mapping
 ------------------------------
 
 Data "mapping.json" (placed in json/mapping folder) is a must-have specification file that defines what ontology data must be indexed in Solr, and how this must be done. Data mapping is not a simple direct Owl to Solr mapping. It must be defined in a way that it later can be used for specific object domain searches (See Step 4), and provide additional information of the field nature to get Solr treating the data properly.
@@ -178,7 +205,7 @@ For example: 'Name' data (that is, person and location name) is interesting for 
         ]
 
 
-Step 4: Object template
+Step 5: Object template
 ------------------------------------
 
 Any object search will finally lead to individual object visualization. This makes it necessary to build templates for any Ontology object that should be visualizable. Object view is organized in sections, and each section contains a list of mapped data, in a similar way we used it in previous step.

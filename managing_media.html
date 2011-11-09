@@ -27,6 +27,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
+    <link rel="next" title="Managing Solr" href="managing_solr.html" />
     <link rel="prev" title="Managing data" href="managing_data.html" />
 <link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
 
@@ -46,6 +47,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="managing_solr.html" title="Managing Solr"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
           <a href="managing_data.html" title="Managing data"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
@@ -58,6 +62,7 @@
 <li><a class="reference internal" href="#">Managing media</a><ul>
 <li><a class="reference internal" href="#upload">Upload</a></li>
 <li><a class="reference internal" href="#get">Get</a></li>
+<li><a class="reference internal" href="#get-format">Get format</a></li>
 </ul>
 </li>
 </ul>
@@ -65,6 +70,9 @@
   <h4>Previous topic</h4>
   <p class="topless"><a href="managing_data.html"
                         title="previous chapter">Managing data</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="managing_solr.html"
+                        title="next chapter">Managing Solr</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/managing_media.txt"
@@ -97,7 +105,7 @@
 <div class="section" id="upload">
 <h2>Upload<a class="headerlink" href="#upload" title="Permalink to this headline">¶</a></h2>
 <p>Uploads media file and proceeds to conversion if necessary (eligible file formats for conversion are in Configuration var VIDEO_FILE_EXTENSIONS)</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/upload?fn=
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/upload?fn=FILE NAME
 HTTP Method: POST
 Accepted content: (any media type)
 Returns: media identifier or "error"</pre>
@@ -116,7 +124,7 @@ Returns: media identifier or "error"</pre>
 <div class="section" id="get">
 <h2>Get<a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h2>
 <p>Retrieves stored media</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/{id}
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/{identifier}
 HTTP Method: GET
 Returns: media file</pre>
 </div>
@@ -125,6 +133,21 @@ Returns: media file</pre>
 </div>
 <p><strong>OK Result</strong></p>
 <div class="highlight-python"><pre>[Media file binary content]</pre>
+</div>
+</div>
+<div class="section" id="get-format">
+<h2>Get format<a class="headerlink" href="#get-format" title="Permalink to this headline">¶</a></h2>
+<p>Media file extension is also requestable</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/{identifier}/format
+HTTP Method: GET
+Returns: file extension</pre>
+</div>
+<p><strong>POST Example</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/rest-path/media/_media_file_123/format</pre>
+</div>
+<p><strong>OK Result</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">jpg</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -141,6 +164,9 @@ Returns: media file</pre>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="managing_solr.html" title="Managing Solr"
+             >next</a> |</li>
         <li class="right" >
           <a href="managing_data.html" title="Managing data"
              >previous</a> |</li>

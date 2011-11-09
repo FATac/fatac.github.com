@@ -59,6 +59,7 @@
 <li><a class="reference internal" href="#object-view">Object view</a></li>
 <li><a class="reference internal" href="#search-in-object-template">Search in object template</a></li>
 <li><a class="reference internal" href="#object-thumbnail">Object thumbnail</a></li>
+<li><a class="reference internal" href="#class-list-and-tree">Class list and tree</a></li>
 </ul>
 </li>
 </ul>
@@ -102,7 +103,7 @@
 HTTP Method: GET
 Returns: JSON data or "error"</pre>
 </div>
-<p>Template processing result of a Person (with template defined at Configuration Step ) would be as follows:</p>
+<p>Template processing result of a Person (with template defined at Configuration 5) would be as follows:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
         <span class="s">&quot;className&quot;</span><span class="p">:</span><span class="s">&quot;Person&quot;</span><span class="p">,</span>
 
@@ -163,7 +164,7 @@ Returns: JSON data or "error"</pre>
 </div>
 <div class="section" id="search-in-object-template">
 <h2>Search in object template<a class="headerlink" href="#search-in-object-template" title="Permalink to this headline">¶</a></h2>
-<p>As described in Configuration Step 4, a template can have a specific object data type called &#8220;search&#8221;. It indicates that Solr search sould be performed in order to fill that part of the template with data. The aim of this feature is that some objects can relate to many other objects, and we want to be able to perform search and filtering of this particular scope. There are to possible approaches that lead to same result.</p>
+<p>As described in Configuration Step 5, a template can have a specific object data type called &#8220;search&#8221;. It indicates that Solr search sould be performed in order to fill that part of the template with data. The aim of this feature is that some objects can relate to many other objects, and we want to be able to perform search and filtering of this particular scope. There are to possible approaches that lead to same result.</p>
 <p>The <strong>first approach</strong>, can be described as: from all other objects related to one specific object. What we do is to map (in mapping.json) the filtering criteria that will be used to scope a particular object group. For example:</p>
 <p>(mapping.json)</p>
 <div class="highlight-python"><pre>{
@@ -318,7 +319,7 @@ HTTP Method: GET
 Returns: jpg image</pre>
 </div>
 <p>Thumbnail length and width can be Configured.</p>
-<p>Image generation will first search for any related image to object. It&#8217;s done by resolving any existing &#8220;objects&#8221; data type in object template, otherwise it tries to resolve any existing &#8220;media&#8221; data type in such template. If no template or none of those data types can be found in template, it generates a generic thumbnail according to the object class. This generic thumbnail must be placed in (MEDIA_PATH)/thumbnails/classes as de (Class-name).jpg, where class-name can be the object&#8217;s or one of it&#8217;s superclasses. The last resort for thumbnail generation is &#8220;default.jpg&#8221; placed in mentioned directory.</p>
+<p>Image generation will first search for any related image to object. It&#8217;s done by resolving any existing &#8220;objects&#8221; data type in object template, otherwise it tries to resolve any existing &#8220;media&#8221; data type in such template. If no template or none of those data types can be found in template, it generates a generic thumbnail according to the object class. This generic thumbnail must be placed in (MEDIA_PATH)/thumbnails/classes as (Class-name).jpg, where class-name can be the object&#8217;s or one of it&#8217;s superclasses. The last resort for thumbnail generation is &#8220;default.jpg&#8221; placed in mentioned directory.</p>
 <p>Thubmnail generation is object recursive, which means that thumbnails of objects related to other objects will be a composition of related objects thumbnails.</p>
 <p><strong>Example</strong></p>
 <p>Suppose template of a class Country that is composed of Locations</p>
@@ -466,6 +467,19 @@ Returns: jpg image</pre>
 <p>thumbnails of related Location objects will be generated first, by accessing to their media (if there&#8217;s more than one media url, as shown in example, there&#8217;s an image composition). Next, thumbnail of Country will be generated as a composition of related object thumbnails.</p>
 <p>If there are both &#8220;media&#8221; and &#8220;objects&#8221; data types in the template, &#8220;media&#8221; references have priority for thumbnail generation.</p>
 <p>All generated thumbnails are saved in folder (MEDIA_PATH)/thumbnails to avoid regenerating at every access. If you need them to be regenerated, you have to remove their corresponding thumbnail image files.</p>
+</div>
+<div class="section" id="class-list-and-tree">
+<h2>Class list and tree<a class="headerlink" href="#class-list-and-tree" title="Permalink to this headline">¶</a></h2>
+<p>Service that returns class tree in JSON</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/classes/tree?c=ROOT CLASS
+HTTP Method: GET
+Returns: JSON tree or "error"</pre>
+</div>
+<p>Service that returns class list in JSON</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/classes/list?c=PARENT CLASS
+HTTP Method: GET
+Returns: JSON list or "error"</pre>
+</div>
 </div>
 </div>
 

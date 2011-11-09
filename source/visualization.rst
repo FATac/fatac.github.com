@@ -14,7 +14,7 @@ REST service that generates Ontology object view based on its corresponding temp
     HTTP Method: GET
     Returns: JSON data or "error"
 
-Template processing result of a Person (with template defined at Configuration Step ) would be as follows:
+Template processing result of a Person (with template defined at Configuration 5) would be as follows:
 
 ::
 
@@ -78,7 +78,7 @@ Template processing result of a Person (with template defined at Configuration S
 Search in object template
 -------------------------------------
 
-As described in Configuration Step 4, a template can have a specific object data type called "search". It indicates that Solr search sould be performed in order to fill that part of the template with data. The aim of this feature is that some objects can relate to many other objects, and we want to be able to perform search and filtering of this particular scope. There are to possible approaches that lead to same result.
+As described in Configuration Step 5, a template can have a specific object data type called "search". It indicates that Solr search sould be performed in order to fill that part of the template with data. The aim of this feature is that some objects can relate to many other objects, and we want to be able to perform search and filtering of this particular scope. There are to possible approaches that lead to same result.
 
 The **first approach**, can be described as: from all other objects related to one specific object. What we do is to map (in mapping.json) the filtering criteria that will be used to scope a particular object group. For example:
 
@@ -435,6 +435,26 @@ thumbnails of related Location objects will be generated first, by accessing to 
 If there are both "media" and "objects" data types in the template, "media" references have priority for thumbnail generation. 
 
 All generated thumbnails are saved in folder (MEDIA_PATH)/thumbnails to avoid regenerating at every access. If you need them to be regenerated, you have to remove their corresponding thumbnail image files.
+
+
+Class list and tree
+-----------------------
+
+Service that returns class tree in JSON
+
+::
+
+    Service path: http://{host:port}/{appname}/classes/tree?c=ROOT CLASS
+    HTTP Method: GET
+    Returns: JSON tree or "error"
+
+Service that returns class list in JSON
+
+::
+
+    Service path: http://{host:port}/{appname}/classes/list?c=PARENT CLASS
+    HTTP Method: GET
+    Returns: JSON list or "error"
 
 
 

@@ -61,9 +61,10 @@
   <ul>
 <li><a class="reference internal" href="#">Configuration</a><ul>
 <li><a class="reference internal" href="#step-1-main-properties">Step 1: Main properties</a></li>
-<li><a class="reference internal" href="#step-2-legal-script">Step 2: Legal script</a></li>
-<li><a class="reference internal" href="#step-3-data-mapping">Step 3: Data mapping</a></li>
-<li><a class="reference internal" href="#step-4-object-template">Step 4: Object template</a></li>
+<li><a class="reference internal" href="#step-2-reset">Step 2: Reset</a></li>
+<li><a class="reference internal" href="#step-3-legal-script">Step 3: Legal script</a></li>
+<li><a class="reference internal" href="#step-4-data-mapping">Step 4: Data mapping</a></li>
+<li><a class="reference internal" href="#step-5-object-template">Step 5: Object template</a></li>
 </ul>
 </li>
 </ul>
@@ -151,14 +152,29 @@
     SOLR_PATH = /mycurrentdirectory/solr/
 
 # Media directory where all uploaded media filles will be stored, it must contain 'thumbnail' subfolder, and 'classes' subsubfolder inside
-    MEDIA_PATH = ./var/ac-project/media/
+    MEDIA_PATH = /var/ac-project/media/
 
 # Path to OWL file containing the main Ontology. This file will be uploaded on every call to 'reset' service.
-    ONTOLOGY_PATH = /var/ac-project/OntologiaArtsCombinatories.owl</pre>
+    ONTOLOGY_PATH = /var/ac-project/myOntology.owl</pre>
 </div>
 </div>
-<div class="section" id="step-2-legal-script">
-<h2>Step 2: Legal script<a class="headerlink" href="#step-2-legal-script" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-2-reset">
+<h2>Step 2: Reset<a class="headerlink" href="#step-2-reset" title="Permalink to this headline">¶</a></h2>
+<p>Calling reset service, ALL data and media will be removed. Also last Ontology file (located in ONTOLOGY_PATH) will be loaded.</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/reset?option=ontology&amp;confirm=CURRENT_DATE
+HTTP Method: GET
+Returns: "success" or "error"</pre>
+</div>
+<p>Set &#8220;option=ontology&#8221; if you do not want a total reset, but only an Ontology reload.</p>
+<p>Otherwise, for safety, &#8220;confirm&#8221; must be filled with current server date and time formated as &#8220;dd/mm/yy hh:mm&#8221;</p>
+<p><strong>Examples</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/rest-path/reset?option=ontology               // ontology reload</pre>
+</div>
+<div class="highlight-python"><pre>http://internetdomain.org/rest-path/reset?confirm=11/11/2011 23:11      // data reset and ontology upload</pre>
+</div>
+</div>
+<div class="section" id="step-3-legal-script">
+<h2>Step 3: Legal script<a class="headerlink" href="#step-3-legal-script" title="Permalink to this headline">¶</a></h2>
 <p>AC provides capabilities for assigning legal rights to media objects. The right assignation is an user assisted process that can be scripted and fully customized. (If you have no intention to apply this feature you may skip this step).</p>
 <p>There is a self-explanatory sample named &#8216;legal.json&#8217; in json directory, &#8216;legal&#8217; subfolder. &#8216;legal.json&#8217; is the name of the script file that will assist the user, the main parts of the script are:</p>
 <ul class="simple">
@@ -171,8 +187,8 @@
 </ul>
 <p>There are four &#8220;trafic light&#8221; colors that can be assigned to any object as a result of the legal process. From less to more restrictive: &#8220;green&#8221;, &#8220;yellow&#8221;, &#8220;orange&#8221; and &#8220;red&#8221;. Each of one corresponding to one accessing right level from 1 to 4. On every call to a service that provides media data, the accessing level must be specified. Service will fail if user accessing level is lower than object restriction level. Eg. User level = 1 , Object level = 2 &#8211;&gt; Fail / User level = 2 , Object level = 2 &#8211;&gt; OK.</p>
 </div>
-<div class="section" id="step-3-data-mapping">
-<h2>Step 3: Data mapping<a class="headerlink" href="#step-3-data-mapping" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-4-data-mapping">
+<h2>Step 4: Data mapping<a class="headerlink" href="#step-4-data-mapping" title="Permalink to this headline">¶</a></h2>
 <p>Data &#8220;mapping.json&#8221; (placed in json/mapping folder) is a must-have specification file that defines what ontology data must be indexed in Solr, and how this must be done. Data mapping is not a simple direct Owl to Solr mapping. It must be defined in a way that it later can be used for specific object domain searches (See Step 4), and provide additional information of the field nature to get Solr treating the data properly.</p>
 <p>Let&#8217;s say we have the Person class defined in our Ontology, and that we want to indexate several useful person data such as: name, biography, date of birth and birth place. Person indexation should be specified this way:</p>
 <div class="highlight-python"><pre>{
@@ -257,8 +273,8 @@
     ]</pre>
 </div>
 </div>
-<div class="section" id="step-4-object-template">
-<h2>Step 4: Object template<a class="headerlink" href="#step-4-object-template" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-5-object-template">
+<h2>Step 5: Object template<a class="headerlink" href="#step-5-object-template" title="Permalink to this headline">¶</a></h2>
 <p>Any object search will finally lead to individual object visualization. This makes it necessary to build templates for any Ontology object that should be visualizable. Object view is organized in sections, and each section contains a list of mapped data, in a similar way we used it in previous step.</p>
 <p>Going back to Person object class example: name, birth date, and birth place should be placed at header. Biography can be placed at body, we can also use a &#8216;knows&#8217; relation to get related Persons and we can place this at footer section. (Note that sections are totally customizable).</p>
 <p>The resulting template file must be placed as &#8220;Person.json&#8221; (generally, (Class-name).json) in json/mapping directory. Code should look as follows:</p>
