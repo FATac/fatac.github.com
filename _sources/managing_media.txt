@@ -47,7 +47,7 @@ Retrieves stored media
     HTTP Method: GET
     Returns: media file
 
-**POST Example**
+**GET Example**
 
 ::
 
@@ -70,7 +70,7 @@ Media file extension is also requestable
     HTTP Method: GET
     Returns: file extension
 
-**POST Example**
+**GET Example**
 
 ::
 
