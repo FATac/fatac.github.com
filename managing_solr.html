@@ -66,6 +66,7 @@
 <li><a class="reference internal" href="#reload">Reload</a></li>
 <li><a class="reference internal" href="#update">Update</a></li>
 <li><a class="reference internal" href="#search">Search</a></li>
+<li><a class="reference internal" href="#autocomplete">Autocomplete</a></li>
 </ul>
 </li>
 </ul>
@@ -164,7 +165,7 @@ Returns: Solr JSON result or "error"</pre>
 </div>
 <p><strong>OK Result</strong></p>
 <div class="highlight-python"><pre>{
-    + "responseHeader": { ... },                    // Not rellevant
+    + "responseHeader": { ... },                    // Not relevant
     - "response":
         {
             "numFound": 277,
@@ -240,6 +241,41 @@ Returns: Solr JSON result or "error"</pre>
 }</pre>
 </div>
 <p>Note that you can filter by two values of the same category (for example: &#8220;Year:1930,Year:1975&#8221;). In this case the filter will be non-exclusive.</p>
+</div>
+<div class="section" id="autocomplete">
+<h2>Autocomplete<a class="headerlink" href="#autocomplete" title="Permalink to this headline">¶</a></h2>
+<p>Performs autocomplete of a given search string, JSON result comes straight from Solr engine.</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/autocomplete?s=Search
+HTTP Method: GET
+Returns: Solr JSON result or "error"</pre>
+</div>
+<p>&#8220;s&#8221; Search parameter, contains general text search.</p>
+<p><strong>Autocomplete Example</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/rest-path/solr/autocomplete?s=Ja</pre>
+</div>
+<p><strong>OK Result</strong></p>
+<div class="highlight-python"><pre>{
+    + "responseHeader": { ... },                    // Not relevant
+    + "response": { ... },                          // In autocomplete main response is neither relevant
+    - "facet_counts": {
+
+         - "facet_fields": {
+                - "Birth": [ ]
+                - "Country": [
+                    + "Jamaica","1",
+                    + "Japan","1",
+                 ]
+                - "Person": [
+                    + "Jack the ripper","1",
+                    + "James Bond","1",
+                    + "James Franco","1"
+                    + "James Stewart","1"
+                 ]
+            }
+        }
+}</pre>
+</div>
+<p>Note that in autocomplete search, the faceted results comprise the fields marked as &#8220;autocomplete&#8221; in mapping.json (see Configuration).</p>
 </div>
 </div>
 

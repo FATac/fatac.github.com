@@ -1,0 +1,168 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Legal &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0a1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
+    <link rel="prev" title="Visualization" href="visualization.html" />
+<link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
+
+  </head>
+  <body>
+<div class="header">
+    <a href="#">
+        <img alt="Logo" src="_static/logo.jpg" class="logo" />
+    </a>
+</div>
+    
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="visualization.html" title="Visualization"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Legal</a><ul>
+<li><a class="reference internal" href="#legal-accessing">Legal accessing</a></li>
+<li><a class="reference internal" href="#services-legally-involved">Services legally involved</a></li>
+<li><a class="reference internal" href="#legal-process">Legal process</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="visualization.html"
+                        title="previous chapter">Visualization</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/legal.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="legal">
+<h1>Legal<a class="headerlink" href="#legal" title="Permalink to this headline">¶</a></h1>
+<p>The purpose of this section is to guide user through the process of protecting objects from unauthorized access regarding their license and/or administrator preferences. First steps are explained in Configuration section and self-explained in legal.json script.</p>
+<div class="section" id="legal-accessing">
+<h2>Legal accessing<a class="headerlink" href="#legal-accessing" title="Permalink to this headline">¶</a></h2>
+<p>In the legal process, the user will go through a scripted form (see Configuration) that will require the data to be resolved to a color result. This color will be used to determine who can access to object. You can assign access authorization to Plone groups by defining their Plone group names in Configuration variables USER_LEVEL.</p>
+<p><strong>Example</strong></p>
+<p>(Coniguration properties)</p>
+<div class="highlight-python"><pre>USER_LEVEL = *, MyUserGroup1, MyUserGroup2 MyUserGroup3, MyUserGroup4</pre>
+</div>
+<p>In this example, all users (specified by &#8220;*&#8221; character) are given &#8220;green&#8221; access. Users of MyUserGroup1 are given &#8220;yellow&#8221; access. Users of MyUserGroup2 and MyUserGroup3 are given &#8220;orange&#8221; access. Finally, MyUserGroup4 users are given &#8220;red&#8221; access. Note that any user of more restrictive authorization color can also access to less restrictive authorization colors.</p>
+</div>
+<div class="section" id="services-legally-involved">
+<h2>Services legally involved<a class="headerlink" href="#services-legally-involved" title="Permalink to this headline">¶</a></h2>
+<p>These are the services that implement access restrictions according to object assigned color:</p>
+<div class="highlight-python"><pre>/resource/{identifier}
+/resource/{identifier}/view
+/resource/{identifier}/thumbnail
+/media/{identifier}</pre>
+</div>
+<p>They all do accept parameter &#8220;uid&#8221;, its value must be current user identifier. This user identifier is internally used to resolve user group which is used to get user access level. If user level is equal or greater than object color level, this can be viewed/accessed. Objects with no access color can be viewed by anyone. If &#8220;uid&#8221; is not specified, access level is minimum (&#8220;green&#8221; and no color).</p>
+<p>All data modification services which are:</p>
+<div class="highlight-python"><pre>/resource/{identifier}/upload
+/resource/{identifier}/update
+/resource/{identifier}/delete
+/media/upload</pre>
+</div>
+<p>Require that user group is the one with maximum priviledges, this is &#8220;red&#8221; authorization level.</p>
+</div>
+<div class="section" id="legal-process">
+<h2>Legal process<a class="headerlink" href="#legal-process" title="Permalink to this headline">¶</a></h2>
+<p>Legal process is the script execution which results to a object color assignation. This process is run by REST services which are:</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/legal/start
+HTTP Method: POST
+Returns: JSON code of generated temporary user identifier and first form</pre>
+</div>
+<p>POST body must contain JSON list of Object identifiers that will be processed</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/legal/next
+HTTP Method: POST
+Returns: JSON code of next form or result</pre>
+</div>
+<p>POST body must contain JSON filled form and temporary user identifier.</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/legal/restore?key=KEY&amp;value=VALUE
+HTTP Method: GET
+Returns: JSON code of generated temporary user identifier and first form</pre>
+</div>
+<p>Support service that retrieves information concerning a specified key-value pair. This key must be specified at legal script using &#8220;autodata&#8221; clause. This should be called background (using AJAX) to fill current form with recurrent data to save user time from data introduction.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="visualization.html" title="Visualization"
+             >previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, FAT - UPCnet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

@@ -94,7 +94,7 @@ Peforms search, JSON result comes straight from Solr engine.
 ::
 
     {
-        + "responseHeader": { ... },                    // Not rellevant
+        + "responseHeader": { ... },                    // Not relevant
         - "response":
             {
                 "numFound": 277,
@@ -180,3 +180,48 @@ Constructing filter parameter is quite simple. All we have to do is to chose wha
 
 Note that you can filter by two values of the same category (for example: "Year:1930,Year:1975"). In this case the filter will be non-exclusive.
 
+Autocomplete
+------------------------
+
+Performs autocomplete of a given search string, JSON result comes straight from Solr engine.
+
+::
+
+    Service path: http://{host:port}/{appname}/solr/autocomplete?s=Search
+    HTTP Method: GET
+    Returns: Solr JSON result or "error"
+
+"s" Search parameter, contains general text search.
+
+**Autocomplete Example**
+
+::
+
+    http://internetdomain.org/rest-path/solr/autocomplete?s=Ja
+
+**OK Result**
+
+::
+
+    {
+        + "responseHeader": { ... },                    // Not relevant
+        + "response": { ... },                          // In autocomplete main response is neither relevant
+        - "facet_counts": {
+
+             - "facet_fields": {                       
+                    - "Birth": [ ]
+                    - "Country": [ 
+                        + "Jamaica","1",
+                        + "Japan","1",
+                     ]
+                    - "Person": [
+                        + "Jack the ripper","1",
+                        + "James Bond","1",
+                        + "James Franco","1"
+                        + "James Stewart","1"
+                     ]
+                }
+            }
+    }
+
+Note that in autocomplete search, the faceted results comprise the fields marked as "autocomplete" in mapping.json (see Configuration).

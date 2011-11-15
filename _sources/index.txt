@@ -34,4 +34,5 @@ Contents
    managing_media
    managing_solr
    visualization
+   legal
    

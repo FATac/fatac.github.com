@@ -440,7 +440,7 @@ All generated thumbnails are saved in folder (MEDIA_PATH)/thumbnails to avoid re
 Class list and tree
 -----------------------
 
-Service that returns class tree in JSON
+Service that returns Ontology classes tree in JSON
 
 ::
 
@@ -448,15 +448,10 @@ Service that returns class tree in JSON
     HTTP Method: GET
     Returns: JSON tree or "error"
 
-Service that returns class list in JSON
+Service that returns Ontology classes list in JSON
 
 ::
 
     Service path: http://{host:port}/{appname}/classes/list?c=PARENT CLASS
     HTTP Method: GET
     Returns: JSON list or "error"
-
-
-
-
-
