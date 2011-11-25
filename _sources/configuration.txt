@@ -8,62 +8,105 @@ Configuration
 
 There are several aspects that must be defined in order to get the Semantic Web (SW) working with a new Ontology. This configuration guide is organized step-by-step.
 
-Step 1: Main properties
-----------------------------
+Step 0: Virtuoso
+---------------------------
 
-Once installed (see Installation), the first thing we have to do is to configure the 'config.properties' file, you may place them on your current directory. Here's a sample with detailed explanations:
+Some Virtuoso initial configuration is necessary. Access to Virtuoso Conductor console (default should be: http://localhost:8890/conductor/ with both user and password "dba"). Click "Interactive SQL" on the right, and run the next sql script:
 
 ::
 
-     # Core application supports thumbnail generation for any kind of object that may or may not contain data. Set thumbnail width and length in pixels.
-	 THUMBNAIL_WIDTH = 250
-	 THUMBNAIL_HEIGHT = 180
-     
-     # Video format extensions that are eligible for conversion to open format (OGV)
-	 VIDEO_FILE_EXTENSIONS = dv,mpg,avi
+    -- Base script which creates necessary data structure for managing users, rights and uploaded media and objects
+    -- Suitable (only?) for Openlink Virtuoso sql implementation
+    
+    --DROP TABLE db.dba._media;
+    CREATE TABLE db.dba._media (
+	    SID INT IDENTITY,
+    	mediaId VARCHAR(60),
+	    path VARCHAR(500),
+	    moment TIMESTAMP
+    )
 
-     # Language code list that should be considered to be in ontology. 
+    --DROP TABLE db.dba._thumbnail;
+    CREATE TABLE db.dba._thumbnail (
+	    SID INT IDENTITY,
+	    objectId VARCHAR(60),
+	    path VARCHAR(500),
+	    moment TIMESTAMP
+    )
 
-     # Languages that are not in the list are ignored. The first language on the list is considered as default language
-	 LANG_LIST = ca,en,es,fr,it,de
+    --DROP TABLE db.dba._right;
+    CREATE TABLE db.dba._right (
+	    SID INT IDENTITY,
+	    objectId VARCHAR(60),
+	    rightLevel INT
+    )
 
-     # Services base URLs and connection strings
-	 RDFDB_URL = jdbc:virtuoso://localhost:1111
-	 RDFDB_USER = 
-	 RDFDB_PASS = 
+    --DROP TABLE db.dba._identifier_counter;
+    CREATE TABLE db.dba._identifier_counter (
+	    identifier VARCHAR(150),
+	    counter INT
+    )
 
-     # URL of REST services ideally reachable from any Internet location
-	 REST_URL = http://internetdomain.org/rest-path/
+    --DROP TABLE db.dba.autodata_table;
+    CREATE TABLE db.dba.autodata_table (
+	    keyName VARCHAR(100),
+	    keyValue VARCHAR(100),
+	    name VARCHAR(100),
+	    defaultValue VARCHAR(100)
+    )
 
-     # URL of Solr search engine, local or not
-	 SOLR_URL = http://localhost:8080/solr/
+    GRANT EXECUTE ON DB.DBA.SPARQL_DELETE_DICT_CONTENT TO "SPARQL";
+    GRANT ALL PRIVILEGES TO "SPARQL";
 
-     # URL of Video conversion services, local or not
-	 VIDEO_SERVICES_URL = http://localhost:8080/video-services/rest/
+(Note that you can uncomment "drops" to reset all tables)
 
-     # Own ontology and data resource namespaces. Notice that data and ontology is reparated for flexibility purposes
-	 ONTOLOGY_URI_NS = http://internetdomain.org/rest-path/ontology/ac#
-	 ONTOLOGY_PREFIX = ac
-	 RESOURCE_URI_NS = http://internetdomain.org/rest-path/resource/	
-	 RESOURCE_PREFIX = ac_res
-	 RDF_URI_NS = http://www.w3.org/1999/02/22-rdf-syntax-ns#
-	 RDFS_URI_NS = http://www.w3.org/2000/01/rdf-schema#
+Next, click "RDF" tab, and click "Namespaces", you must add here all linked ontology namespaces not included in the list. Keep in mind that those namespaces are eligible for use, and that all ontologies specified in "ONTOLOGY_NAMESPACES" in Configuration (see Step 1) must appear in this list.
 
-     # ATENTION: LinkedData best practices requires that RESOURCE_URI_NS, ONTOLOGY_URI_NS and REST_URL should have the same uri base (as specified in this sample) for REST services 'ontology' and 'resource' are implemented. 
+Step 1: Main properties
+----------------------------
 
-     # Also, ONTOLOGY_URI_NS termination must coincide with ONTOLOGY_PREFIX plus '#' character
+Once installed (see Installation) and Virtuoso is configured, the first thing we have to do is to configure the 'config.json' file, you may place them on your current directory (when running on Tomcat, it is: $TOMCAT_HOME/webapps/ROOT/). Here's a sample with some explanations:
+
+::
+
+    {	
+        "__comment_0":"Mixed config",
+
+	    "THUMBNAIL_WIDTH":250,
+	    "THUMBNAIL_HEIGHT":180,
+	    "VIDEO_FILE_EXTENSIONS":["dv", "mpg", "avi"],
+	    "LANGUAGE_LIST":["ca", "en", "es", "fr", "it", "de"],							
+	    "USER_LEVEL":["*", "Member", "Manager Reviewer", "Site Administrator"],	    
 	
-     # Json directory containing object templates and mapping specifications
-	 CONFIGURATIONS_PATH = /var/ac-project/json/
+	    "__comment_1":"Services base URLs and connection strings",
 
-     # Solr base directory to access schema. This folder must placed where Solr can reach it (usually in current directory)
-	 SOLR_PATH = /mycurrentdirectory/solr/
+	    "RDFDB_URL":"jdbc:virtuoso://localhost:1111",
+	    "RDFDB_USER":"dba",
+	    "RDFDB_PASS":"dba",
+	    "REST_URL":"http://stress.upc.es:8080/ArtsCombinatoriesRest/",
+	    "SOLR_URL":"http://localhost:8080/solr/",
+	    "VIDEO_SERVICES_URL":"http://tapies.aur.i2cat.net:8080/TapiesWebServices/rest/",
+	
+        "__comment_2":"Ontology namespaces (After any change, all existing triples must be fixed)",
 
-     # Media directory where all uploaded media filles will be stored, it must contain 'thumbnail' subfolder, and 'classes' subsubfolder inside
-	 MEDIA_PATH = /var/ac-project/media/
+	    "RESOURCE_URI_NS":"http://localhost:8080/ArtsCombinatoriesRest/resource/",		
+	    "RESOURCE_PREFIX":"ac_res",
+	    "ONTOLOGY_NAMESPACES":[
+		    "http://localhost:8080/rest/ontology/my#", "my",
+		    "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf",
+		    "http://www.w3.org/2000/01/rdf-schema#", "rdfs",
+		    "http://dublincore.org/2010/10/11/dcterms.rdf#", "dcterms"
+	    ],
+	
+	    "__comment_3":"File system paths",
 
-     # Path to OWL file containing the main Ontology. This file will be uploaded on every call to 'reset' service.
-	 ONTOLOGY_PATH = /var/ac-project/myOntology.owl
+	    "CONFIGURATIONS_PATH":"/home/jordi.roig.prieto/workspace/ArtsCombinatoriesRest/json/",
+	    "SOLR_PATH":"/home/jordi.roig.prieto/solr/",
+	    "MEDIA_PATH":"./ac_media/",
+	    "ONTOLOGY_PATH":"./OntologiaArtsCombinatories.owl"
+    }
+
+ONTOLOGY_NAMESPACES stablishes a prefix for each ontology/schema namespace, this prefix must also appear on namespaces list in Virtuoso (see Step 0). The first specified ontology must be the one specially created for this project (myOntology in the example), other specified ontologies/schemas must be the ones included on the first one. Generally, RDF and RDFS schemas should be always included.
 
 Step 2: Reset
 -----------------------------
