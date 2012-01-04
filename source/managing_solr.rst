@@ -3,8 +3,6 @@ Managing Solr
 
 Solr is a search engine that supports full-text search of indexed documents, plus features for categorization and data filtering. Managing Solr properly is critical to provide easy user access to uploaded Ontology objects. Solr should not be directly dealed with, but through REST services that read from JSON Mapping specifications (already introduced in Configuration).
 
-Solr path must be properly set in SOLR_PATH Configuration variable.
-
 Clear
 ------------------
 
@@ -19,7 +17,7 @@ Clears all indexed data (commits automatically)
 Commit
 ----------------
 
-Commits recent indexation
+Commits recent indexation (not necessary)
 
 ::
 
@@ -45,7 +43,7 @@ Reload
 
 Peforms an update removing any existing data index. This process may take some time.
 
-Solr indexation can be found at (SOLR_PATH)/data/data.xml
+Solr indexation can be found at (SOLR_PATH)/data.xml
 
 ::
 
@@ -58,7 +56,9 @@ Update
 
 Indexates new data according to mapping JSON configuration. This process may take some time.
 
-Solr indexation can be found at (SOLR_PATH)/data/data.xml
+Solr indexation can be found at (SOLR_PATH)/data.xml
+
+This call is not recommended as there may remain indexed documents of unexisting objects in ontology. 
 
 ::
 
@@ -73,7 +73,7 @@ Peforms search, JSON result comes straight from Solr engine.
 
 ::
 
-    Service path: http://{host:port}/{appname}/solr/search?s=Search&f=Filter&start=Start&rows=Rows
+    Service path: http://{host:port}/{appname}/solr/search?s=Search&f=Filter&start=Start&rows=Rows&sort=Sort
     HTTP Method: GET
     Returns: Solr JSON result or "error"
 
@@ -82,6 +82,8 @@ Peforms search, JSON result comes straight from Solr engine.
 "f" Filter parameter, defines results filtering in a "key:value" form sepparated by comas (see example below).
 
 "start" and "rows" parameters define result scoping to provide pagination.
+
+"sort" allows sorting results. Value must be field name to sort by, plus "desc" or "asc". Any used field here must have "sort" clause in mapping.json file (see Configuration)
 
 **Search Example**
 
@@ -135,8 +137,6 @@ Peforms search, JSON result comes straight from Solr engine.
             }
     }
 
-Note that search results consists in identifiers only (they are always indexed as 'id'), to get the full object data we use View services
-
 **How filtering works**
 
 Constructing filter parameter is quite simple. All we have to do is to chose what category value we want to filter from "facet_fields" section of JSON Solr result. Still in previous example, say we want to filter by Birth year and Country with specific values for each. Filter could be: "Birth:1930,Country:United Kingdom".
@@ -145,7 +145,7 @@ Constructing filter parameter is quite simple. All we have to do is to chose wha
 
 ::
 
-    http://internetdomain.org/rest-path/solr/search?s=James&f=Birth:1930,Country:United%20Kingdom   // Note that this may require URI encoding
+    http://internetdomain.org/rest-path/solr/search?s=James&f=Birth:1930,Country:United+Kingdom   // Space characters can be replaced with "+"
 
 **OK Result**
 
@@ -225,3 +225,35 @@ Performs autocomplete of a given search string, JSON result comes straight from 
     }
 
 Note that in autocomplete search, the faceted results comprise the fields marked as "autocomplete" in mapping.json (see Configuration).
+
+Search configurations
+-------------------------------
+
+It is possible to customize search modes from server side. This is done by editing or creating the search.json in CONFIGURATIONS_PATH/mapping/ folder. Configuring searches allowes to add extra filtering to client request to focus its searches to a particular scope.
+Say we want that, all searches focus only on Persons and Countries, ignoring other object types, and births from 1900 to 1950; the proper search.json would be as follows:
+
+::
+    
+    {
+        "name":"mycustomsearch"
+        "type":"search",
+        "value":["ObjectType:Person", "ObjectType:Country", "Birth:[1900 TO 1950]" ]
+    },
+
+    {
+        "name":"default"
+        "type":"search"
+        // it can be left blank if we do not need additional filtering
+    }
+
+To use this search configuration, we add "config" parameter with value "mycustomsearch"
+
+**Search Example**
+
+::
+
+    http://internetdomain.org/rest-path/solr/search?s=James&config=mycustomsearch
+
+If "config" is not specified, "default" search configuration is used. If there's no such configuration or config value is not found in search.json, there's no additional filtering.
+
+

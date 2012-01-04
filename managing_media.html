@@ -63,6 +63,9 @@
 <li><a class="reference internal" href="#upload">Upload</a></li>
 <li><a class="reference internal" href="#get">Get</a></li>
 <li><a class="reference internal" href="#get-format">Get format</a></li>
+<li><a class="reference internal" href="#convert">Convert</a></li>
+<li><a class="reference internal" href="#get-with-profile">Get (with profile)</a></li>
+<li><a class="reference internal" href="#delete">Delete</a></li>
 </ul>
 </li>
 </ul>
@@ -113,7 +116,7 @@ Returns: media identifier or "error"</pre>
 <p>Http request body must contain binary file data.</p>
 <p>Parameter &#8220;fn&#8221; is required, and it is the file name including format extension.</p>
 <p><strong>POST Example</strong></p>
-<div class="highlight-python"><pre>http://internetdomain.org/rest-path/media/upload?fn=myimage.jpg</pre>
+<div class="highlight-python"><pre>http://myhost:8080/rest/media/upload?fn=myimage.jpg</pre>
 </div>
 <div class="highlight-python"><pre>[Media file binary content]</pre>
 </div>
@@ -129,7 +132,7 @@ HTTP Method: GET
 Returns: media file</pre>
 </div>
 <p><strong>GET Example</strong></p>
-<div class="highlight-python"><pre>http://internetdomain.org/rest-path/media/_media_file_123</pre>
+<div class="highlight-python"><pre>http://myhost:8080/rest/media/_media_file_123</pre>
 </div>
 <p><strong>OK Result</strong></p>
 <div class="highlight-python"><pre>[Media file binary content]</pre>
@@ -143,11 +146,44 @@ HTTP Method: GET
 Returns: file extension</pre>
 </div>
 <p><strong>GET Example</strong></p>
-<div class="highlight-python"><pre>http://internetdomain.org/rest-path/media/_media_file_123/format</pre>
+<div class="highlight-python"><pre>http://myhost:8080/rest/media/_media_file_123/format</pre>
 </div>
 <p><strong>OK Result</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">jpg</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="convert">
+<h2>Convert<a class="headerlink" href="#convert" title="Permalink to this headline">¶</a></h2>
+<p>Proceed to media conversion (if applicable, this is having defined this media format in MEDIA_CONVERSION_PROFILES)</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/{identifier}/convert
+HTTP Method: GET
+Returns: "success" or "error"</pre>
+</div>
+<p>Upon conversion, a &#8220;master&#8221; (this is, a copy of the original) media file will be created and a converted file will be generated for each applicable profile. To access each generated media we use a profile clause as described next.</p>
+</div>
+<div class="section" id="get-with-profile">
+<h2>Get (with profile)<a class="headerlink" href="#get-with-profile" title="Permalink to this headline">¶</a></h2>
+<p>Retrieves stored media according to specified profile</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/{identifier}/profile/{profile}
+HTTP Method: GET
+Returns: media file</pre>
+</div>
+<p><strong>GET Examples</strong></p>
+<div class="highlight-python"><pre>http://myhost:8080/rest/media/_media_file_123/profile/master    // returns original file
+http://myhost:8080/rest/media/_media_file_123/profile/1         // returns the first profile conversion of this file, this is equivalent to calling the simple get service.
+http://myhost:8080/rest/media/_media_file_123/profile/2         // returns the second profile conversion</pre>
+</div>
+<p><strong>OK Result</strong></p>
+<div class="highlight-python"><pre>[Media file binary content]</pre>
+</div>
+</div>
+<div class="section" id="delete">
+<h2>Delete<a class="headerlink" href="#delete" title="Permalink to this headline">¶</a></h2>
+<p>Deletes stored media and its converted files</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/{identifier}/delete
+HTTP Method: DELETE
+Returns: "success" or "error"</pre>
 </div>
 </div>
 </div>

@@ -6,9 +6,9 @@
 Configuration
 ======================================================================================
 
-There are several aspects that must be defined in order to get the Semantic Web (SW) working with a new Ontology. This configuration guide is organized step-by-step.
+There are several aspects that must be defined in order to get Arts Combinatòries (AC) working with a new Ontology. This configuration guide is organized step-by-step.
 
-Step 0: Virtuoso
+Step 1: Virtuoso
 ---------------------------
 
 Some Virtuoso initial configuration is necessary. Access to Virtuoso Conductor console (default should be: http://localhost:8890/conductor/ with both user and password "dba"). Click "Interactive SQL" on the right, and run the next sql script:
@@ -17,16 +17,28 @@ Some Virtuoso initial configuration is necessary. Access to Virtuoso Conductor c
 
     -- Base script which creates necessary data structure for managing users, rights and uploaded media and objects
     -- Suitable (only?) for Openlink Virtuoso sql implementation
-    
-    --DROP TABLE db.dba._media;
+
+    -- DROP TABLE db.dba._media;
+    -- DROP TABLE db.dba._thumbnail;
+    -- DROP TABLE db.dba._right;
+    -- DROP TABLE db.dba._identifier_counter;
+    -- DROP TABLE db.dba._autodata;
+    -- DROP TABLE db.dba._resource_statistics;
+
+    CREATE TABLE db.dba._resource_statistics (
+	    identifier VARCHAR(150),
+	    visitCounter BIGINT,
+	    creationMoment BIGINT,
+	    lastMoment BIGINT
+    )
+
     CREATE TABLE db.dba._media (
 	    SID INT IDENTITY,
-    	mediaId VARCHAR(60),
+	    mediaId VARCHAR(60),
 	    path VARCHAR(500),
 	    moment TIMESTAMP
     )
 
-    --DROP TABLE db.dba._thumbnail;
     CREATE TABLE db.dba._thumbnail (
 	    SID INT IDENTITY,
 	    objectId VARCHAR(60),
@@ -34,24 +46,21 @@ Some Virtuoso initial configuration is necessary. Access to Virtuoso Conductor c
 	    moment TIMESTAMP
     )
 
-    --DROP TABLE db.dba._right;
     CREATE TABLE db.dba._right (
 	    SID INT IDENTITY,
 	    objectId VARCHAR(60),
 	    rightLevel INT
     )
 
-    --DROP TABLE db.dba._identifier_counter;
     CREATE TABLE db.dba._identifier_counter (
 	    identifier VARCHAR(150),
 	    counter INT
     )
 
-    --DROP TABLE db.dba.autodata_table;
-    CREATE TABLE db.dba.autodata_table (
+    CREATE TABLE db.dba._autodata (
 	    keyName VARCHAR(100),
 	    keyValue VARCHAR(100),
-	    name VARCHAR(100),
+    	name VARCHAR(100),
 	    defaultValue VARCHAR(100)
     )
 
@@ -60,12 +69,66 @@ Some Virtuoso initial configuration is necessary. Access to Virtuoso Conductor c
 
 (Note that you can uncomment "drops" to reset all tables)
 
-Next, click "RDF" tab, and click "Namespaces", you must add here all linked ontology namespaces not included in the list. Keep in mind that those namespaces are eligible for use, and that all ontologies specified in "ONTOLOGY_NAMESPACES" in Configuration (see Step 1) must appear in this list.
+Next, click "RDF" tab, and click "Namespaces", you must add here all linked ontology namespaces not included in the list. Keep in mind that those namespaces are eligible for use, and that all ontologies specified in "ONTOLOGY_NAMESPACES" in Step 3 must appear in this list.
 
-Step 1: Main properties
+Step 2: Solr
+---------------------------
+
+Upon Solr installation, a specific schema.xml must be used. This is generated according to mapping specifications (see Step 6) and to a base schema. This base schema is a file placed in "solr" directory (referenced in "SOLR_PATH" at Step 3), containing exactly the next content:
+
+::
+	<?xml version="1.0" encoding="UTF-8" ?>
+	
+	<schema name="mySchema" version="1.4">
+	
+	 <types>
+	    <fieldType name="identifier" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+	    <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/>
+	    <fieldType name="long" class="solr.TrieLongField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/> 
+	    <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
+	    <fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/> 
+	
+	    <fieldType name="string" class="solr.TextField" sortMissingLast="true" omitNorms="true">
+	      <analyzer type="index">
+	        <tokenizer class="solr.KeywordTokenizerFactory"/>
+	        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
+	      </analyzer>
+	      <analyzer type="query">
+	        <tokenizer class="solr.KeywordTokenizerFactory"/>
+	        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
+	      </analyzer>
+	    </fieldType>
+	
+	    <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
+	      <analyzer type="index">
+	        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+	        <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
+	        <filter class="solr.LowerCaseFilterFactory" />
+	        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
+	      </analyzer>
+	      <analyzer type="query">
+	        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+	        <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
+	        <filter class="solr.LowerCaseFilterFactory" />
+	        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
+	      </analyzer>
+	    </fieldType>
+	 </types>
+	
+	<!-- FIELDS_INSERTION_MARK -->
+	
+	 <uniqueKey>id</uniqueKey>
+	
+	 <defaultSearchField>id</defaultSearchField>
+	
+	 <solrQueryParser defaultOperator="OR"/>
+	
+	</schema>
+	
+Step 3: Main properties
 ----------------------------
 
-Once installed (see Installation) and Virtuoso is configured, the first thing we have to do is to configure the 'config.json' file, you may place them on your current directory (when running on Tomcat, it is: $TOMCAT_HOME/webapps/ROOT/). Here's a sample with some explanations:
+The first thing we have to do is to configure the 'config.json' file, you may place them on your current directory. If you don't know which is the current dir you can see the AC log. Here's a sample with required properties and possible values: 
 
 ::
 
@@ -74,18 +137,19 @@ Once installed (see Installation) and Virtuoso is configured, the first thing we
 
 	    "THUMBNAIL_WIDTH":250,
 	    "THUMBNAIL_HEIGHT":180,
-	    "VIDEO_FILE_EXTENSIONS":["dv", "mpg", "avi"],
+	    "MEDIA_CONVERSION_PROFILES":["dv", "mpg", "avi", "aif", "mov"],
+            "MEDIA_AUTOCONVERT":"false",
 	    "LANGUAGE_LIST":["ca", "en", "es", "fr", "it", "de"],							
-	    "USER_LEVEL":["*", "Member", "Manager Reviewer", "Site Administrator"],	    
+	    "USER_LEVEL":["*", "Member", "Manager+Reviewer", "Site Administrator"],	    
 	
 	    "__comment_1":"Services base URLs and connection strings",
 
-	    "RDFDB_URL":"jdbc:virtuoso://localhost:1111",
+	    "RDFDB_URL":"jdbc:virtuoso://myhost:1111",
 	    "RDFDB_USER":"dba",
 	    "RDFDB_PASS":"dba",
-	    "REST_URL":"http://stress.upc.es:8080/ArtsCombinatoriesRest/",
-	    "SOLR_URL":"http://localhost:8080/solr/",
-	    "VIDEO_SERVICES_URL":"http://tapies.aur.i2cat.net:8080/TapiesWebServices/rest/",
+	    "REST_URL":"http://myhost:8080/rest/",
+	    "SOLR_URL":"http://myhost:8080/solr/",
+	    "VIDEO_SERVICES_URL":"http://myhost:8080/videoservices/rest/",
 	
         "__comment_2":"Ontology namespaces (After any change, all existing triples must be fixed)",
 
@@ -98,17 +162,45 @@ Once installed (see Installation) and Virtuoso is configured, the first thing we
 		    "http://dublincore.org/2010/10/11/dcterms.rdf#", "dcterms"
 	    ],
 	
-	    "__comment_3":"File system paths",
+	    "__comment_3":"Base directories that will be used by AC to allocate or access content and contiguratios",
 
-	    "CONFIGURATIONS_PATH":"/home/jordi.roig.prieto/workspace/ArtsCombinatoriesRest/json/",
-	    "SOLR_PATH":"/home/jordi.roig.prieto/solr/",
-	    "MEDIA_PATH":"./ac_media/",
-	    "ONTOLOGY_PATH":"./OntologiaArtsCombinatories.owl"
+	    "CONFIGURATIONS_PATH":"/achome/json/",
+	    "SOLR_PATH":"/achome/solr/",
+	    "MEDIA_PATH":"/achome/media/",
+	    "ONTOLOGY_PATH":"/achome/myontology.owl"
     }
 
-ONTOLOGY_NAMESPACES stablishes a prefix for each ontology/schema namespace, this prefix must also appear on namespaces list in Virtuoso (see Step 0). The first specified ontology must be the one specially created for this project (myOntology in the example), other specified ontologies/schemas must be the ones included on the first one. Generally, RDF and RDFS schemas should be always included.
+THUMBNAIL_WIDTH and THUMBNAIL_HEIGHT determines the size of generated thumbnails.
 
-Step 2: Reset
+MEDIA_CONVERSION_PROFILES enumerates video/audio file extensions suitable for conversion, ordered by profile number (e.g.: "dv" is profile 1, "mpg" is profile 2, etc.).
+
+MEDIA_AUTOCONVERT set to "true" if you require that video/audo files to be converted once uploaded. Otherwise you can use "convert" service (see Managing Media section).
+
+LANGUAGE_LIST enumerates codes of languages that are expected to be used in data base fields (the first one is used as default language).
+
+USER_LEVEL specifies the degree of legal access that have each user role, ordered from more to less restrictions ("*" means any role). This list should contain only 4 elements as there are only 4 restriction levels. Each elements may contain more than one role, separated by '+' (p.ex: "Manager+Reviewer") 
+
+ONTOLOGY_NAMESPACES stablishes a prefix for each ontology/schema namespace, this prefix must also appear on namespaces list in Virtuoso (see Step 1). The first specified ontology must be the one specially created for this project (myOntology in the example), other specified ontologies/schemas must be the ones included on the first one. Generally, RDF and RDFS schemas should be always included.
+
+AC requires the next folder and file structure in order to allocate and use its files:
+
+- [CONFIGURATIONS_PATH]
+    - legal
+        - legal.json (required)
+    - mapping
+        - mapping.json (required)
+        - search.json (optional)
+        - (optionally, json template definitons for any Ontology class named with prefix, example "foaf:Person.json")
+- [SOLR_PATH]
+    - (Solr specific file structure comprising sorl.xml, conf/, data/, etc.)
+- [MEDIA_PATH]
+    - thumbnail 
+        - classes
+            - default.jpg (Required. Default thumbnail for all objects. Does not need to fit a specific size)
+            - (Optionally, default thumbnail for any classes Ontology class named with prefix, example "foaf:Person.jpg")
+- [ONTOLOGY_PATH] (Path to file containing the project's Ontology)
+
+Step 4: Reset
 -----------------------------
 
 Calling reset service, ALL data and media will be removed. Also last Ontology file (located in ONTOLOGY_PATH) will be loaded. 
@@ -119,7 +211,7 @@ Calling reset service, ALL data and media will be removed. Also last Ontology fi
     HTTP Method: GET
     Returns: "success" or "error"
 
-Set "option=ontology" if you do not want a total reset, but only an Ontology reload.
+Set "option=ontology" if you do not want a total reset, but only a reload of all ontologies specified in ONTOLOGY_NAMESPACES.
 
 Otherwise, for safety, "confirm" must be filled with current server date and time formated as "dd/mm/yy hh:mm"
 
@@ -127,15 +219,15 @@ Otherwise, for safety, "confirm" must be filled with current server date and tim
 
 ::
 
-    http://internetdomain.org/rest-path/reset?option=ontology               // ontology reload
+    http://internetdomain.org/rest-path/reset?option=ontology               // ontologies reload
 
 ::
 
-    http://internetdomain.org/rest-path/reset?confirm=11/11/2011 23:11      // data reset and ontology upload
+    http://internetdomain.org/rest-path/reset?confirm=11/11/2011 23:11      // data reset and ontologies reload
 
 
 
-Step 3: Legal script
+Step 5: Legal script
 -----------------------------
 
 AC provides capabilities for assigning legal rights to media objects. The right assignation is an user assisted process that can be scripted and fully customized. (If you have no intention to apply this feature you may skip this step).
@@ -151,7 +243,7 @@ There is a self-explanatory sample named 'legal.json' in json directory, 'legal'
 
 There are four "trafic light" colors that can be assigned to any object as a result of the legal process. From less to more restrictive: "green", "yellow", "orange" and "red". Each of one corresponding to one accessing right level from 1 to 4. On every call to a service that provides media data, the accessing level must be specified. Service will fail if user accessing level is lower than object restriction level. Eg. User level = 1 , Object level = 2 --> Fail / User level = 2 , Object level = 2 --> OK.
 
-Step 4: Data mapping
+Step 6: Data mapping
 ------------------------------
 
 Data "mapping.json" (placed in json/mapping folder) is a must-have specification file that defines what ontology data must be indexed in Solr, and how this must be done. Data mapping is not a simple direct Owl to Solr mapping. It must be defined in a way that it later can be used for specific object domain searches (See Step 4), and provide additional information of the field nature to get Solr treating the data properly.
@@ -166,19 +258,19 @@ Let's say we have the Person class defined in our Ontology, and that we want to 
             {
                 "name":"Name",                      // Specifies the data identifier, in this case, the person Name
                 "type":"string",                    // 'string' type means that values of Name will be treated as a whole
-                "path":["my:Person.my=fullName"]    // Path to Class data property, note that it's specified as (Class-name).(property)
+                "path":["my:Person.my:fullName"]    // Path to Class data property, note that it's specified as (Class-name).(property)
             },
 
             {
                 "name":"Biography",             
                 "type":"text",                  // 'text' makes every word (space separated tokens) to be treated separately on search
-                "path":["my:Person.my=Bio"]           
+                "path":["my:Person.my:Bio"]           
             },
 
             {
                 "name":"BirthDate",             
                 "type":"date.year",             // 'date.year' will extract the year part of date value (default date format expected is dd/mm/yyyy)
-                "path":["my:Person.my=BirthDate"]           
+                "path":["my:Person.my:BirthDate"]           
             },
 
             {
@@ -248,10 +340,10 @@ For example: 'Name' data (that is, person and location name) is interesting for 
         ]
 
 
-Step 5: Object template
+Step 7: Object template
 ------------------------------------
 
-Any object search will finally lead to individual object visualization. This makes it necessary to build templates for any Ontology object that should be visualizable. Object view is organized in sections, and each section contains a list of mapped data, in a similar way we used it in previous step.
+Any resource search will finally lead to individual object visualization. This makes it necessary to build templates for any Ontology object that should be visualizable. Object view is organized in sections, and each section contains a list of mapped data, in a similar way we used it in previous step.
 
 Going back to Person object class example: name, birth date, and birth place should be placed at header. Biography can be placed at body, we can also use a 'knows' relation to get related Persons and we can place this at footer section. (Note that sections are totally customizable).
 
@@ -325,6 +417,7 @@ Data 'type' clause has not much to do with 'type' defined in previous step. The 
 - **media**: resolves path to media url value.
 - **date**: and its parts (**date.year**, **date.day**, **date.month**). Same effect as date defined at step 3.
 - **search**: this is a quite sophisticated object that comprises Solr searching feature from indexed data filtered by the specified constraint defined as combination of value and path. In this example: the search will only result to persons ("Person.knows:") that know current person ("Person.id"). For detailed information about searches please see Visualization page.
+- **counter**: groups and counts same value results.
 
 Please note that **text**, **objects** and **media** have the same effect. They resolve the path the same way but resulting value type is supposed to be different. See Visualization Object Thumbnail section to further in **media** and **objects** types.
 

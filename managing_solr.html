@@ -67,6 +67,7 @@
 <li><a class="reference internal" href="#update">Update</a></li>
 <li><a class="reference internal" href="#search">Search</a></li>
 <li><a class="reference internal" href="#autocomplete">Autocomplete</a></li>
+<li><a class="reference internal" href="#search-configurations">Search configurations</a></li>
 </ul>
 </li>
 </ul>
@@ -276,6 +277,28 @@ Returns: Solr JSON result or "error"</pre>
 }</pre>
 </div>
 <p>Note that in autocomplete search, the faceted results comprise the fields marked as &#8220;autocomplete&#8221; in mapping.json (see Configuration).</p>
+</div>
+<div class="section" id="search-configurations">
+<h2>Search configurations<a class="headerlink" href="#search-configurations" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to customize search modes from server side. This is done by editing or creating the search.json in CONFIGURATIONS_PATH/mapping/ folder. Configuring searches allowes to add extra filtering to client request to focus its searches to a particular scope.
+Say we want that, by default, all searches focus only on Persons and Countries, ignoring other object types, and births from 1900 to 1950; the proper search.json would be as follows:</p>
+<div class="highlight-python"><pre>{
+    "name":"mycustomsearch"
+    "type":"search",
+    "value":["ObjectType:Person", "ObjectType:Country", "Birth:[1900 TO 1950]" ]
+},
+
+{
+    "name":"default"
+    "type":"search"
+    // it can be left blank if we do not need additional filtering
+}</pre>
+</div>
+<p>To use this search configuration, we add &#8220;config&#8221; parameter with value &#8220;mycustomsearch&#8221;</p>
+<p><strong>Search Example</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/rest-path/solr/search?s=James&amp;config=mycustomsearch</pre>
+</div>
+<p>If &#8220;config&#8221; is not specified, &#8220;default&#8221; search configuration is used, if there&#8217;s no such configuration or config value is not found in search.json, there&#8217;s no additional filtering.</p>
 </div>
 </div>
 

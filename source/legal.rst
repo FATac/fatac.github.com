@@ -10,7 +10,7 @@ In the legal process, the user will go through a scripted form (see Configuratio
 
 **Example**
 
-(Coniguration properties)
+(Configuration properties)
 ::
 
     USER_LEVEL = *, MyUserGroup1, MyUserGroup2 MyUserGroup3, MyUserGroup4

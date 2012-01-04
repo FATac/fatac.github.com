@@ -60,12 +60,13 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Configuration</a><ul>
-<li><a class="reference internal" href="#step-0-virtuoso">Step 0: Virtuoso</a></li>
-<li><a class="reference internal" href="#step-1-main-properties">Step 1: Main properties</a></li>
-<li><a class="reference internal" href="#step-2-reset">Step 2: Reset</a></li>
-<li><a class="reference internal" href="#step-3-legal-script">Step 3: Legal script</a></li>
-<li><a class="reference internal" href="#step-4-data-mapping">Step 4: Data mapping</a></li>
-<li><a class="reference internal" href="#step-5-object-template">Step 5: Object template</a></li>
+<li><a class="reference internal" href="#step-1-virtuoso">Step 1: Virtuoso</a></li>
+<li><a class="reference internal" href="#step-2-solr">Step 2: Solr</a></li>
+<li><a class="reference internal" href="#step-3-main-properties">Step 3: Main properties</a></li>
+<li><a class="reference internal" href="#step-4-reset">Step 4: Reset</a></li>
+<li><a class="reference internal" href="#step-5-legal-script">Step 5: Legal script</a></li>
+<li><a class="reference internal" href="#step-6-data-mapping">Step 6: Data mapping</a></li>
+<li><a class="reference internal" href="#step-7-object-template">Step 7: Object template</a></li>
 </ul>
 </li>
 </ul>
@@ -105,21 +106,33 @@
   <div class="section" id="configuration">
 <h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
 <p>There are several aspects that must be defined in order to get the Semantic Web (SW) working with a new Ontology. This configuration guide is organized step-by-step.</p>
-<div class="section" id="step-0-virtuoso">
-<h2>Step 0: Virtuoso<a class="headerlink" href="#step-0-virtuoso" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-1-virtuoso">
+<h2>Step 1: Virtuoso<a class="headerlink" href="#step-1-virtuoso" title="Permalink to this headline">¶</a></h2>
 <p>Some Virtuoso initial configuration is necessary. Access to Virtuoso Conductor console (default should be: <a class="reference external" href="http://localhost:8890/conductor/">http://localhost:8890/conductor/</a> with both user and password &#8220;dba&#8221;). Click &#8220;Interactive SQL&#8221; on the right, and run the next sql script:</p>
 <div class="highlight-python"><pre>-- Base script which creates necessary data structure for managing users, rights and uploaded media and objects
 -- Suitable (only?) for Openlink Virtuoso sql implementation
 
---DROP TABLE db.dba._media;
+-- DROP TABLE db.dba._media;
+-- DROP TABLE db.dba._thumbnail;
+-- DROP TABLE db.dba._right;
+-- DROP TABLE db.dba._identifier_counter;
+-- DROP TABLE db.dba._autodata;
+-- DROP TABLE db.dba._resource_statistics;
+
+CREATE TABLE db.dba._resource_statistics (
+        identifier VARCHAR(150),
+        visitCounter BIGINT,
+        creationMoment BIGINT,
+        lastMoment BIGINT
+)
+
 CREATE TABLE db.dba._media (
         SID INT IDENTITY,
-    mediaId VARCHAR(60),
+        mediaId VARCHAR(60),
         path VARCHAR(500),
         moment TIMESTAMP
 )
 
---DROP TABLE db.dba._thumbnail;
 CREATE TABLE db.dba._thumbnail (
         SID INT IDENTITY,
         objectId VARCHAR(60),
@@ -127,24 +140,21 @@ CREATE TABLE db.dba._thumbnail (
         moment TIMESTAMP
 )
 
---DROP TABLE db.dba._right;
 CREATE TABLE db.dba._right (
         SID INT IDENTITY,
         objectId VARCHAR(60),
         rightLevel INT
 )
 
---DROP TABLE db.dba._identifier_counter;
 CREATE TABLE db.dba._identifier_counter (
         identifier VARCHAR(150),
         counter INT
 )
 
---DROP TABLE db.dba.autodata_table;
-CREATE TABLE db.dba.autodata_table (
+CREATE TABLE db.dba._autodata (
         keyName VARCHAR(100),
         keyValue VARCHAR(100),
-        name VARCHAR(100),
+    name VARCHAR(100),
         defaultValue VARCHAR(100)
 )
 
@@ -152,30 +162,73 @@ GRANT EXECUTE ON DB.DBA.SPARQL_DELETE_DICT_CONTENT TO "SPARQL";
 GRANT ALL PRIVILEGES TO "SPARQL";</pre>
 </div>
 <p>(Note that you can uncomment &#8220;drops&#8221; to reset all tables)</p>
-<p>Next, click &#8220;RDF&#8221; tab, and click &#8220;Namespaces&#8221;, you must add here all linked ontology namespaces not included in the list. Keep in mind that those namespaces are eligible for use, and that all ontologies specified in &#8220;ONTOLOGY_NAMESPACES&#8221; in Configuration (see Step 1) must appear in this list.</p>
+<p>Next, click &#8220;RDF&#8221; tab, and click &#8220;Namespaces&#8221;, you must add here all linked ontology namespaces not included in the list. Keep in mind that those namespaces are eligible for use, and that all ontologies specified in &#8220;ONTOLOGY_NAMESPACES&#8221; in Step 3 must appear in this list.</p>
 </div>
-<div class="section" id="step-1-main-properties">
-<h2>Step 1: Main properties<a class="headerlink" href="#step-1-main-properties" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-2-solr">
+<h2>Step 2: Solr<a class="headerlink" href="#step-2-solr" title="Permalink to this headline">¶</a></h2>
+<p>Uppon Solr installation, a specific schema.xml must be used. It is generated according to mapping specifications (see Step 6) and according to a base schema. This base schema must be placed in conf/ directory of Solr as &#8220;schema.xml-EMPTY&#8221;, with exactly the next content:</p>
+<div class="highlight-python"><pre>&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+
+&lt;schema name="mySchema" version="1.4"&gt;
+    &lt;types&gt;
+        &lt;fieldType name="identifier" class="solr.StrField" sortMissingLast="true" omitNorms="true"/&gt;
+        &lt;fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/&gt;
+        &lt;fieldType name="long" class="solr.TrieLongField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
+        &lt;fieldType name="float" class="solr.TrieFloatField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
+        &lt;fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
+
+        &lt;fieldType name="string" class="solr.TextField" sortMissingLast="true" omitNorms="true"&gt;
+          &lt;analyzer type="index"&gt;
+            &lt;tokenizer class="solr.KeywordTokenizerFactory"/&gt;
+          &lt;/analyzer&gt;
+          &lt;analyzer type="query"&gt;
+            &lt;tokenizer class="solr.KeywordTokenizerFactory"/&gt;
+          &lt;/analyzer&gt;
+        &lt;/fieldType&gt;
+
+        &lt;fieldType name="text_general" class="solr.TextField" positionIncrementGap="100"&gt;
+          &lt;analyzer type="index"&gt;
+            &lt;tokenizer class="solr.StandardTokenizerFactory"/&gt;
+            &lt;filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/&gt;
+          &lt;/analyzer&gt;
+          &lt;analyzer type="query"&gt;
+            &lt;tokenizer class="solr.StandardTokenizerFactory"/&gt;
+            &lt;filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/&gt;
+          &lt;/analyzer&gt;
+        &lt;/fieldType&gt;
+    &lt;/types&gt;
+
+    &lt;!-- FIELDS_INSERTION_MARK --&gt;
+
+    &lt;uniqueKey&gt;id&lt;/uniqueKey&gt;
+    &lt;defaultSearchField&gt;id&lt;/defaultSearchField&gt;
+    &lt;solrQueryParser defaultOperator="OR"/&gt;
+&lt;/schema&gt;</pre>
+</div>
+</div>
+<div class="section" id="step-3-main-properties">
+<h2>Step 3: Main properties<a class="headerlink" href="#step-3-main-properties" title="Permalink to this headline">¶</a></h2>
 <p>Once installed (see Installation) and Virtuoso is configured, the first thing we have to do is to configure the &#8216;config.json&#8217; file, you may place them on your current directory (when running on Tomcat, it is: $TOMCAT_HOME/webapps/ROOT/). Here&#8217;s a sample with some explanations:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
-    <span class="s">&quot;__comment_0&quot;</span><span class="p">:</span><span class="s">&quot;Mixed config&quot;</span><span class="p">,</span>
+        <span class="s">&quot;__comment_0&quot;</span><span class="p">:</span><span class="s">&quot;Mixed config&quot;</span><span class="p">,</span>
 
         <span class="s">&quot;THUMBNAIL_WIDTH&quot;</span><span class="p">:</span><span class="mi">250</span><span class="p">,</span>
         <span class="s">&quot;THUMBNAIL_HEIGHT&quot;</span><span class="p">:</span><span class="mi">180</span><span class="p">,</span>
-        <span class="s">&quot;VIDEO_FILE_EXTENSIONS&quot;</span><span class="p">:[</span><span class="s">&quot;dv&quot;</span><span class="p">,</span> <span class="s">&quot;mpg&quot;</span><span class="p">,</span> <span class="s">&quot;avi&quot;</span><span class="p">],</span>
+        <span class="s">&quot;MEDIA_CONVERSION_PROFILES&quot;</span><span class="p">:[</span><span class="s">&quot;dv&quot;</span><span class="p">,</span> <span class="s">&quot;mpg&quot;</span><span class="p">,</span> <span class="s">&quot;avi&quot;</span><span class="p">,</span> <span class="s">&quot;aif&quot;</span><span class="p">,</span> <span class="s">&quot;mov&quot;</span><span class="p">],</span>
+        <span class="s">&quot;MEDIA_AUTOCONVERT&quot;</span><span class="p">:</span><span class="s">&quot;false&quot;</span><span class="p">,</span>
         <span class="s">&quot;LANGUAGE_LIST&quot;</span><span class="p">:[</span><span class="s">&quot;ca&quot;</span><span class="p">,</span> <span class="s">&quot;en&quot;</span><span class="p">,</span> <span class="s">&quot;es&quot;</span><span class="p">,</span> <span class="s">&quot;fr&quot;</span><span class="p">,</span> <span class="s">&quot;it&quot;</span><span class="p">,</span> <span class="s">&quot;de&quot;</span><span class="p">],</span>
         <span class="s">&quot;USER_LEVEL&quot;</span><span class="p">:[</span><span class="s">&quot;*&quot;</span><span class="p">,</span> <span class="s">&quot;Member&quot;</span><span class="p">,</span> <span class="s">&quot;Manager Reviewer&quot;</span><span class="p">,</span> <span class="s">&quot;Site Administrator&quot;</span><span class="p">],</span>
 
         <span class="s">&quot;__comment_1&quot;</span><span class="p">:</span><span class="s">&quot;Services base URLs and connection strings&quot;</span><span class="p">,</span>
 
-        <span class="s">&quot;RDFDB_URL&quot;</span><span class="p">:</span><span class="s">&quot;jdbc:virtuoso://localhost:1111&quot;</span><span class="p">,</span>
+        <span class="s">&quot;RDFDB_URL&quot;</span><span class="p">:</span><span class="s">&quot;jdbc:virtuoso://myhost:1111&quot;</span><span class="p">,</span>
         <span class="s">&quot;RDFDB_USER&quot;</span><span class="p">:</span><span class="s">&quot;dba&quot;</span><span class="p">,</span>
         <span class="s">&quot;RDFDB_PASS&quot;</span><span class="p">:</span><span class="s">&quot;dba&quot;</span><span class="p">,</span>
-        <span class="s">&quot;REST_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://stress.upc.es:8080/ArtsCombinatoriesRest/&quot;</span><span class="p">,</span>
-        <span class="s">&quot;SOLR_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://localhost:8080/solr/&quot;</span><span class="p">,</span>
-        <span class="s">&quot;VIDEO_SERVICES_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://tapies.aur.i2cat.net:8080/TapiesWebServices/rest/&quot;</span><span class="p">,</span>
+        <span class="s">&quot;REST_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myhost:8080/rest/&quot;</span><span class="p">,</span>
+        <span class="s">&quot;SOLR_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myhost:8080/solr/&quot;</span><span class="p">,</span>
+        <span class="s">&quot;VIDEO_SERVICES_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myhost:8080/videoservices/rest/&quot;</span><span class="p">,</span>
 
-    <span class="s">&quot;__comment_2&quot;</span><span class="p">:</span><span class="s">&quot;Ontology namespaces (After any change, all existing triples must be fixed)&quot;</span><span class="p">,</span>
+        <span class="s">&quot;__comment_2&quot;</span><span class="p">:</span><span class="s">&quot;Ontology namespaces (After any change, all existing triples must be fixed)&quot;</span><span class="p">,</span>
 
         <span class="s">&quot;RESOURCE_URI_NS&quot;</span><span class="p">:</span><span class="s">&quot;http://localhost:8080/ArtsCombinatoriesRest/resource/&quot;</span><span class="p">,</span>
         <span class="s">&quot;RESOURCE_PREFIX&quot;</span><span class="p">:</span><span class="s">&quot;ac_res&quot;</span><span class="p">,</span>
@@ -186,34 +239,100 @@ GRANT ALL PRIVILEGES TO "SPARQL";</pre>
                 <span class="s">&quot;http://dublincore.org/2010/10/11/dcterms.rdf#&quot;</span><span class="p">,</span> <span class="s">&quot;dcterms&quot;</span>
         <span class="p">],</span>
 
-        <span class="s">&quot;__comment_3&quot;</span><span class="p">:</span><span class="s">&quot;File system paths&quot;</span><span class="p">,</span>
+        <span class="s">&quot;__comment_3&quot;</span><span class="p">:</span><span class="s">&quot;File system paths. It&#39;s recommended that they all have project home folder as parent&quot;</span><span class="p">,</span>
 
-        <span class="s">&quot;CONFIGURATIONS_PATH&quot;</span><span class="p">:</span><span class="s">&quot;/home/jordi.roig.prieto/workspace/ArtsCombinatoriesRest/json/&quot;</span><span class="p">,</span>
-        <span class="s">&quot;SOLR_PATH&quot;</span><span class="p">:</span><span class="s">&quot;/home/jordi.roig.prieto/solr/&quot;</span><span class="p">,</span>
-        <span class="s">&quot;MEDIA_PATH&quot;</span><span class="p">:</span><span class="s">&quot;./ac_media/&quot;</span><span class="p">,</span>
-        <span class="s">&quot;ONTOLOGY_PATH&quot;</span><span class="p">:</span><span class="s">&quot;./OntologiaArtsCombinatories.owl&quot;</span>
+        <span class="s">&quot;CONFIGURATIONS_PATH&quot;</span><span class="p">:</span><span class="s">&quot;/achome/json/&quot;</span><span class="p">,</span>
+        <span class="s">&quot;SOLR_PATH&quot;</span><span class="p">:</span><span class="s">&quot;/achome/solr/&quot;</span><span class="p">,</span>
+        <span class="s">&quot;MEDIA_PATH&quot;</span><span class="p">:</span><span class="s">&quot;/achome/media/&quot;</span><span class="p">,</span>
+        <span class="s">&quot;ONTOLOGY_PATH&quot;</span><span class="p">:</span><span class="s">&quot;/achome/myontology.owl&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>THUMBNAIL_WIDTH and THUMBNAIL_HEIGHT determines the size of generated thumbnails.</p>
+<p>MEDIA_CONVERSION_PROFILES enumerates video/audio file extensions suitable for conversion, ordered by profile number (e.g.: &#8220;dv&#8221; is profile 1, &#8220;mpg&#8221; is profile 2, etc.).</p>
+<p>MEDIA_AUTOCONVERT set to &#8220;true&#8221; if you require that video/audo files to be converted once uploaded. Otherwise you can use &#8220;convert&#8221; service (see Managing Media section).</p>
+<p>LANGUAGE_LIST enumerates codes of languages that are expected to be used in data base fields (the first one is used as default language).</p>
+<p>USER_LEVEL specifies the degree of legal access that have each user role, ordered from more to less restrictions (&#8220;*&#8221; means any role).</p>
 <p>ONTOLOGY_NAMESPACES stablishes a prefix for each ontology/schema namespace, this prefix must also appear on namespaces list in Virtuoso (see Step 0). The first specified ontology must be the one specially created for this project (myOntology in the example), other specified ontologies/schemas must be the ones included on the first one. Generally, RDF and RDFS schemas should be always included.</p>
+<p>AC requires the next folder and file structure in order to allocate and use its files:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>[CONFIGURATIONS_PATH]</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>legal</dt>
+<dd><ul class="first last simple">
+<li>legal.json (required)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>mapping</dt>
+<dd><ul class="first last simple">
+<li>mapping.json (required)</li>
+<li>search.json (optional)</li>
+<li>(optionally, json template definitons for any Ontology class named with prefix, example &#8220;foaf:Person.json&#8221;)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>[SOLR_PATH]</dt>
+<dd><ul class="first last simple">
+<li>(Solr specific file structure comprising sorl.xml, conf/, data/, etc.)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>[MEDIA_PATH]</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>thumbnail</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>classes</dt>
+<dd><ul class="first last simple">
+<li>default.jpg (Required. Default thumbnail for all objects. Does not need to fit a specific size)</li>
+<li>(Optionally, default thumbnail for any classes Ontology class named with prefix, example &#8220;foaf:Person.jpg&#8221;)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">[ONTOLOGY_PATH] (Path to file containing the project&#8217;s Ontology)</p>
+</li>
+</ul>
 </div>
-<div class="section" id="step-2-reset">
-<h2>Step 2: Reset<a class="headerlink" href="#step-2-reset" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-4-reset">
+<h2>Step 4: Reset<a class="headerlink" href="#step-4-reset" title="Permalink to this headline">¶</a></h2>
 <p>Calling reset service, ALL data and media will be removed. Also last Ontology file (located in ONTOLOGY_PATH) will be loaded.</p>
 <div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/reset?option=ontology&amp;confirm=CURRENT_DATE
 HTTP Method: GET
 Returns: "success" or "error"</pre>
 </div>
-<p>Set &#8220;option=ontology&#8221; if you do not want a total reset, but only an Ontology reload.</p>
+<p>Set &#8220;option=ontology&#8221; if you do not want a total reset, but only a reload of all ontologies specified in ONTOLOGY_NAMESPACES.</p>
 <p>Otherwise, for safety, &#8220;confirm&#8221; must be filled with current server date and time formated as &#8220;dd/mm/yy hh:mm&#8221;</p>
 <p><strong>Examples</strong></p>
-<div class="highlight-python"><pre>http://internetdomain.org/rest-path/reset?option=ontology               // ontology reload</pre>
+<div class="highlight-python"><pre>http://internetdomain.org/rest-path/reset?option=ontology               // ontologies reload</pre>
 </div>
-<div class="highlight-python"><pre>http://internetdomain.org/rest-path/reset?confirm=11/11/2011 23:11      // data reset and ontology upload</pre>
+<div class="highlight-python"><pre>http://internetdomain.org/rest-path/reset?confirm=11/11/2011 23:11      // data reset and ontologies reload</pre>
 </div>
 </div>
-<div class="section" id="step-3-legal-script">
-<h2>Step 3: Legal script<a class="headerlink" href="#step-3-legal-script" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-5-legal-script">
+<h2>Step 5: Legal script<a class="headerlink" href="#step-5-legal-script" title="Permalink to this headline">¶</a></h2>
 <p>AC provides capabilities for assigning legal rights to media objects. The right assignation is an user assisted process that can be scripted and fully customized. (If you have no intention to apply this feature you may skip this step).</p>
 <p>There is a self-explanatory sample named &#8216;legal.json&#8217; in json directory, &#8216;legal&#8217; subfolder. &#8216;legal.json&#8217; is the name of the script file that will assist the user, the main parts of the script are:</p>
 <ul class="simple">
@@ -226,35 +345,35 @@ Returns: "success" or "error"</pre>
 </ul>
 <p>There are four &#8220;trafic light&#8221; colors that can be assigned to any object as a result of the legal process. From less to more restrictive: &#8220;green&#8221;, &#8220;yellow&#8221;, &#8220;orange&#8221; and &#8220;red&#8221;. Each of one corresponding to one accessing right level from 1 to 4. On every call to a service that provides media data, the accessing level must be specified. Service will fail if user accessing level is lower than object restriction level. Eg. User level = 1 , Object level = 2 &#8211;&gt; Fail / User level = 2 , Object level = 2 &#8211;&gt; OK.</p>
 </div>
-<div class="section" id="step-4-data-mapping">
-<h2>Step 4: Data mapping<a class="headerlink" href="#step-4-data-mapping" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-6-data-mapping">
+<h2>Step 6: Data mapping<a class="headerlink" href="#step-6-data-mapping" title="Permalink to this headline">¶</a></h2>
 <p>Data &#8220;mapping.json&#8221; (placed in json/mapping folder) is a must-have specification file that defines what ontology data must be indexed in Solr, and how this must be done. Data mapping is not a simple direct Owl to Solr mapping. It must be defined in a way that it later can be used for specific object domain searches (See Step 4), and provide additional information of the field nature to get Solr treating the data properly.</p>
 <p>Let&#8217;s say we have the Person class defined in our Ontology, and that we want to indexate several useful person data such as: name, biography, date of birth and birth place. Person indexation should be specified this way:</p>
 <div class="highlight-python"><pre>{
         "data":
         [
         {
-            "name":"Name",                  // Specifies the data identifier, in this case, the person Name
-            "type":"string",                // 'string' type means that values of Name will be treated as a whole
-            "path":["Person.fullName"]      // Path to Class data property, note that it's specified as (Class-name).(property)
+            "name":"Name",                      // Specifies the data identifier, in this case, the person Name
+            "type":"string",                    // 'string' type means that values of Name will be treated as a whole
+            "path":["my:Person.my:fullName"]    // Path to Class data property, note that it's specified as (Class-name).(property)
         },
 
         {
             "name":"Biography",
             "type":"text",                  // 'text' makes every word (space separated tokens) to be treated separately on search
-            "path":["Person.Bio"]
+            "path":["my:Person.my:Bio"]
         },
 
         {
             "name":"BirthDate",
             "type":"date.year",             // 'date.year' will extract the year part of date value (default date format expected is dd/mm/yyyy)
-            "path":["Person.BirthDate"]
+            "path":["my:Person.my:BirthDate"]
         },
 
         {
             "name":"BirthPlace",
             "type":"string",
-            "path":["Person.BirthPlace:Location.Name"]   // Note that as Birth Place is not a string but an external object, specified path chains both objects, from original, to target data (Name property of Location class). You can chain as many objects as you need.
+            "path":["my:Person.my:BirthPlace=my:Location.my:Name"]   // Note that as Birth Place is not a string but an external object, specified path chains both objects, from original, to target data (Name property of Location class). You can chain as many objects as you need.
         }
     ]
 }</pre>
@@ -274,7 +393,7 @@ Returns: "success" or "error"</pre>
         {
             "name":"Name",
             "type":"string",
-            "path":["Person.fullName", "Location.Name"]     // Path to Person and Location data property
+            "path":["my:Person.my:fullName", "my:Location.my:Name"]     // Path to Person and Location data property
         },
 
         /* rest of json ... */
@@ -293,7 +412,7 @@ Returns: "success" or "error"</pre>
         {
             "name":"Person",
             "type":"string",
-            "path":["Person.fullName"],
+            "path":["my:Person.my:fullName"],
             "search":"yes",
             "autocomplete":"yes"
         },
@@ -301,7 +420,7 @@ Returns: "success" or "error"</pre>
         {
             "name":"Location",
             "type":"string",
-            "path":["Location.Name", "Person.BirthPlace:Location.Name"]
+            "path":["my:Location.my:Name", "my:Person.my:BirthPlace=my:Location.my:Name"]
             "search":"yes",                     // Note that ALL clauses are unactive by default,
             "autocomplete":"yes",               // so they must be always specified in case of need.
             "multilingual":"yes",
@@ -312,9 +431,9 @@ Returns: "success" or "error"</pre>
     ]</pre>
 </div>
 </div>
-<div class="section" id="step-5-object-template">
-<h2>Step 5: Object template<a class="headerlink" href="#step-5-object-template" title="Permalink to this headline">¶</a></h2>
-<p>Any object search will finally lead to individual object visualization. This makes it necessary to build templates for any Ontology object that should be visualizable. Object view is organized in sections, and each section contains a list of mapped data, in a similar way we used it in previous step.</p>
+<div class="section" id="step-7-object-template">
+<h2>Step 7: Object template<a class="headerlink" href="#step-7-object-template" title="Permalink to this headline">¶</a></h2>
+<p>Any resource search will finally lead to individual object visualization. This makes it necessary to build templates for any Ontology object that should be visualizable. Object view is organized in sections, and each section contains a list of mapped data, in a similar way we used it in previous step.</p>
 <p>Going back to Person object class example: name, birth date, and birth place should be placed at header. Biography can be placed at body, we can also use a &#8216;knows&#8217; relation to get related Persons and we can place this at footer section. (Note that sections are totally customizable).</p>
 <p>The resulting template file must be placed as &#8220;Person.json&#8221; (generally, (Class-name).json) in json/mapping directory. Code should look as follows:</p>
 <div class="highlight-python"><pre>{
@@ -329,19 +448,19 @@ Returns: "success" or "error"</pre>
                             {
                                         "name":"Name",
                                         "type":"text",
-                                        "path":["Person.fullName"]
+                                        "path":["my:Person.my:fullName"]
                                 },
 
                 {
                                         "name":"BirthDate",
                                         "type":"date",
-                                        "path":["Person.BirthDate"]
+                                        "path":["my:Person.my:BirthDate"]
                                 },
 
                 {
                                         "name":"BirthPlace",
                                         "type":"linkedObject",
-                                        "path":["Person.BirthPlace:Location.Name"]
+                                        "path":["my:Person.my:BirthPlace=my:Location.my:Name"]
                                 }
                         ]
                 },
@@ -353,7 +472,7 @@ Returns: "success" or "error"</pre>
                             {
                                 "name":"Biography",
                                 "type":"text",
-                                "path":["Person.Bio"]
+                                "path":["my:Person.my:Bio"]
                             }
                         ]
                 },
@@ -365,7 +484,7 @@ Returns: "success" or "error"</pre>
                             {
                                         "name":"Related",
                                         "type":"search",
-                    "path":["Person.id"],
+                    "path":["my:Person.id"],
                     "value":["RelatedPeople:"],
                     "categories":["Year", "Location"]
                                 }
@@ -382,6 +501,7 @@ Returns: "success" or "error"</pre>
 <li><strong>media</strong>: resolves path to media url value.</li>
 <li><strong>date</strong>: and its parts (<strong>date.year</strong>, <strong>date.day</strong>, <strong>date.month</strong>). Same effect as date defined at step 3.</li>
 <li><strong>search</strong>: this is a quite sophisticated object that comprises Solr searching feature from indexed data filtered by the specified constraint defined as combination of value and path. In this example: the search will only result to persons (&#8220;Person.knows:&#8221;) that know current person (&#8220;Person.id&#8221;). For detailed information about searches please see Visualization page.</li>
+<li><strong>counter</strong>: groups and counts same value results.</li>
 </ul>
 <p>Please note that <strong>text</strong>, <strong>objects</strong> and <strong>media</strong> have the same effect. They resolve the path the same way but resulting value type is supposed to be different. See Visualization Object Thumbnail section to further in <strong>media</strong> and <strong>objects</strong> types.</p>
 </div>

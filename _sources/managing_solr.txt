@@ -225,3 +225,35 @@ Performs autocomplete of a given search string, JSON result comes straight from 
     }
 
 Note that in autocomplete search, the faceted results comprise the fields marked as "autocomplete" in mapping.json (see Configuration).
+
+Search configurations
+-------------------------------
+
+It is possible to customize search modes from server side. This is done by editing or creating the search.json in CONFIGURATIONS_PATH/mapping/ folder. Configuring searches allowes to add extra filtering to client request to focus its searches to a particular scope.
+Say we want that, by default, all searches focus only on Persons and Countries, ignoring other object types, and births from 1900 to 1950; the proper search.json would be as follows:
+
+::
+    
+    {
+        "name":"mycustomsearch"
+        "type":"search",
+        "value":["ObjectType:Person", "ObjectType:Country", "Birth:[1900 TO 1950]" ]
+    },
+
+    {
+        "name":"default"
+        "type":"search"
+        // it can be left blank if we do not need additional filtering
+    }
+
+To use this search configuration, we add "config" parameter with value "mycustomsearch"
+
+**Search Example**
+
+::
+
+    http://internetdomain.org/rest-path/solr/search?s=James&config=mycustomsearch
+
+If "config" is not specified, "default" search configuration is used, if there's no such configuration or config value is not found in search.json, there's no additional filtering.
+
+

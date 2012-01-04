@@ -6,14 +6,14 @@ AC REST services provide media storage and some format conversion cappabilities.
 Upload
 ------------------
 
-Uploads media file and proceeds to conversion if necessary (eligible file formats for conversion are in Configuration var VIDEO_FILE_EXTENSIONS)
+Uploads media file and proceeds to conversion if necessary (depending on Configuration)
 
 ::
 
     Service path: http://{host:port}/{appname}/media/upload?fn=FILE NAME
     HTTP Method: POST
     Accepted content: (any media type)
-    Returns: media identifier or "error"
+    Returns: full media URL or "error"
 
 Http request body must contain binary file data.
 
@@ -23,7 +23,7 @@ Parameter "fn" is required, and it is the file name including format extension.
 
 ::
 
-    http://internetdomain.org/rest-path/media/upload?fn=myimage.jpg
+    http://myhost:8080/rest/media/upload?fn=myimage.jpg
 
 ::
 
@@ -51,7 +51,7 @@ Retrieves stored media
 
 ::
 
-    http://internetdomain.org/rest-path/media/_media_file_123
+    http://myhost:8080/rest/media/_media_file_123
 
 **OK Result**
 
@@ -74,7 +74,7 @@ Media file extension is also requestable
 
 ::
 
-    http://internetdomain.org/rest-path/media/_media_file_123/format
+    http://myhost:8080/rest/media/_media_file_123/format
 
 **OK Result**
 
@@ -82,6 +82,53 @@ Media file extension is also requestable
 
     jpg
 
+Convert
+--------------
+
+Proceed to media conversion (if applicable, this is having defined this media format in MEDIA_CONVERSION_PROFILES)
+
+::
+
+    Service path: http://{host:port}/{appname}/media/{identifier}/convert
+    HTTP Method: GET
+    Returns: "success" or "error"
+
+Upon conversion, a "master" (this is, a copy of the original) media file will be created and a converted file will be generated for each applicable profile. To access each generated media we use a profile clause as described next.
+
+Get (with profile)
+---------------------
+
+Retrieves stored media according to specified profile
+
+::
+
+    Service path: http://{host:port}/{appname}/media/{identifier}/profile/{profile}
+    HTTP Method: GET
+    Returns: media file
+
+**GET Examples**
+
+::
+
+    http://myhost:8080/rest/media/_media_file_123/profile/master    // returns original file
+    http://myhost:8080/rest/media/_media_file_123/profile/1         // returns the first profile conversion of this file, this is equivalent to calling the simple get service.
+    http://myhost:8080/rest/media/_media_file_123/profile/2         // returns the second profile conversion
+
+**OK Result**
+
+::
+
+    [Media file binary content]
 
 
 
+Delete
+---------------
+
+Deletes stored media and its converted files
+
+::
+
+    Service path: http://{host:port}/{appname}/media/{identifier}/delete
+    HTTP Method: DELETE
+    Returns: "success" or "error"

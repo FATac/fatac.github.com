@@ -1,20 +1,20 @@
-Visualization
+Visualització
 ======================================================================================
 
-AC supports several data visualization functions, such as templating and object thumbnail generation. This feature uses many concepts explained in previous sections, which will be constantly referred to.
+Arts Combinatòries suporta diverses funcions de visualització de les dades, així com patrons i miniatures. Aquesta característica utilitza molts dels conceptes explicats en seccions posteriors, a les quals es faran contínues referències.
 
 Object view
 ------------------
 
-REST service that generates Ontology object view based on its corresponding template. That is the template with name of current object class, or one of its superclasses. If there's no such template service returns error.
+Servei que genera una vista JSON de l'objecte ontològic basant-se en el seu patró corresponent. Aquest és el patró amb el nom de la classe de l'objecte, o d'alguna de les seves superclasses. Si no hi ha cap template que correspongui, el servei retorna error.
 
 ::
 
-    Service path: http://{host:port}/{appname}/resource/{identifier}/view
-    HTTP Method: GET
-    Returns: JSON data or "error"
+    Ruta servei: http://{host:port}/{appname}/resource/{identifier}/view
+    Mètode HTTP: GET
+    Retorna: JSON data or "error"
 
-Template processing result of a Person (with template defined at Configuration) would be as follows:
+Utilitzant el patró definit a la Configuració. Un objecte Person específic tindria la següent vista:
 
 ::
 
@@ -43,7 +43,7 @@ Template processing result of a Person (with template defined at Configuration) 
                     {
 					    "name":"BirthPlace",
 					    "type":"linkedObject",
-					    "value":["United Kingdom"]
+					    "value":["Regne Unit"]
 				    }
 			    ]
 		    },
@@ -55,7 +55,7 @@ Template processing result of a Person (with template defined at Configuration) 
 			     	{
 			            "name":"Biography",
 			            "type":"text",
-			            "value":["Secret agent in the service of the Queen"]
+			            "value":["Agent secret al servei de la Reina"]
 			        }
 			    ]  
 		    },
@@ -75,12 +75,14 @@ Template processing result of a Person (with template defined at Configuration) 
 	    ]
     }
 
-Search in object template
--------------------------------------
+Cerca dins del patró d'objecte
+-----------------------------------------
 
-As described in Configuration Step 5, a template can have a specific object data type called "search". It indicates that Solr search sould be performed in order to fill that part of the template with data. The aim of this feature is that some objects can relate to many other objects, and we want to be able to perform search and filtering of this particular scope. There are to possible approaches that lead to same result.
+Tal com s'ha explicat a la Configuració, un template pot tenir un tipus de dada específica anomenat "search". Indica que s'hauria de realitzar una cerca Solr per tal d'omplir aquesta secció del patró. El motiu d'aquesta funcionalitat, és que alguns objectes poden referenciar un conjunt ampli d'objectes, i s'ha de permetre realitzar cerces sobre aquest conjunt.
 
-The **first approach**, can be described as: from all other objects related to one specific object. What we do is to map (in mapping.json) the filtering criteria that will be used to scope a particular object group. For example:
+Hi ha dues possibles aproximacions que porten al mateix resultat.
+
+La **Primera aproximació**, es pot descriure com a: des del conjunt d'objectes relacionats a un objecte específic. El que fem és mapejar (a mapping.json) el criteri del filtre que serà usat per a focalitzar els resultats a aquest conjunt d'objectes. Per exemple:
 
 (mapping.json)
 ::
@@ -88,7 +90,7 @@ The **first approach**, can be described as: from all other objects related to o
     {
         "data":
 	    [
-            /* .. rest of json*/
+            /* .. resta del json */
 
             {
                 "name":"RelatedPeople",                  
@@ -98,14 +100,15 @@ The **first approach**, can be described as: from all other objects related to o
         ]
     }
 
-In the template we use this criteria to get all related objects:
+
+Al patró, usem aquest camp indexat per tal d'obtenir tots els objectes relacionats.
 
 (Person.json)
 ::
 
 
     {
-	        /* ... rest of json */
+	        /* ... resta del json */
 
             {
 			    "name":"footer",                    
@@ -123,13 +126,13 @@ In the template we use this criteria to get all related objects:
 	    ]
     }
 
-Which after template process "James Bond" object results to following code:
+Després de crear la vista de l'objecte "James Bons", resulta en el següent:
 
 ::
 
 
     {
-	        /* ... rest of json */
+	        /* ... resta del json */
 
             {
 			    "name":"footer",                    
@@ -146,7 +149,7 @@ Which after template process "James Bond" object results to following code:
 	    ]
     }
 
-Since according to our mapping Solr indexated all related people for each Person, it makes sense to call Solr search filtering by "RelatedPeople" and value "James_Bond_ID" to get all related objects to this specific object.
+Ja que d'acord amb el nostre mapeig, el Solr ha indexat totes les persones relacionades amb cada persona (Person.knows), té sentit cridar la cerca solr filtrant per "RelatedPeople" i valor "James_Bond_ID" per obtenir el conjunt d'objectes relacionats amb aquest.
 
 ::
 
@@ -262,9 +265,9 @@ Calling thumbnail service you can get an autogenerated image representing the ob
 
 ::
 
-    Service path: http://{host:port}/{appname}/resource/{identifier}/thumbnail
-    HTTP Method: GET
-    Returns: jpg image
+    Ruta servei: http://{host:port}/{appname}/resource/{identifier}/thumbnail
+    Mètode HTTP: GET
+    Retorna: jpg image
 
 Thumbnail length and width can be Configured.
 
@@ -440,18 +443,18 @@ All generated thumbnails are saved in folder (MEDIA_PATH)/thumbnails to avoid re
 Class list and tree
 -----------------------
 
-Service that returns Ontology classes tree in JSON
+Service that Retorna Ontology classes tree in JSON
 
 ::
 
-    Service path: http://{host:port}/{appname}/classes/tree?c=ROOT CLASS
-    HTTP Method: GET
-    Returns: JSON tree or "error"
+    Ruta servei: http://{host:port}/{appname}/classes/tree?c=ROOT CLASS
+    Mètode HTTP: GET
+    Retorna: JSON tree or "error"
 
-Service that returns Ontology classes list in JSON
+Service that Retorna Ontology classes list in JSON
 
 ::
 
-    Service path: http://{host:port}/{appname}/classes/list?c=PARENT CLASS
-    HTTP Method: GET
-    Returns: JSON list or "error"
+    Ruta servei: http://{host:port}/{appname}/classes/list?c=PARENT CLASS
+    Mètode HTTP: GET
+    Retorna: JSON list or "error"

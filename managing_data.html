@@ -108,12 +108,12 @@
 <h2>Upload<a class="headerlink" href="#upload" title="Permalink to this headline">¶</a></h2>
 <p>Creates a new object of specific type and data</p>
 <div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/resource/upload
-HTTP Method: POST
+HTTP Method: PUT
 Accepted content: */json
 Returns: Identifier of uploaded object or "error"</pre>
 </div>
 <p>Http request body must contain a JSON list of key-value tuples.</p>
-<p>&#8220;type&#8221; is a required key, otherwise returns error.</p>
+<p>&#8220;type&#8221; or &#8220;rdf:type&#8221; is a required key, otherwise returns error.</p>
 <p>&#8220;about&#8221; is a recommended key in order to generate proper object identifiers.</p>
 <p>Multilingual properties can be specified with language code prefix for each value (see example).</p>
 <p><strong>POST Example</strong></p>
@@ -122,12 +122,13 @@ Returns: Identifier of uploaded object or "error"</pre>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
     <span class="s">&quot;type&quot;</span><span class="p">:</span><span class="s">&quot;Location&quot;</span><span class="p">,</span>
     <span class="s">&quot;about&quot;</span><span class="p">:</span><span class="s">&quot;New York City&quot;</span><span class="p">,</span>
-    <span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;New York City@en&quot;</span><span class="p">,</span>
-    <span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;Nueva York@es&quot;</span><span class="p">,</span>
-    <span class="s">&quot;abbreviation&quot;</span><span class="p">:</span><span class="s">&quot;NYC&quot;</span>
+    <span class="s">&quot;my:name&quot;</span><span class="p">:</span><span class="s">&quot;New York City@en&quot;</span><span class="p">,</span>
+    <span class="s">&quot;my:name&quot;</span><span class="p">:</span><span class="s">&quot;Nueva York@es&quot;</span><span class="p">,</span>
+    <span class="s">&quot;my:abbreviation&quot;</span><span class="p">:</span><span class="s">&quot;NYC&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>Note that all properties must be prefixed apart from &#8220;about&#8221;, and &#8220;rdf:type&#8221; and &#8220;type&#8221; are both correct.</p>
 <p><strong>OK Result</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;New_York_City&quot;</span>
 </pre></div>
@@ -145,11 +146,11 @@ Returns: JSON object data</pre>
 </div>
 <p><strong>OK Result</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
-    <span class="s">&quot;type&quot;</span><span class="p">:</span><span class="s">&quot;Location&quot;</span><span class="p">,</span>
+    <span class="s">&quot;rdf:type&quot;</span><span class="p">:</span><span class="s">&quot;Location&quot;</span><span class="p">,</span>
     <span class="s">&quot;about&quot;</span><span class="p">:</span><span class="s">&quot;New York City&quot;</span><span class="p">,</span>
-    <span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;New York City@en&quot;</span><span class="p">,</span>
-    <span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;Nueva York@es&quot;</span><span class="p">,</span>
-    <span class="s">&quot;abbreviation&quot;</span><span class="p">:</span><span class="s">&quot;NYC&quot;</span>
+    <span class="s">&quot;my:name&quot;</span><span class="p">:</span><span class="s">&quot;New York City@en&quot;</span><span class="p">,</span>
+    <span class="s">&quot;my:name&quot;</span><span class="p">:</span><span class="s">&quot;Nueva York@es&quot;</span><span class="p">,</span>
+    <span class="s">&quot;my:abbreviation&quot;</span><span class="p">:</span><span class="s">&quot;NYC&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -158,7 +159,7 @@ Returns: JSON object data</pre>
 <h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
 <p>Updates specified object data.</p>
 <div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/resource/{identifier}/update
-HTTP Method: PUT
+HTTP Method: POST
 Accepted content: */json
 Returns: "success" or "error"</pre>
 </div>
@@ -169,8 +170,8 @@ Returns: "success" or "error"</pre>
 <div class="highlight-python"><pre>http://internetdomain.org/rest-path/resource/New_York_City/update</pre>
 </div>
 <div class="highlight-python"><pre>{
-    "type":"Person",            // has no effect
-    "name":"City of New York"   // changes property value (and turns to a single-language property)
+    "type":"Person",            // has no effect (same with "rdf:type")
+    "name":"City of New York"   // changes property value (and turns to a single-value property)
     "abbrevitation":"",         // removes property
     "population":"8175133",     // creates property
 }</pre>
