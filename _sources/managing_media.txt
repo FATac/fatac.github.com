@@ -6,14 +6,14 @@ AC REST services provide media storage and some format conversion cappabilities.
 Upload
 ------------------
 
-Uploads media file and proceeds to conversion if necessary (eligible file formats for conversion are in Configuration var VIDEO_FILE_EXTENSIONS)
+Uploads media file and proceeds to conversion if necessary (depending on Configuration)
 
 ::
 
     Service path: http://{host:port}/{appname}/media/upload?fn=FILE NAME
     HTTP Method: POST
     Accepted content: (any media type)
-    Returns: media identifier or "error"
+    Returns: full media URL or "error"
 
 Http request body must contain binary file data.
 
@@ -132,7 +132,3 @@ Deletes stored media and its converted files
     Service path: http://{host:port}/{appname}/media/{identifier}/delete
     HTTP Method: DELETE
     Returns: "success" or "error"
-
-
-
-

@@ -1,0 +1,169 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Legal &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0a1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
+    <link rel="prev" title="Visualització" href="visualization_ca.html" />
+<link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
+
+  </head>
+  <body>
+<div class="header">
+    <a href="#">
+        <img alt="Logo" src="_static/logo.jpg" class="logo" />
+    </a>
+</div>
+    
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="visualization_ca.html" title="Visualització"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Legal</a><ul>
+<li><a class="reference internal" href="#acces-legal">Accés legal</a></li>
+<li><a class="reference internal" href="#serveis-que-implementen-les-restriccions-legals">Serveis que implementen les restriccions legals</a></li>
+<li><a class="reference internal" href="#proces-legal">Procés legal</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="visualization_ca.html"
+                        title="previous chapter">Visualització</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/legal_ca.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="legal">
+<h1>Legal<a class="headerlink" href="#legal" title="Permalink to this headline">¶</a></h1>
+<p>El propòsit d&#8217;aquesta funcionalitat és guiar l&#8217;usuari pel procés de protecció d&#8217;objectes d&#8217;un accés no autoritzat, d&#8217;acord amb la seva llicència o preferències d&#8217;administració. Els primers passos s&#8217;expliquen a la Configuració i a l&#8217;arxiu legal.json.</p>
+<div class="section" id="acces-legal">
+<h2>Accés legal<a class="headerlink" href="#acces-legal" title="Permalink to this headline">¶</a></h2>
+<p>En el procés legal, l&#8217;usuari haurà de passar per un flux configurat (veure Configuració) que requerirà que les dades condueixin a un color resultant. Aquest color serà utilitzat per a determinar qui pot accedir a l&#8217;objecte. Pots assignar autoritzacions d&#8217;accés als grups de Plone definint els noms del grup a la variable de Configuració USER_LEVEL.</p>
+<p><strong>Exemple</strong></p>
+<p>(config.json)</p>
+<div class="highlight-python"><pre>"USER_LEVEL": { "*", "MyUserGroup1", "MyUserGroup2+MyUserGroup3", "MyUserGroup4" }</pre>
+</div>
+<p>En aquest exemple, tots els usuaris (especificats amb &#8216;*&#8217;) tenen accés verd. Els usuaris de MyUserGroup1 accés groc. Els usuaris de MyUserGroup2 i MyUserGroup3 accés taronja. I els usuaris de MyUserGroup4 accés vermell. S&#8217;entén que qualsevol usuari també pot accedir als objectes de nivells d&#8217;autorització (colors) inferiors al del seu grup.</p>
+</div>
+<div class="section" id="serveis-que-implementen-les-restriccions-legals">
+<h2>Serveis que implementen les restriccions legals<a class="headerlink" href="#serveis-que-implementen-les-restriccions-legals" title="Permalink to this headline">¶</a></h2>
+<p>La finalitat de les funcions legals són en definitiva protegir els continguts audiovisuals, per aquest motiu els serveis implicats són aquells que retornen aquest tipus de contingut o la seva URL:</p>
+<div class="highlight-python"><pre>/resource/{identifier}/thumbnail
+/resource/{identifier}/view
+/resource/{identifier}
+/media/{identifier}</pre>
+</div>
+<p>Tots ells accepten el paràmetre &#8220;uid&#8221;. El seu valor ha de ser l&#8217;identificador d&#8217;usuari, que servirà per identificar el seu grup. Si el nivell d&#8217;autorització del grup és igual o superior al de l&#8217;objecte al qual es vol accedir es permetrà l&#8217;accés als media. Els objectes que no tenen cap color assignat s&#8217;entén que són públics, equivalent a &#8220;verd&#8221;. Si no s&#8217;especifica &#8220;uid&#8221;, el nivell d&#8217;accés per defecte és &#8220;verd&#8221;.</p>
+<p>Tots els serveis de modificació de dades:</p>
+<div class="highlight-python"><pre>/resource/{identifier}/upload
+/resource/{identifier}/update
+/resource/{identifier}/delete
+/media/upload</pre>
+</div>
+<p>Requereixen que el grup de l&#8217;usuari tingui autorització màxima, és a dir &#8220;vermell&#8221;.</p>
+</div>
+<div class="section" id="proces-legal">
+<h2>Procés legal<a class="headerlink" href="#proces-legal" title="Permalink to this headline">¶</a></h2>
+<p>El procés legal és l&#8217;execució del flux que resulta en una assignació de color a l&#8217;objecte o objectes. Aquest procés s&#8217;executa fent crides als serveis REST, que són:</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/legal/start
+Mètode HTTP: POST
+Retorna: Codi JSON amb un identificador d'usuari temporal</pre>
+</div>
+<p>El cos de la crida ha de contenir una llista JSON dels identificadors dels objectes que seran processats.</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/legal/next
+Mètode HTTP: POST
+Retorna: Codi JSON amb les dades del següent formulari o bé el resultat.</pre>
+</div>
+<p>El cos de la crida ha de contenir els valors dels camps del formulari anterior juntament amb l&#8217;identificador temporal d&#8217;usuari.</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/legal/restore?key=KEY&amp;value=VALUE
+Mètode HTTP: GET
+Retorna: Codi JSON amb les dades associades a la tupla key-value</pre>
+</div>
+<p>Servei de suport que retorna dades relacionadades amb la tupla key-value. El paràmetre key ha de ser especificat al flux legal (legal.json) usant la clàusula &#8220;reference&#8221;.
+Aquest servei hauria de cridar-se per darrera (amb AJAX) per emplenar el formulari actual amb les dades corresponents i estalviar temps a l&#8217;usuari.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="visualization_ca.html" title="Visualització"
+             >previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, FAT - UPCnet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

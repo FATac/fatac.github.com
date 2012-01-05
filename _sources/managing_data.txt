@@ -3,8 +3,6 @@ Managing data
 
 AC REST services provide CRUD access to data. All communication is in JSON format.
 
-Note: data service base path should correspond to Configuration var RESOURCE_URI_NS plus the actual physical domain url.
-
 
 Upload
 ------------------
@@ -26,11 +24,11 @@ Http request body must contain a JSON list of key-value tuples.
 
 Multilingual properties can be specified with language code prefix for each value (see example).
 
-**POST Example**
+**PUT Example**
 
 ::
 
-    http://internetdomain.org/rest-path/resource/upload
+    http://internetdomain.org/ac/resource/upload
 
 ::
 
@@ -41,8 +39,8 @@ Multilingual properties can be specified with language code prefix for each valu
         "my:name":"Nueva York@es",
         "my:abbreviation":"NYC"
     }
-
-Note that all properties must be prefixed apart from "about", and "rdf:type" and "type" are both correct.
+    
+Note that language prefix is '@' plus language code.
 
 **OK Result**
 
@@ -66,7 +64,7 @@ Retrieves specific object data
 
 ::
 
-    http://internetdomain.org/rest-path/resource/New_York_City
+    http://internetdomain.org/ac/resource/New_York_City
 
 **OK Result**
 
@@ -103,10 +101,11 @@ Identifier and type cannot be changed.
 
 ::
 
-    http://internetdomain.org/rest-path/resource/New_York_City/update
+    http://internetdomain.org/ac/resource/New_York_City/update
 
 ::
 
+	// Starting from previous example
     {
         "type":"Person",            // has no effect (same with "rdf:type")
         "name":"City of New York"   // changes property value (and turns to a single-value property)

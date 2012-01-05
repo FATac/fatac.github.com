@@ -1,0 +1,540 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuració &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0a1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
+    <link rel="next" title="Gestió de dades" href="managing_data_ca.html" />
+    <link rel="prev" title="Introducció" href="introduction_ca.html" />
+<link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
+
+  </head>
+  <body>
+<div class="header">
+    <a href="#">
+        <img alt="Logo" src="_static/logo.jpg" class="logo" />
+    </a>
+</div>
+    
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="managing_data_ca.html" title="Gestió de dades"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction_ca.html" title="Introducció"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Configuració</a><ul>
+<li><a class="reference internal" href="#pas-1r-virtuoso">Pas 1r: Virtuoso</a></li>
+<li><a class="reference internal" href="#pas-2n-solr">Pas 2n: Solr</a></li>
+<li><a class="reference internal" href="#pas-3er-propietats-principals">Pas 3er: Propietats principals</a></li>
+<li><a class="reference internal" href="#pas-4t-reiniciar">Pas 4t: Reiniciar</a></li>
+<li><a class="reference internal" href="#pas-5e-script-legal">Pas 5è: Script legal</a></li>
+<li><a class="reference internal" href="#pas-6e-mapeig-de-dades">Pas 6è: Mapeig de dades</a></li>
+<li><a class="reference internal" href="#pas-7e-patrons-de-classe">Pas 7è: Patrons de classe</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="introduction_ca.html"
+                        title="previous chapter">Introducció</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="managing_data_ca.html"
+                        title="next chapter">Gestió de dades</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/configuration_ca.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="configuracio">
+<h1>Configuració<a class="headerlink" href="#configuracio" title="Permalink to this headline">¶</a></h1>
+<p>Cal definir diversos aspectes per tal que Arts Combinatòries (AC) funcioni amb una nova Ontologia. Aquesta pàgina mostra pas a pas el procediment de configuració.</p>
+<div class="section" id="pas-1r-virtuoso">
+<h2>Pas 1r: Virtuoso<a class="headerlink" href="#pas-1r-virtuoso" title="Permalink to this headline">¶</a></h2>
+<p>És necessari establir la configuració incial del Virtuoso. Accedeix a la consola de Virtuoso Conductor (per defecte: <a class="reference external" href="http://localhost:8890/conductor/">http://localhost:8890/conductor/</a> amb usuari i contrassenya &#8220;dba&#8221;). Clicar a &#8220;Interactive SQL&#8221; a la dreta, i executar l&#8217;script SQL següent:</p>
+<p>Some Virtuoso initial configuration is necessary. Access to Virtuoso Conductor console (default should be: <a class="reference external" href="http://localhost:8890/conductor/">http://localhost:8890/conductor/</a> with both user and password &#8220;dba&#8221;). Click &#8220;Interactive SQL&#8221; on the right, and run the next sql script:</p>
+<div class="highlight-python"><pre>-- Base script which creates necessary data structure for managing users, rights and uploaded media and objects
+    -- Suitable (only?) for Openlink Virtuoso sql implementation
+
+    DROP TABLE db.dba._media;
+    DROP TABLE db.dba._thumbnail;
+    DROP TABLE db.dba._right;
+    DROP TABLE db.dba._identifier_counter;
+    DROP TABLE db.dba._autodata;
+    DROP TABLE db.dba._resource_statistics;
+
+    CREATE TABLE db.dba._resource_statistics (
+            identifier VARCHAR(150),
+            visitCounter BIGINT,
+            creationMoment BIGINT,
+            lastMoment BIGINT
+    )
+
+    CREATE TABLE db.dba._media (
+            SID INT IDENTITY,
+            mediaId VARCHAR(60),
+            path VARCHAR(500),
+            moment TIMESTAMP
+    )
+
+    CREATE TABLE db.dba._thumbnail (
+            SID INT IDENTITY,
+            objectId VARCHAR(60),
+            path VARCHAR(500),
+            moment TIMESTAMP
+    )
+
+    CREATE TABLE db.dba._right (
+            SID INT IDENTITY,
+            objectId VARCHAR(60),
+            rightLevel INT
+    )
+
+    CREATE TABLE db.dba._identifier_counter (
+            identifier VARCHAR(150),
+            counter INT
+    )
+
+    CREATE TABLE db.dba._autodata (
+            keyName VARCHAR(100),
+            keyValue VARCHAR(100),
+            name VARCHAR(100),
+            defaultValue VARCHAR(100)
+    )
+
+    --GRANT EXECUTE ON DB.DBA.SPARQL_DELETE_DICT_CONTENT TO "SPARQL";
+    GRANT ALL PRIVILEGES TO "SPARQL";</pre>
+</div>
+<p>(Es pot descomentar els &#8220;drops&#8221; per netejar les taules)</p>
+<p>A continuació, clic a la pestanya &#8220;RDF&#8221; i després &#8220;Namespaces&#8221;. Cal afegir aquí totes les ontologies relacionades que no apareguin a la llista, aquestes ontologies són les especificades a la propietat &#8220;ONTOLOGY_NAMESPACES&#8221; (Pas 3r).</p>
+</div>
+<div class="section" id="pas-2n-solr">
+<h2>Pas 2n: Solr<a class="headerlink" href="#pas-2n-solr" title="Permalink to this headline">¶</a></h2>
+<p>Un cop instal·lat el Solr, cal utilitzar un schema.xml específic. Aquest es genera d&#8217;acord amb les especificacions de mapeig (veure Pas 6è) i d&#8217;acord amb una &#8220;schema&#8221; base. Aquest esquema base és un arxiu situat al directori &#8220;solr&#8221; (referenciat a la variable &#8220;SOLR_PATH&#8221; del Pas 3r), amb exactament el contingut següent:</p>
+<div class="highlight-python"><pre>&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+
+&lt;schema name="mySchema" version="1.4"&gt;
+
+         &lt;types&gt;
+            &lt;fieldType name="identifier" class="solr.StrField" sortMissingLast="true" omitNorms="true"/&gt;
+            &lt;fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/&gt;
+            &lt;fieldType name="long" class="solr.TrieLongField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
+            &lt;fieldType name="float" class="solr.TrieFloatField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
+            &lt;fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
+
+            &lt;fieldType name="string" class="solr.TextField" sortMissingLast="true" omitNorms="true"&gt;
+              &lt;analyzer type="index"&gt;
+                &lt;tokenizer class="solr.KeywordTokenizerFactory"/&gt;
+                &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+              &lt;/analyzer&gt;
+              &lt;analyzer type="query"&gt;
+                &lt;tokenizer class="solr.KeywordTokenizerFactory"/&gt;
+                &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+              &lt;/analyzer&gt;
+            &lt;/fieldType&gt;
+
+            &lt;fieldType name="text_general" class="solr.TextField" positionIncrementGap="100"&gt;
+              &lt;analyzer type="index"&gt;
+                &lt;tokenizer class="solr.WhitespaceTokenizerFactory"/&gt;
+                &lt;filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/&gt;
+                &lt;filter class="solr.LowerCaseFilterFactory" /&gt;
+                &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+              &lt;/analyzer&gt;
+              &lt;analyzer type="query"&gt;
+                &lt;tokenizer class="solr.WhitespaceTokenizerFactory"/&gt;
+                &lt;filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/&gt;
+                &lt;filter class="solr.LowerCaseFilterFactory" /&gt;
+                &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+              &lt;/analyzer&gt;
+            &lt;/fieldType&gt;
+         &lt;/types&gt;
+
+        &lt;!-- FIELDS_INSERTION_MARK --&gt;
+
+         &lt;uniqueKey&gt;id&lt;/uniqueKey&gt;
+
+         &lt;defaultSearchField&gt;id&lt;/defaultSearchField&gt;
+
+         &lt;solrQueryParser defaultOperator="OR"/&gt;
+
+&lt;/schema&gt;</pre>
+</div>
+</div>
+<div class="section" id="pas-3er-propietats-principals">
+<h2>Pas 3er: Propietats principals<a class="headerlink" href="#pas-3er-propietats-principals" title="Permalink to this headline">¶</a></h2>
+<p>El primer que hem de fer per a configurar AC és definir l&#8217;arxiu de propietats &#8220;config.json&#8221;. Aquest arxiu és el primer que s&#8217;utilitza i ha d&#8217;estar al directori actual (current directory). Si no sabeu quin és el directori actual podeu mirar el log d&#8217;AC en el moment d&#8217;inici de l&#8217;aplicació. El següent bloc mostra un exemple de les propietats requerides i possibles valors.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;__comment_0&quot;</span><span class="p">:</span><span class="s">&quot;Configuracio diversa&quot;</span><span class="p">,</span>
+
+        <span class="s">&quot;THUMBNAIL_WIDTH&quot;</span><span class="p">:</span><span class="mi">250</span><span class="p">,</span>
+        <span class="s">&quot;THUMBNAIL_HEIGHT&quot;</span><span class="p">:</span><span class="mi">180</span><span class="p">,</span>
+        <span class="s">&quot;MEDIA_CONVERSION_PROFILES&quot;</span><span class="p">:[</span><span class="s">&quot;dv&quot;</span><span class="p">,</span> <span class="s">&quot;mpg&quot;</span><span class="p">,</span> <span class="s">&quot;avi&quot;</span><span class="p">,</span> <span class="s">&quot;aif&quot;</span><span class="p">,</span> <span class="s">&quot;mov&quot;</span><span class="p">],</span>
+    <span class="s">&quot;MEDIA_AUTOCONVERT&quot;</span><span class="p">:</span><span class="s">&quot;false&quot;</span><span class="p">,</span>
+        <span class="s">&quot;LANGUAGE_LIST&quot;</span><span class="p">:[</span><span class="s">&quot;ca&quot;</span><span class="p">,</span> <span class="s">&quot;en&quot;</span><span class="p">,</span> <span class="s">&quot;es&quot;</span><span class="p">,</span> <span class="s">&quot;fr&quot;</span><span class="p">,</span> <span class="s">&quot;it&quot;</span><span class="p">,</span> <span class="s">&quot;de&quot;</span><span class="p">],</span>
+        <span class="s">&quot;USER_LEVEL&quot;</span><span class="p">:[</span><span class="s">&quot;*&quot;</span><span class="p">,</span> <span class="s">&quot;Member&quot;</span><span class="p">,</span> <span class="s">&quot;Manager+Reviewer&quot;</span><span class="p">,</span> <span class="s">&quot;Site Administrator&quot;</span><span class="p">],</span>
+
+        <span class="s">&quot;__comment_1&quot;</span><span class="p">:</span><span class="s">&quot;Les URL base dels serveis&quot;</span><span class="p">,</span>
+
+        <span class="s">&quot;RDFDB_URL&quot;</span><span class="p">:</span><span class="s">&quot;jdbc:virtuoso://myhost:1111&quot;</span><span class="p">,</span>
+        <span class="s">&quot;RDFDB_USER&quot;</span><span class="p">:</span><span class="s">&quot;dba&quot;</span><span class="p">,</span>
+        <span class="s">&quot;RDFDB_PASS&quot;</span><span class="p">:</span><span class="s">&quot;dba&quot;</span><span class="p">,</span>
+        <span class="s">&quot;REST_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myhost:8080/rest/&quot;</span><span class="p">,</span>
+        <span class="s">&quot;SOLR_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myhost:8080/solr/&quot;</span><span class="p">,</span>
+        <span class="s">&quot;VIDEO_SERVICES_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myhost:8080/videoservices/rest/&quot;</span><span class="p">,</span>
+
+    <span class="s">&quot;__comment_2&quot;</span><span class="p">:</span><span class="s">&quot;Les ontologies i els namespaces (qualsevo canvi implicarà corregir tots els registres existents a la BD)&quot;</span><span class="p">,</span>
+
+        <span class="s">&quot;RESOURCE_URI_NS&quot;</span><span class="p">:</span><span class="s">&quot;http://localhost:8080/ArtsCombinatoriesRest/resource/&quot;</span><span class="p">,</span>
+        <span class="s">&quot;RESOURCE_PREFIX&quot;</span><span class="p">:</span><span class="s">&quot;ac_res&quot;</span><span class="p">,</span>
+        <span class="s">&quot;ONTOLOGY_NAMESPACES&quot;</span><span class="p">:[</span>
+                <span class="s">&quot;http://localhost:8080/rest/ontology/my#&quot;</span><span class="p">,</span> <span class="s">&quot;my&quot;</span><span class="p">,</span>
+                <span class="s">&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;</span><span class="p">,</span> <span class="s">&quot;rdf&quot;</span><span class="p">,</span>
+                <span class="s">&quot;http://www.w3.org/2000/01/rdf-schema#&quot;</span><span class="p">,</span> <span class="s">&quot;rdfs&quot;</span><span class="p">,</span>
+                <span class="s">&quot;http://dublincore.org/2010/10/11/dcterms.rdf#&quot;</span><span class="p">,</span> <span class="s">&quot;dcterms&quot;</span>
+        <span class="p">],</span>
+
+        <span class="s">&quot;__comment_3&quot;</span><span class="p">:</span><span class="s">&quot;Els directoris base on AC allotjarà o accedirà a continguts i configuracions&quot;</span><span class="p">,</span>
+
+        <span class="s">&quot;CONFIGURATIONS_PATH&quot;</span><span class="p">:</span><span class="s">&quot;/achome/json/&quot;</span><span class="p">,</span>
+        <span class="s">&quot;SOLR_PATH&quot;</span><span class="p">:</span><span class="s">&quot;/achome/solr/&quot;</span><span class="p">,</span>
+        <span class="s">&quot;MEDIA_PATH&quot;</span><span class="p">:</span><span class="s">&quot;/achome/media/&quot;</span><span class="p">,</span>
+        <span class="s">&quot;ONTOLOGY_PATH&quot;</span><span class="p">:</span><span class="s">&quot;/achome/myontology.owl&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>THUMBNAIL_WIDTH i THUMBNAIL_HEIGHT determina la mida de les miniatures generades.</p>
+<p>MEDIA_CONVERSION_PROFILES enumera extensions vídeo/àudio adequats per una conversió, ordenats per número de perfil (p.ex: &#8220;dv&#8221; és perfil 1, &#8220;mpg&#8221; és perfil 2, etc.).</p>
+<p>MEDIA_AUTOCONVERT posat a &#8220;true&#8221; si cal que cada cop que es pugi un fitxer mèdia, aquest sigui convertit automàticament d&#8217;acord amb els perfils i la propietat anterior. En altre cas sempre hi haurà disponible el servei &#8220;convert&#8221; (veure secció Gestió de Medias).</p>
+<p>LANGUAGE_LIST enumera els codis d&#8217;idioma que s&#8217;espera que siguin emprats en els camps de les propietats (el primer de la llista serà el considerat com l&#8217;idioma d&#8217;accés per defecte).</p>
+<p>USER_LEVEL especifica el grau d&#8217;accés legal que té cada rol d&#8217;usuari, ordenats de més a menys restricció (&#8220;*&#8221; significa qualsevol rol). Com que només hi ha 4 nivells de restricció, aquesta llista hauria de contenir sempre 4 elements. Cada element pot contenir més d&#8217;un rol, separat per &#8216;+&#8217; (p.ex: &#8220;Manager+Reviewer&#8221;).</p>
+<p>ONTOLOGY_NAMESPACES estableix un prefix per a cada namespace d&#8217;Ontologia, aquesta relació també ha d&#8217;aparèixer la llista &#8220;namespaces&#8221; del Virtuoso (veure Pas 1r). La primera ontologia especificada ha de ser necessariament aquella que hagi estat creada (o escollida) especialment per la web semàntica (corresponent a l&#8217;arxiu especificat a la variable &#8220;ONTOLOGY_PATH&#8221;) i la resta d&#8217;ontologies seran aquelles importades a l&#8217;ontologia principal. Generalment, els esquemes RDF i RDFS haurien de ser inclosos sempre.</p>
+<p>AC requereix la següent estructura de directoris:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>[CONFIGURATIONS_PATH]</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>legal</dt>
+<dd><ul class="first last simple">
+<li>legal.json (requerit)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>mapping</dt>
+<dd><ul class="first last simple">
+<li>mapping.json (requerit)</li>
+<li>search.json (opcional)</li>
+<li>(opcionalment, un arxiu json per a cada classe de l&#8217;Ontologia, amb el seu prefix, per exemple &#8220;foaf:Person.json&#8221;)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>[SOLR_PATH] (no confondre amb el directory Home del Solr)</dt>
+<dd><ul class="first last simple">
+<li>schema.xml-EMPTY (requerit)</li>
+<li>data.xml (autogenerat per l&#8217;aplicació cada cop que es faci una indexació a Solr, i contindrà les dades indexades)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>[MEDIA_PATH]</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>thumbnail</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>classes</dt>
+<dd><ul class="first last simple">
+<li>default.jpg (requerit. Miniatura per defecte de tots els objectes. No té perquè ser d&#8217;una mida específica)</li>
+<li>(Opcionalment, una miniatura per defecte per a cada classe amb el seu prefix, exemple &#8220;foaf:Person.jpg&#8221;)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">[ONTOLOGY_PATH] (Ruta completa a l&#8217;arxiu que conté l&#8217;ontologia principal del projecte)</p>
+</li>
+</ul>
+</div>
+<div class="section" id="pas-4t-reiniciar">
+<h2>Pas 4t: Reiniciar<a class="headerlink" href="#pas-4t-reiniciar" title="Permalink to this headline">¶</a></h2>
+<p>Cridant el servei &#8220;reset&#8221;, TOTES les dades i arxius media seran esborrats. També s&#8217;actualitzarà l&#8217;Ontologia principal amb la darrera versió (situada a ONTOLOGY_PATH).</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/reset?option=ontology&amp;confirm=CURRENT_DATE
+HTTP Method: GET
+Returns: "success" or "error"</pre>
+</div>
+<p>Poseu &#8220;option=ontology&#8221; si no voleu un reinici total, sinó només una recàrrega de totes les ontologies especificades a ONTOLOGY_NAMESPACES.</p>
+<p>En altre cas, per seguretat, cal omplir el paràmetre &#8220;confirm&#8221; amb la data i hora actual del servidor formatat com: &#8220;dd/mm/yy hh:mm&#8221;</p>
+<p><strong>Exemples</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/ac/reset?option=ontology               // recarrega ontologies</pre>
+</div>
+<div class="highlight-python"><pre>http://internetdomain.org/ac/reset?confirm=11/11/2011 23:11      // reinicia dades i recarrega ontologies</pre>
+</div>
+</div>
+<div class="section" id="pas-5e-script-legal">
+<h2>Pas 5è: Script legal<a class="headerlink" href="#pas-5e-script-legal" title="Permalink to this headline">¶</a></h2>
+<p>AC proporciona funcionalitats per assignar drets legals als objectes media. L&#8217;assignació de drets és un procés assistit que pot ser guionat i completament personalitzat. (Si no tens intenció d&#8217;utilitzar aquesta característica pots obviar aquest pas)</p>
+<p>Hi ha un exemple auto-explicatiu a &#8220;legal.json&#8221; al directori de configuració, subdirectori &#8220;legal&#8221;. &#8220;legal.json&#8221; és el nom de l&#8217;arxiu que conté el guió que assistirà l&#8217;usuari. Les parts d&#8217;aquest guió són:</p>
+<ul class="simple">
+<li>StartBlock: bloc inicial</li>
+<li>Llista de Blocks: pels quals passarà l&#8217;execució del guió.</li>
+<li>Nom del block: serà usat per a referenciar-lo d&#8217;altres blocks.</li>
+<li>Descrició del block: finalitat simplement informativa.</li>
+<li>Dades del block: dades que seran sol·licitated a l&#8217;usuari (en forma de formulari) i seran utilitzades per a determinar l&#8217;assignació de drets. Aquestes dades són considerades globals, és a dir que poden ser usades o reassignades en blocks posteriors.</li>
+<li>Regles del block: evaluació lògica mitjançant expressions booleanes de les dades introduïdes en el procés. Aquesta evaluació por portar a un nou block indicat per la paraula &#8220;block&#8221; keyword, o a un color legal indicat per la paraula &#8216;result&#8217;. Les conseqüències funcionals de cada color s&#8217;expliquen a continuació:</li>
+</ul>
+<p>Hi ha quatre &#8220;colors de semàfor&#8221; que poden ser assignats a cada objecte. De menys a més restrictiu: &#8220;green&#8221;, &#8220;yellow&#8221;, &#8220;orange&#8221; i &#8220;red&#8221;. Cada un correspon a un nivell d&#8217;accés de 1 a 4. Per cada crida a un servei que proveeix audiovisuals o urls a audiovisual,l&#8217;identificador d&#8217;usuari ha de ser especificiat, en funció d&#8217;això i de la configuració (variable USER_LEVEL) se n&#8217;obtindrà el nivell. Exemple. User level = 1 , Object level = 2 &#8211;&gt; Fail / User level = 2 , Object level = 2 &#8211;&gt; OK.</p>
+</div>
+<div class="section" id="pas-6e-mapeig-de-dades">
+<h2>Pas 6è: Mapeig de dades<a class="headerlink" href="#pas-6e-mapeig-de-dades" title="Permalink to this headline">¶</a></h2>
+<p>El fitxer &#8220;mapping.json&#8221; (situat a (CONFIGURATIONS_PATH)/mapping) és un arxiu necessari amb la definició de la forma com les dades seran indexades al Solr. El mapeig de dades no és una traducció plana dels camps i classes de l&#8217;ontologia. Cal especificar-lo de tal manera que després pugui ser usat pels diversos aspectes funcionals de la plataforma (patrons, ordenació, filtres, etc. que s&#8217;expliquen en aquest manual).</p>
+<p>Suposem que tenim la classe Person definida a la nostra Ontologia, i que volem indexar diverses dades com: nom, biografia, data de neixement, lloc de neixement. La indexació de Person serà especificada de la següent manera:</p>
+<div class="highlight-python"><pre>{
+        "data":
+        [
+        {
+            "name":"Nom",                       // Especifica l'identificador de la dada, en aquest cas el Nom
+            "type":"string",                    // 'string' indexa la dada com a un "string" (fieldType) del schema.xml del Solr
+            "path":["my:Person.my:fullName"]    // Ruta a propietat de la classe, especificat de la forma (prefix:Nom-classe).(prefix:propietat)
+        },
+
+        {
+            "name":"Biografia",
+            "type":"text",                          // 'text' indexa la dada com a "text_general" (fildType) del schema.xml del Solr.
+            "path":["my:Person.my:Bio"]
+        },
+
+        {
+            "name":"DataNeixement",
+            "type":"date.year",                     // "date.year" extraurà l'any de la data continguda a la propietat (el format esperat és "dd/mm/yyyy" o simplement "yyyy")
+            "path":["my:Person.my:BirthDate"]
+        },
+
+        {
+            "name":"LlocNeixement",
+            "type":"string",
+            "path":["my:Person.my:BirthPlace=my:Location.my:Name"]   // El lloc de neixement és de fet un objecte referenciat (Location), per aquest motiu cal encadenar les relacions dels objectes mitjançant '='. Per aquest mètode es poden encadenar tants objectes com calguin.
+        }
+    ]
+}</pre>
+</div>
+<p>La ruta (path) és una llista, això permet especificar diverses rutes per un mateix camp indexat. Suposem que volem indexar noms de persones i sota una mateixa variable. El codi quedarà de la següent manera:</p>
+<div class="highlight-python"><pre>"data":
+    [
+        {
+            "name":"Nom",
+            "type":"string",
+            "path":["my:Person.my:fullName", "my:Location.my:Name"]     // Ruta a propietats tant de Person com de Location
+        },
+
+        /* resta del json ... */
+    ]</pre>
+</div>
+<p>Per proporcionar les cerques adequades, podem establir clàusules adicionals per a cada dada:</p>
+<ul class="simple">
+<li><strong>category</strong>: El Solr utilitzarà la característica &#8216;facets&#8217; per categoritzar les dades implicades agrupant-les i comptant les coincidències.</li>
+<li><strong>sortCategory</strong>: Si heu establert la clàusula anterior, els elements de la categoria s&#8217;ordenaran per número de coincidències. Es pot escollir l&#8217;ordenació alfabètica establint aquesta clàusula (és a dir, s&#8217;utilitzarà el paràmetre &#8220;facet.sort=index&#8221; del Solr).</li>
+<li><strong>multilingual</strong>: Aplicable a les propietats introduïdes en diversos idiomes a la base de dades RDF. Per exemple, la biografia d&#8217;una persona pot ser escrita en diversos idiomes. Això assegura que el Solr tornarà les dades només en l&#8217;idioma desitjat (veure secció Gestionant el Solr).</li>
+<li><strong>search</strong>: Pot semblar obvi que totes les dades indexades han de ser utilitzades per la cerca, però no té perquè ser així (algunes son introduïdes només a efectes d&#8217;ordenació, i d&#8217;altres nomñes a efectes de categorització). Cal establir aquesta clàusula explícitament perquè la dada sigui utilitzada en la cerca.</li>
+<li><strong>autocomplete</strong>: Si i només si heu establert la clàusula anterior, es pot optar per utilitzar la dada per autocompletar una cerca.</li>
+<li><strong>sort</strong>: Si volem que un camp pugui ser utilitzat posteriorment per a ordenar els resultats de cerca, cal especificar-ho explícitament amb aquesta clàusula. Això causarà forçosament que aquest camp serà de valor únic (a diferència de la resta que són multi-valor) per a permetre l&#8217;ordenació, per aquest motiu generalment els camps destinats a ordenació no s&#8217;utilitzaran per a res més.</li>
+</ul>
+<p>Per exemple: la dada &#8220;Nom&#8221; abans descrita (nom de persona o lloc), és interessant tant per a cercar com per a autocompletar. Però el nom de Person és especificat en un sol idioma, i el nom de Location és especificat en diferents idiomes. A més, categoritzarem els resultats per llocs però no per persones. D&#8217;acord amb això, el codi json anterior canvia a:</p>
+<div class="highlight-python"><pre>"data":
+    [
+        {
+            "name":"Persona",
+            "type":"string",
+            "path":["my:Person.my:fullName"],
+            "search":"yes",
+            "autocomplete":"yes"
+        },
+
+        {
+            "name":"Lloc",
+            "type":"string",
+            "path":["my:Location.my:Name", "my:Person.my:BirthPlace=my:Location.my:Name"]
+            "search":"yes",                     // Totes les clàusules són desactivades per defecte
+            "autocomplete":"yes",               // pel que han de ser especificades sempre que es necessitin
+            "multilingual":"yes",
+            "category":"yes"
+        }
+
+        /* resta del json ... */
+    ]</pre>
+</div>
+</div>
+<div class="section" id="pas-7e-patrons-de-classe">
+<h2>Pas 7è: Patrons de classe<a class="headerlink" href="#pas-7e-patrons-de-classe" title="Permalink to this headline">¶</a></h2>
+<p>Qualsevol cerca retornarà una llista d&#8217;IDs dels objectes que s&#8217;adeqüen als criteris de cerca. Per a poder generar la informació d&#8217;aquests objectes cal accedir individualment a cadascún mitjançant el servei &#8220;view&#8221; (veure secció Visualització), i per obtenir aquesta vista cal haver definit un patró per la classe d&#8217;aquest objecte. Per aquest motiu serà necessari que totes les classes referenciades d&#8217;arrel al &#8220;mapping.json&#8221; tinguin definit el seu patró corresponent.</p>
+<p>Tornant a l&#8217;exemple de la classe Person: el nom, data de neixement, i lloc de neixement els podem posar a la capçalera (header). La biografia al cos (body). I al peu (footer) hi podem incloure la classe &#8216;knows&#8217;, que relaciona persones entre si.</p>
+<p>El template resultant ha d&#8217;anomenar-se &#8220;my:Person.json&#8221; (generalitzant, (prefix:Nom-classe).json) al directory mapping de CONFIGURATIONS_PATH. El codi quedaria de la següent manera:</p>
+<div class="highlight-python"><pre>{
+        "className":"Person",
+
+        "sections":
+        [
+                {
+                        "name":"header",                    // nom de secció
+                        "data":[
+
+                            {
+                                        "name":"Nom",
+                                        "type":"text",
+                                        "path":["my:Person.my:fullName"]
+                                },
+
+                {
+                                        "name":"DataNeixement",
+                                        "type":"date",
+                                        "path":["my:Person.my:BirthDate"]
+                                },
+
+                {
+                                        "name":"LlocNeixement",
+                                        "type":"linkedObject",
+                                        "path":["my:Person.my:BirthPlace=my:Location.my:Name"]
+                                }
+                        ]
+                },
+
+                {
+                        "name":"body",
+                        "data":[
+
+                            {
+                                "name":"Biografia",
+                                "type":"text",
+                                "path":["my:Person.my:Bio"]
+                            }
+                        ]
+                },
+
+        {
+                        "name":"footer",
+                        "data":[
+
+                            {
+                                        "name":"Relacionats",
+                                        "type":"search",
+                    "path":["my:Person.id"],
+                    "value":["RelatedPeople:"]
+                                }
+                        ]
+                }
+        ]
+}</pre>
+</div>
+<p>El tipus de dada dels patrons és diferent del tipus explicat al pas anterior. Els tipus següents són els disponibles per a patrons:</p>
+<ul class="simple">
+<li><strong>text</strong>: adequat per la majoria de casos, resol la ruta (path) a un literal sense cap modificació adicional.</li>
+<li><strong>linkedObject</strong>: resol la ruta a un literal i hi afegeix l&#8217;id de l&#8217;objecte que el conté, separat per &#8216;&#64;&#8217;. Això permet crear enllaços html entre objectes. Per exemple: <a class="reference external" href="mailto:Londres&#37;&#52;&#48;london_id">Londres<span>&#64;</span>london_id</a>, l&#8217;enllaç referenciaria a <a class="reference external" href="http://myhost:8080/rest/resource/london_id/">http://myhost:8080/rest/resource/london_id/</a>...</li>
+<li><strong>objects</strong>: resol la ruta especificada on la propietat és de fet una relació, i pertant el resultat serà un identificador.</li>
+<li><strong>media</strong>: resol la ruta a una URL que conté un media.</li>
+<li><strong>date</strong>: i les seves específiques (<strong>date.year</strong>, <strong>date.day</strong>, <strong>date.month</strong>). Anàlog al &#8220;date&#8221; explicat al pas 6è.</li>
+<li><strong>search</strong>: aquest tipus combina la resolució de la ruta amb les cerques Solr per a generar conjunts de resultats per a l&#8217;usuari sobre els quals es puguin fer cerques adicionals. En aquest exemple: es cridarà una cerca que retornarà (&#8220;Person.knows:&#8221;) that know current person (&#8220;Person.id&#8221;). Per més informació sobre aquest element si us plau llegeix la secció de Visualització.</li>
+<li><strong>counter</strong>: resol la ruta i agrupa i fa un recompte de les coincidències.</li>
+</ul>
+<p>Adoneu-vos que <strong>text</strong>, <strong>objects</strong> and <strong>media</strong> fan el mateix a la pràctica. La diferència és que el valor que resolen es suposa que és per propòsits diferents. Veure la secció Visualització per a més informació sobre els tipus <strong>media</strong> i <strong>objects</strong>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="managing_data_ca.html" title="Gestió de dades"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction_ca.html" title="Introducció"
+             >previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, FAT - UPCnet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

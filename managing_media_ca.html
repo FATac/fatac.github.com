@@ -9,7 +9,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Managing media &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    <title>Gestió de media &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,8 +27,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
-    <link rel="next" title="Managing Solr" href="managing_solr.html" />
-    <link rel="prev" title="Managing data" href="managing_data.html" />
+    <link rel="next" title="Ús del Solr" href="managing_solr_ca.html" />
+    <link rel="prev" title="Gestió de dades" href="managing_data_ca.html" />
 <link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
 
   </head>
@@ -47,10 +47,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="managing_solr.html" title="Managing Solr"
+          <a href="managing_solr_ca.html" title="Ús del Solr"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="managing_data.html" title="Managing data"
+          <a href="managing_data_ca.html" title="Gestió de dades"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
       </ul>
@@ -59,26 +59,26 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Managing media</a><ul>
+<li><a class="reference internal" href="#">Gestió de media</a><ul>
 <li><a class="reference internal" href="#upload">Upload</a></li>
 <li><a class="reference internal" href="#get">Get</a></li>
 <li><a class="reference internal" href="#get-format">Get format</a></li>
 <li><a class="reference internal" href="#convert">Convert</a></li>
-<li><a class="reference internal" href="#get-with-profile">Get (with profile)</a></li>
+<li><a class="reference internal" href="#get-amb-perfil">Get (amb perfil)</a></li>
 <li><a class="reference internal" href="#delete">Delete</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="managing_data.html"
-                        title="previous chapter">Managing data</a></p>
+  <p class="topless"><a href="managing_data_ca.html"
+                        title="previous chapter">Gestió de dades</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="managing_solr.html"
-                        title="next chapter">Managing Solr</a></p>
+  <p class="topless"><a href="managing_solr_ca.html"
+                        title="next chapter">Ús del Solr</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/managing_media.txt"
+    <li><a href="_sources/managing_media_ca.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -102,88 +102,88 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="managing-media">
-<h1>Managing media<a class="headerlink" href="#managing-media" title="Permalink to this headline">¶</a></h1>
-<p>AC REST services provide media storage and some format conversion cappabilities.</p>
+  <div class="section" id="gestio-de-media">
+<h1>Gestió de media<a class="headerlink" href="#gestio-de-media" title="Permalink to this headline">¶</a></h1>
+<p>Els serveis REST d&#8217;Arts Combinatòries permeten emmagatzematge i conversió de formats d&#8217;arxius media.</p>
 <div class="section" id="upload">
 <h2>Upload<a class="headerlink" href="#upload" title="Permalink to this headline">¶</a></h2>
-<p>Uploads media file and proceeds to conversion if necessary (depending on Configuration)</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/upload?fn=FILE NAME
-HTTP Method: POST
-Accepted content: (any media type)
-Returns: full media URL or "error"</pre>
+<p>Carrega un fitxer media i procedeix a conversió si aplica (segons la configuració)</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/media/upload?fn=NOM FITXER
+Mètode HTTP: POST
+Contingut acceptat: (qualsevol)
+Retorna: la URL completa del media o bé error</pre>
 </div>
-<p>Http request body must contain binary file data.</p>
-<p>Parameter &#8220;fn&#8221; is required, and it is the file name including format extension.</p>
-<p><strong>POST Example</strong></p>
+<p>El cos de la petició HTTP ha de contenir la informació binària de l&#8217;arxiu.</p>
+<p>El paràmetre &#8220;fn&#8221; és necessari, ha de ser el nom de l&#8217;arxiu incloent el format.</p>
+<p><strong>Exemple POST</strong></p>
 <div class="highlight-python"><pre>http://myhost:8080/rest/media/upload?fn=myimage.jpg</pre>
 </div>
-<div class="highlight-python"><pre>[Media file binary content]</pre>
+<div class="highlight-python"><pre>[Contingut binari de l'arxiu media]</pre>
 </div>
-<p><strong>OK Result</strong></p>
-<div class="highlight-python"><pre>"_media_file_123"       // auto-generated id</pre>
+<p><strong>Resultat OK</strong></p>
+<div class="highlight-python"><pre>"_media_file_123"       // id auto-generat</pre>
 </div>
 </div>
 <div class="section" id="get">
 <h2>Get<a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h2>
-<p>Retrieves stored media</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/{identifier}
-HTTP Method: GET
-Returns: media file</pre>
+<p>Retorna el fitxer media</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/media/{identifier}
+Mètode HTTP: GET
+Retorna: arxiu media</pre>
 </div>
-<p><strong>GET Example</strong></p>
+<p><strong>Exemple GET</strong></p>
 <div class="highlight-python"><pre>http://myhost:8080/rest/media/_media_file_123</pre>
 </div>
-<p><strong>OK Result</strong></p>
-<div class="highlight-python"><pre>[Media file binary content]</pre>
+<p><strong>Resultat OK</strong></p>
+<div class="highlight-python"><pre>[Contingut binari de l'arxiu media]</pre>
 </div>
 </div>
 <div class="section" id="get-format">
 <h2>Get format<a class="headerlink" href="#get-format" title="Permalink to this headline">¶</a></h2>
-<p>Media file extension is also requestable</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/{identifier}/format
-HTTP Method: GET
-Returns: file extension</pre>
+<p>També es pot sol·licitat el format de l&#8217;arxiu</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/media/{identifier}/format
+Mètode HTTP: GET
+Retorna: extensió de l'arxiu</pre>
 </div>
-<p><strong>GET Example</strong></p>
+<p><strong>Exemple GET</strong></p>
 <div class="highlight-python"><pre>http://myhost:8080/rest/media/_media_file_123/format</pre>
 </div>
-<p><strong>OK Result</strong></p>
+<p><strong>Resultat OK</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">jpg</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="convert">
 <h2>Convert<a class="headerlink" href="#convert" title="Permalink to this headline">¶</a></h2>
-<p>Proceed to media conversion (if applicable, this is having defined this media format in MEDIA_CONVERSION_PROFILES)</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/{identifier}/convert
-HTTP Method: GET
-Returns: "success" or "error"</pre>
+<p>Procedeix a la conversió del media (si aplica, d&#8217;acord amb allò especificat a la variable de configuració MEDIA_CONVERSION_PROFILES)</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/media/{identifier}/convert
+Mètode HTTP: GET
+Retorna: "success" o "error"</pre>
 </div>
-<p>Upon conversion, a &#8220;master&#8221; (this is, a copy of the original) media file will be created and a converted file will be generated for each applicable profile. To access each generated media we use a profile clause as described next.</p>
+<p>Un cop convertit, es crearà un arxiu &#8220;master&#8221; (és a dir, una còpia de l&#8217;original), i es crearà un arxiu convertit per a cada perfil aplicable. Per accedir a cada media utilitzem el següent servei.</p>
 </div>
-<div class="section" id="get-with-profile">
-<h2>Get (with profile)<a class="headerlink" href="#get-with-profile" title="Permalink to this headline">¶</a></h2>
-<p>Retrieves stored media according to specified profile</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/{identifier}/profile/{profile}
-HTTP Method: GET
-Returns: media file</pre>
+<div class="section" id="get-amb-perfil">
+<h2>Get (amb perfil)<a class="headerlink" href="#get-amb-perfil" title="Permalink to this headline">¶</a></h2>
+<p>Retorna el media específic d&#8217;acord amb el perfil indicat.</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/media/{identifier}/profile/{profile}
+Mètode HTTP: GET
+Retorna: arxiu media</pre>
 </div>
-<p><strong>GET Examples</strong></p>
-<div class="highlight-python"><pre>http://myhost:8080/rest/media/_media_file_123/profile/master    // returns original file
-http://myhost:8080/rest/media/_media_file_123/profile/1         // returns the first profile conversion of this file, this is equivalent to calling the simple get service.
-http://myhost:8080/rest/media/_media_file_123/profile/2         // returns the second profile conversion</pre>
+<p><strong>Exemple GET</strong></p>
+<div class="highlight-python"><pre>http://myhost:8080/rest/media/_media_file_123/profile/master    // retorna l'arxiu original
+http://myhost:8080/rest/media/_media_file_123/profile/1         // retorna la conversió del media al primer perfil, això és equivalent no especificar cap perfil
+http://myhost:8080/rest/media/_media_file_123/profile/2         // retorna la conversió del media al segon perfil</pre>
 </div>
 <p><strong>OK Result</strong></p>
-<div class="highlight-python"><pre>[Media file binary content]</pre>
+<div class="highlight-python"><pre>[Contingut binari de l'arxiu media]</pre>
 </div>
 </div>
 <div class="section" id="delete">
 <h2>Delete<a class="headerlink" href="#delete" title="Permalink to this headline">¶</a></h2>
-<p>Deletes stored media and its converted files</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/{identifier}/delete
-HTTP Method: DELETE
-Returns: "success" or "error"</pre>
+<p>Esborra el media i els seus arxius convertits</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/media/{identifier}/delete
+Mètode HTTP: DELETE
+Retorna: "success" o "error"</pre>
 </div>
 </div>
 </div>
@@ -201,10 +201,10 @@ Returns: "success" or "error"</pre>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="managing_solr.html" title="Managing Solr"
+          <a href="managing_solr_ca.html" title="Ús del Solr"
              >next</a> |</li>
         <li class="right" >
-          <a href="managing_data.html" title="Managing data"
+          <a href="managing_data_ca.html" title="Gestió de dades"
              >previous</a> |</li>
         <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
       </ul>

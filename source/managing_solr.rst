@@ -89,7 +89,7 @@ Peforms search, JSON result comes straight from Solr engine.
 
 ::
 
-    http://internetdomain.org/rest-path/solr/search?s=James
+    http://internetdomain.org/ac/solr/search?s=James
 
 **OK Result**
 
@@ -145,7 +145,7 @@ Constructing filter parameter is quite simple. All we have to do is to chose wha
 
 ::
 
-    http://internetdomain.org/rest-path/solr/search?s=James&f=Birth:1930,Country:United+Kingdom   // Space characters can be replaced with "+"
+    http://internetdomain.org/ac/solr/search?s=James&f=Birth:1930,Country:United+Kingdom   // Space characters can be replaced with "+"
 
 **OK Result**
 
@@ -197,7 +197,7 @@ Performs autocomplete of a given search string, JSON result comes straight from 
 
 ::
 
-    http://internetdomain.org/rest-path/solr/autocomplete?s=Ja
+    http://internetdomain.org/ac/solr/autocomplete?s=Ja
 
 **OK Result**
 
@@ -252,8 +252,14 @@ To use this search configuration, we add "config" parameter with value "mycustom
 
 ::
 
-    http://internetdomain.org/rest-path/solr/search?s=James&config=mycustomsearch
+    http://internetdomain.org/ac/solr/search?s=James&config=mycustomsearch
 
 If "config" is not specified, "default" search configuration is used. If there's no such configuration or config value is not found in search.json, there's no additional filtering.
 
+To get the available search configurations, you can use this service:
 
+::
+
+    Service path: http://{host:port}/{appname}/solr/configurations
+    HTTP Method: GET
+    Returns: Solr JSON result or "error"

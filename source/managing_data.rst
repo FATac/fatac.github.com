@@ -28,7 +28,7 @@ Multilingual properties can be specified with language code prefix for each valu
 
 ::
 
-    http://internetdomain.org/rest-path/resource/upload
+    http://internetdomain.org/ac/resource/upload
 
 ::
 
@@ -64,7 +64,7 @@ Retrieves specific object data
 
 ::
 
-    http://internetdomain.org/rest-path/resource/New_York_City
+    http://internetdomain.org/ac/resource/New_York_City
 
 **OK Result**
 
@@ -101,7 +101,7 @@ Identifier and type cannot be changed.
 
 ::
 
-    http://internetdomain.org/rest-path/resource/New_York_City/update
+    http://internetdomain.org/ac/resource/New_York_City/update
 
 ::
 

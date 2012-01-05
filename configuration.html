@@ -105,7 +105,7 @@
             
   <div class="section" id="configuration">
 <h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
-<p>There are several aspects that must be defined in order to get the Semantic Web (SW) working with a new Ontology. This configuration guide is organized step-by-step.</p>
+<p>There are several aspects that must be defined in order to get Arts Combinatòries (AC) working with a new Ontology. This configuration guide is organized step-by-step.</p>
 <div class="section" id="step-1-virtuoso">
 <h2>Step 1: Virtuoso<a class="headerlink" href="#step-1-virtuoso" title="Permalink to this headline">¶</a></h2>
 <p>Some Virtuoso initial configuration is necessary. Access to Virtuoso Conductor console (default should be: <a class="reference external" href="http://localhost:8890/conductor/">http://localhost:8890/conductor/</a> with both user and password &#8220;dba&#8221;). Click &#8220;Interactive SQL&#8221; on the right, and run the next sql script:</p>
@@ -166,58 +166,68 @@ GRANT ALL PRIVILEGES TO "SPARQL";</pre>
 </div>
 <div class="section" id="step-2-solr">
 <h2>Step 2: Solr<a class="headerlink" href="#step-2-solr" title="Permalink to this headline">¶</a></h2>
-<p>Uppon Solr installation, a specific schema.xml must be used. It is generated according to mapping specifications (see Step 6) and according to a base schema. This base schema must be placed in conf/ directory of Solr as &#8220;schema.xml-EMPTY&#8221;, with exactly the next content:</p>
+<p>Upon Solr installation, a specific schema.xml must be used. This is generated according to mapping specifications (see Step 6) and to a base schema. This base schema is a file placed in &#8220;solr&#8221; directory (referenced in &#8220;SOLR_PATH&#8221; at Step 3), containing exactly the next content:</p>
 <div class="highlight-python"><pre>&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
 
 &lt;schema name="mySchema" version="1.4"&gt;
-    &lt;types&gt;
-        &lt;fieldType name="identifier" class="solr.StrField" sortMissingLast="true" omitNorms="true"/&gt;
-        &lt;fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/&gt;
-        &lt;fieldType name="long" class="solr.TrieLongField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
-        &lt;fieldType name="float" class="solr.TrieFloatField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
-        &lt;fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
 
-        &lt;fieldType name="string" class="solr.TextField" sortMissingLast="true" omitNorms="true"&gt;
-          &lt;analyzer type="index"&gt;
-            &lt;tokenizer class="solr.KeywordTokenizerFactory"/&gt;
-          &lt;/analyzer&gt;
-          &lt;analyzer type="query"&gt;
-            &lt;tokenizer class="solr.KeywordTokenizerFactory"/&gt;
-          &lt;/analyzer&gt;
-        &lt;/fieldType&gt;
+ &lt;types&gt;
+    &lt;fieldType name="identifier" class="solr.StrField" sortMissingLast="true" omitNorms="true"/&gt;
+    &lt;fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/&gt;
+    &lt;fieldType name="long" class="solr.TrieLongField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
+    &lt;fieldType name="float" class="solr.TrieFloatField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
+    &lt;fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
 
-        &lt;fieldType name="text_general" class="solr.TextField" positionIncrementGap="100"&gt;
-          &lt;analyzer type="index"&gt;
-            &lt;tokenizer class="solr.StandardTokenizerFactory"/&gt;
-            &lt;filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/&gt;
-          &lt;/analyzer&gt;
-          &lt;analyzer type="query"&gt;
-            &lt;tokenizer class="solr.StandardTokenizerFactory"/&gt;
-            &lt;filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/&gt;
-          &lt;/analyzer&gt;
-        &lt;/fieldType&gt;
-    &lt;/types&gt;
+    &lt;fieldType name="string" class="solr.TextField" sortMissingLast="true" omitNorms="true"&gt;
+      &lt;analyzer type="index"&gt;
+        &lt;tokenizer class="solr.KeywordTokenizerFactory"/&gt;
+        &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+      &lt;/analyzer&gt;
+      &lt;analyzer type="query"&gt;
+        &lt;tokenizer class="solr.KeywordTokenizerFactory"/&gt;
+        &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+      &lt;/analyzer&gt;
+    &lt;/fieldType&gt;
 
-    &lt;!-- FIELDS_INSERTION_MARK --&gt;
+    &lt;fieldType name="text_general" class="solr.TextField" positionIncrementGap="100"&gt;
+      &lt;analyzer type="index"&gt;
+        &lt;tokenizer class="solr.WhitespaceTokenizerFactory"/&gt;
+        &lt;filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/&gt;
+        &lt;filter class="solr.LowerCaseFilterFactory" /&gt;
+        &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+      &lt;/analyzer&gt;
+      &lt;analyzer type="query"&gt;
+        &lt;tokenizer class="solr.WhitespaceTokenizerFactory"/&gt;
+        &lt;filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/&gt;
+        &lt;filter class="solr.LowerCaseFilterFactory" /&gt;
+        &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+      &lt;/analyzer&gt;
+    &lt;/fieldType&gt;
+ &lt;/types&gt;
 
-    &lt;uniqueKey&gt;id&lt;/uniqueKey&gt;
-    &lt;defaultSearchField&gt;id&lt;/defaultSearchField&gt;
-    &lt;solrQueryParser defaultOperator="OR"/&gt;
+&lt;!-- FIELDS_INSERTION_MARK --&gt;
+
+ &lt;uniqueKey&gt;id&lt;/uniqueKey&gt;
+
+ &lt;defaultSearchField&gt;id&lt;/defaultSearchField&gt;
+
+ &lt;solrQueryParser defaultOperator="OR"/&gt;
+
 &lt;/schema&gt;</pre>
 </div>
 </div>
 <div class="section" id="step-3-main-properties">
 <h2>Step 3: Main properties<a class="headerlink" href="#step-3-main-properties" title="Permalink to this headline">¶</a></h2>
-<p>Once installed (see Installation) and Virtuoso is configured, the first thing we have to do is to configure the &#8216;config.json&#8217; file, you may place them on your current directory (when running on Tomcat, it is: $TOMCAT_HOME/webapps/ROOT/). Here&#8217;s a sample with some explanations:</p>
+<p>The first thing we have to do is to configure the &#8216;config.json&#8217; file, you may place them on your current directory. If you don&#8217;t know which is the current dir you can see the AC log. Here&#8217;s a sample with required properties and possible values:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
-        <span class="s">&quot;__comment_0&quot;</span><span class="p">:</span><span class="s">&quot;Mixed config&quot;</span><span class="p">,</span>
+    <span class="s">&quot;__comment_0&quot;</span><span class="p">:</span><span class="s">&quot;Mixed config&quot;</span><span class="p">,</span>
 
         <span class="s">&quot;THUMBNAIL_WIDTH&quot;</span><span class="p">:</span><span class="mi">250</span><span class="p">,</span>
         <span class="s">&quot;THUMBNAIL_HEIGHT&quot;</span><span class="p">:</span><span class="mi">180</span><span class="p">,</span>
         <span class="s">&quot;MEDIA_CONVERSION_PROFILES&quot;</span><span class="p">:[</span><span class="s">&quot;dv&quot;</span><span class="p">,</span> <span class="s">&quot;mpg&quot;</span><span class="p">,</span> <span class="s">&quot;avi&quot;</span><span class="p">,</span> <span class="s">&quot;aif&quot;</span><span class="p">,</span> <span class="s">&quot;mov&quot;</span><span class="p">],</span>
         <span class="s">&quot;MEDIA_AUTOCONVERT&quot;</span><span class="p">:</span><span class="s">&quot;false&quot;</span><span class="p">,</span>
         <span class="s">&quot;LANGUAGE_LIST&quot;</span><span class="p">:[</span><span class="s">&quot;ca&quot;</span><span class="p">,</span> <span class="s">&quot;en&quot;</span><span class="p">,</span> <span class="s">&quot;es&quot;</span><span class="p">,</span> <span class="s">&quot;fr&quot;</span><span class="p">,</span> <span class="s">&quot;it&quot;</span><span class="p">,</span> <span class="s">&quot;de&quot;</span><span class="p">],</span>
-        <span class="s">&quot;USER_LEVEL&quot;</span><span class="p">:[</span><span class="s">&quot;*&quot;</span><span class="p">,</span> <span class="s">&quot;Member&quot;</span><span class="p">,</span> <span class="s">&quot;Manager Reviewer&quot;</span><span class="p">,</span> <span class="s">&quot;Site Administrator&quot;</span><span class="p">],</span>
+        <span class="s">&quot;USER_LEVEL&quot;</span><span class="p">:[</span><span class="s">&quot;*&quot;</span><span class="p">,</span> <span class="s">&quot;Member&quot;</span><span class="p">,</span> <span class="s">&quot;Manager+Reviewer&quot;</span><span class="p">,</span> <span class="s">&quot;Site Administrator&quot;</span><span class="p">],</span>
 
         <span class="s">&quot;__comment_1&quot;</span><span class="p">:</span><span class="s">&quot;Services base URLs and connection strings&quot;</span><span class="p">,</span>
 
@@ -228,7 +238,7 @@ GRANT ALL PRIVILEGES TO "SPARQL";</pre>
         <span class="s">&quot;SOLR_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myhost:8080/solr/&quot;</span><span class="p">,</span>
         <span class="s">&quot;VIDEO_SERVICES_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myhost:8080/videoservices/rest/&quot;</span><span class="p">,</span>
 
-        <span class="s">&quot;__comment_2&quot;</span><span class="p">:</span><span class="s">&quot;Ontology namespaces (After any change, all existing triples must be fixed)&quot;</span><span class="p">,</span>
+    <span class="s">&quot;__comment_2&quot;</span><span class="p">:</span><span class="s">&quot;Ontology namespaces (After any change, all existing triples must be fixed)&quot;</span><span class="p">,</span>
 
         <span class="s">&quot;RESOURCE_URI_NS&quot;</span><span class="p">:</span><span class="s">&quot;http://localhost:8080/ArtsCombinatoriesRest/resource/&quot;</span><span class="p">,</span>
         <span class="s">&quot;RESOURCE_PREFIX&quot;</span><span class="p">:</span><span class="s">&quot;ac_res&quot;</span><span class="p">,</span>
@@ -239,7 +249,7 @@ GRANT ALL PRIVILEGES TO "SPARQL";</pre>
                 <span class="s">&quot;http://dublincore.org/2010/10/11/dcterms.rdf#&quot;</span><span class="p">,</span> <span class="s">&quot;dcterms&quot;</span>
         <span class="p">],</span>
 
-        <span class="s">&quot;__comment_3&quot;</span><span class="p">:</span><span class="s">&quot;File system paths. It&#39;s recommended that they all have project home folder as parent&quot;</span><span class="p">,</span>
+        <span class="s">&quot;__comment_3&quot;</span><span class="p">:</span><span class="s">&quot;Base directories that will be used by AC to allocate or access content and contiguratios&quot;</span><span class="p">,</span>
 
         <span class="s">&quot;CONFIGURATIONS_PATH&quot;</span><span class="p">:</span><span class="s">&quot;/achome/json/&quot;</span><span class="p">,</span>
         <span class="s">&quot;SOLR_PATH&quot;</span><span class="p">:</span><span class="s">&quot;/achome/solr/&quot;</span><span class="p">,</span>
@@ -252,8 +262,8 @@ GRANT ALL PRIVILEGES TO "SPARQL";</pre>
 <p>MEDIA_CONVERSION_PROFILES enumerates video/audio file extensions suitable for conversion, ordered by profile number (e.g.: &#8220;dv&#8221; is profile 1, &#8220;mpg&#8221; is profile 2, etc.).</p>
 <p>MEDIA_AUTOCONVERT set to &#8220;true&#8221; if you require that video/audo files to be converted once uploaded. Otherwise you can use &#8220;convert&#8221; service (see Managing Media section).</p>
 <p>LANGUAGE_LIST enumerates codes of languages that are expected to be used in data base fields (the first one is used as default language).</p>
-<p>USER_LEVEL specifies the degree of legal access that have each user role, ordered from more to less restrictions (&#8220;*&#8221; means any role).</p>
-<p>ONTOLOGY_NAMESPACES stablishes a prefix for each ontology/schema namespace, this prefix must also appear on namespaces list in Virtuoso (see Step 0). The first specified ontology must be the one specially created for this project (myOntology in the example), other specified ontologies/schemas must be the ones included on the first one. Generally, RDF and RDFS schemas should be always included.</p>
+<p>USER_LEVEL specifies the degree of legal access that have each user role, ordered from more to less restrictions (&#8220;*&#8221; means any role). This list should contain only 4 elements as there are only 4 restriction levels. Each elements may contain more than one role, separated by &#8216;+&#8217; (p.ex: &#8220;Manager+Reviewer&#8221;)</p>
+<p>ONTOLOGY_NAMESPACES stablishes a prefix for each ontology/schema namespace, this prefix must also appear on namespaces list in Virtuoso (see Step 1). The first specified ontology must be the one specially created for this project (myOntology in the example), other specified ontologies/schemas must be the ones included on the first one. Generally, RDF and RDFS schemas should be always included.</p>
 <p>AC requires the next folder and file structure in order to allocate and use its files:</p>
 <ul>
 <li><dl class="first docutils">
@@ -326,9 +336,9 @@ Returns: "success" or "error"</pre>
 <p>Set &#8220;option=ontology&#8221; if you do not want a total reset, but only a reload of all ontologies specified in ONTOLOGY_NAMESPACES.</p>
 <p>Otherwise, for safety, &#8220;confirm&#8221; must be filled with current server date and time formated as &#8220;dd/mm/yy hh:mm&#8221;</p>
 <p><strong>Examples</strong></p>
-<div class="highlight-python"><pre>http://internetdomain.org/rest-path/reset?option=ontology               // ontologies reload</pre>
+<div class="highlight-python"><pre>http://internetdomain.org/ac/reset?option=ontology               // ontologies reload</pre>
 </div>
-<div class="highlight-python"><pre>http://internetdomain.org/rest-path/reset?confirm=11/11/2011 23:11      // data reset and ontologies reload</pre>
+<div class="highlight-python"><pre>http://internetdomain.org/ac/reset?confirm=11/11/2011 23:11      // data reset and ontologies reload</pre>
 </div>
 </div>
 <div class="section" id="step-5-legal-script">
@@ -496,7 +506,7 @@ Returns: "success" or "error"</pre>
 <p>Data &#8216;type&#8217; clause has not much to do with &#8216;type&#8217; defined in previous step. The following types are all the ones available for templates:</p>
 <ul class="simple">
 <li><strong>text</strong>: suitable for most cases, it resolves path to literal value with no modification.</li>
-<li><strong>linkedObject</strong>: it shows resolved data path along with the referenced object id, separated by &#8216;&#64;&#8217;. For example: <a class="reference external" href="mailto:London&#37;&#52;&#48;my_london_id">London<span>&#64;</span>my_london_id</a>, this allows to create an hyperlink to the referenced object, which would be <a class="reference external" href="http://internetdomain.org/rest-path/resource/my_london_id/">http://internetdomain.org/rest-path/resource/my_london_id/</a>...</li>
+<li><strong>linkedObject</strong>: it shows resolved data path along with the referenced object id, separated by &#8216;&#64;&#8217;. For example: <a class="reference external" href="mailto:London&#37;&#52;&#48;my_london_id">London<span>&#64;</span>my_london_id</a>, this allows to create an hyperlink to the referenced object, which would be <a class="reference external" href="http://internetdomain.org/ac/resource/my_london_id/">http://internetdomain.org/ac/resource/my_london_id/</a>...</li>
 <li><strong>objects</strong>: resolves path to identifier value.</li>
 <li><strong>media</strong>: resolves path to media url value.</li>
 <li><strong>date</strong>: and its parts (<strong>date.year</strong>, <strong>date.day</strong>, <strong>date.month</strong>). Same effect as date defined at step 3.</li>

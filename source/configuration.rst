@@ -77,6 +77,7 @@ Step 2: Solr
 Upon Solr installation, a specific schema.xml must be used. This is generated according to mapping specifications (see Step 6) and to a base schema. This base schema is a file placed in "solr" directory (referenced in "SOLR_PATH" at Step 3), containing exactly the next content:
 
 ::
+
 	<?xml version="1.0" encoding="UTF-8" ?>
 	
 	<schema name="mySchema" version="1.4">
@@ -219,11 +220,11 @@ Otherwise, for safety, "confirm" must be filled with current server date and tim
 
 ::
 
-    http://internetdomain.org/rest-path/reset?option=ontology               // ontologies reload
+    http://internetdomain.org/ac/reset?option=ontology               // ontologies reload
 
 ::
 
-    http://internetdomain.org/rest-path/reset?confirm=11/11/2011 23:11      // data reset and ontologies reload
+    http://internetdomain.org/ac/reset?confirm=11/11/2011 23:11      // data reset and ontologies reload
 
 
 
@@ -412,7 +413,7 @@ The resulting template file must be placed as "Person.json" (generally, (Class-n
 Data 'type' clause has not much to do with 'type' defined in previous step. The following types are all the ones available for templates:
 
 - **text**: suitable for most cases, it resolves path to literal value with no modification.
-- **linkedObject**: it shows resolved data path along with the referenced object id, separated by '@'. For example: London@my_london_id, this allows to create an hyperlink to the referenced object, which would be http://internetdomain.org/rest-path/resource/my_london_id/...
+- **linkedObject**: it shows resolved data path along with the referenced object id, separated by '@'. For example: London@my_london_id, this allows to create an hyperlink to the referenced object, which would be http://internetdomain.org/ac/resource/my_london_id/...
 - **objects**: resolves path to identifier value.
 - **media**: resolves path to media url value.
 - **date**: and its parts (**date.year**, **date.day**, **date.month**). Same effect as date defined at step 3.

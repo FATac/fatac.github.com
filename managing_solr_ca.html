@@ -9,7 +9,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Managing Solr &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    <title>Ús del Solr &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,8 +27,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
-    <link rel="next" title="Visualization" href="visualization.html" />
-    <link rel="prev" title="Managing media" href="managing_media.html" />
+    <link rel="next" title="Visualització" href="visualization_ca.html" />
+    <link rel="prev" title="Gestió de media" href="managing_media_ca.html" />
 <link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
 
   </head>
@@ -47,10 +47,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="visualization.html" title="Visualization"
+          <a href="visualization_ca.html" title="Visualització"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="managing_media.html" title="Managing media"
+          <a href="managing_media_ca.html" title="Gestió de media"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
       </ul>
@@ -59,7 +59,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Managing Solr</a><ul>
+<li><a class="reference internal" href="#">Ús del Solr</a><ul>
 <li><a class="reference internal" href="#clear">Clear</a></li>
 <li><a class="reference internal" href="#commit">Commit</a></li>
 <li><a class="reference internal" href="#schema">Schema</a></li>
@@ -67,20 +67,20 @@
 <li><a class="reference internal" href="#update">Update</a></li>
 <li><a class="reference internal" href="#search">Search</a></li>
 <li><a class="reference internal" href="#autocomplete">Autocomplete</a></li>
-<li><a class="reference internal" href="#search-configurations">Search configurations</a></li>
+<li><a class="reference internal" href="#configuracions-de-cerca">Configuracions de cerca</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="managing_media.html"
-                        title="previous chapter">Managing media</a></p>
+  <p class="topless"><a href="managing_media_ca.html"
+                        title="previous chapter">Gestió de media</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="visualization.html"
-                        title="next chapter">Visualization</a></p>
+  <p class="topless"><a href="visualization_ca.html"
+                        title="next chapter">Visualització</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/managing_solr.txt"
+    <li><a href="_sources/managing_solr_ca.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -104,77 +104,77 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="managing-solr">
-<h1>Managing Solr<a class="headerlink" href="#managing-solr" title="Permalink to this headline">¶</a></h1>
-<p>Solr is a search engine that supports full-text search of indexed documents, plus features for categorization and data filtering. Managing Solr properly is critical to provide easy user access to uploaded Ontology objects. Solr should not be directly dealed with, but through REST services that read from JSON Mapping specifications (already introduced in Configuration).</p>
+  <div class="section" id="us-del-solr">
+<h1>Ús del Solr<a class="headerlink" href="#us-del-solr" title="Permalink to this headline">¶</a></h1>
+<p>Solr és un motor de cerca sobre els documents indexats, més característiques per categorització i filtrat de resultats. Utilitzar Solr adequadament és primordial per tal de proveir als usuaris d&#8217;un accés fàcil als objectes ontològics. Solr no hauria de ser utilitzat directament, sino a través del serveis REST que parteixen de les especificacions de mapeig JSON (ja esmentades a la Configuració).</p>
 <div class="section" id="clear">
 <h2>Clear<a class="headerlink" href="#clear" title="Permalink to this headline">¶</a></h2>
-<p>Clears all indexed data (commits automatically)</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/clear
-HTTP Method: GET
-Returns: "success" or "error"</pre>
+<p>Neteja totes les dades indexades.</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/solr/clear
+Mètode HTTP: GET
+Retorna: "success" o "error"</pre>
 </div>
 </div>
 <div class="section" id="commit">
 <h2>Commit<a class="headerlink" href="#commit" title="Permalink to this headline">¶</a></h2>
-<p>Commits recent indexation (not necessary)</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/commit
-HTTP Method: GET
-Returns: media file</pre>
+<p>Realitza commit (innecessari ja que és automàtic)</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/solr/commit
+Mètode HTTP: GET
+Retorna: media file</pre>
 </div>
 </div>
 <div class="section" id="schema">
 <h2>Schema<a class="headerlink" href="#schema" title="Permalink to this headline">¶</a></h2>
-<p>Generates schema from mapping JSON configuration.</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/clear
-HTTP Method: GET
-Returns: "success" or "error"</pre>
+<p>Genera el &#8220;schema&#8221; de la configuració de mapeig JSON.</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/solr/clear
+Mètode HTTP: GET
+Retorna: "success" o "error"</pre>
 </div>
-<p>NOTE: Solr must be restarted for new schema to take effect.</p>
+<p>NOTA: El solr ha de ser reiniciat per tal de carregar el nou esquema.</p>
 </div>
 <div class="section" id="reload">
 <h2>Reload<a class="headerlink" href="#reload" title="Permalink to this headline">¶</a></h2>
-<p>Peforms an update removing any existing data index. This process may take some time.</p>
-<p>Solr indexation can be found at (SOLR_PATH)/data.xml</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/reload
-HTTP Method: GET
-Returns: "success" or "error"</pre>
+<p>Realitza una actualització (servei update del Solr) esborrant totes les dades prèvies. Aquest procés por trigar una mica.</p>
+<p>La indexació Solr resultant es desa a l&#8217;arxiu: (SOLR_PATH)/data.xml</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/solr/reload
+Mètode HTTP: GET
+Retorna: "success" o "error"</pre>
 </div>
 </div>
 <div class="section" id="update">
 <h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
-<p>Indexates new data according to mapping JSON configuration. This process may take some time.</p>
-<p>Solr indexation can be found at (SOLR_PATH)/data.xml</p>
-<p>This call is not recommended as there may remain indexed documents of unexisting objects in ontology.</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/update
-HTTP Method: GET
-Returns: "success" or "error"</pre>
+<p>Realitza una actualització (servei update del Solr) mantenint les dades prèvies. Aquest procés por trigar una mica.</p>
+<p>La indexació Solr resultant es desa a l&#8217;arxiu: (SOLR_PATH)/data.xml</p>
+<p>En principi aquesta crida no es recomana ja que poden romandre documents indexats d&#8217;objectes inexistents a l&#8217;ontologia.</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/solr/update
+Mètode HTTP: GET
+Retorna: "success" or "error"</pre>
 </div>
 </div>
 <div class="section" id="search">
 <h2>Search<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h2>
-<p>Peforms search, JSON result comes straight from Solr engine.</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/search?s=Search&amp;f=Filter&amp;start=Start&amp;rows=Rows&amp;sort=Sort
-HTTP Method: GET
-Returns: Solr JSON result or "error"</pre>
+<p>Realitza la cerca, en aquest cas el resultat JSON ve directament del motor Solr.</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/solr/search?s=Search&amp;f=Filter&amp;start=Start&amp;rows=Rows
+Mètode HTTP: GET
+Retorna: Resultat JSON o "error"</pre>
 </div>
 <p>&#8220;s&#8221; Search parameter, contains general text search.</p>
 <p>&#8220;f&#8221; Filter parameter, defines results filtering in a &#8220;key:value&#8221; form sepparated by comas (see example below).</p>
 <p>&#8220;start&#8221; and &#8220;rows&#8221; parameters define result scoping to provide pagination.</p>
-<p>&#8220;sort&#8221; allows sorting results. Value must be field name to sort by, plus &#8220;desc&#8221; or &#8220;asc&#8221;. Any used field here must have &#8220;sort&#8221; clause in mapping.json file (see Configuration)</p>
-<p><strong>Search Example</strong></p>
+<p>&#8220;sort&#8221; permet ordenar els resultats. El valor ha de ser el nom del camp d&#8217;ordenació més &#8220;desc&#8221; o &#8220;asc&#8221; segons el cas. Qulsevol camp usat aquí ha de tenir la clàusula &#8220;sort&#8221; a l&#8217;arxiu mapping.json.</p>
+<p><strong>Exemple de cerca</strong></p>
 <div class="highlight-python"><pre>http://internetdomain.org/ac/solr/search?s=James</pre>
 </div>
-<p><strong>OK Result</strong></p>
+<p><strong>Resultat OK</strong></p>
 <div class="highlight-python"><pre>{
-    + "responseHeader": { ... },                    // Not relevant
+    + "responseHeader": { ... },                    // Irrellevant
     - "response":
         {
             "numFound": 277,
             "start": 0,
           - "docs": [
               - {
-                    "id": "James_Bond_ID"           // Note that search results consists in identifiers only, to get the full object data we use View services
+                    "id": "James_Bond_ID"           // Fixa't que els resultats contenen només l'identificador, per obtenir totes les dades de cada objecte utilitzem el servei "View"
                 },
 
               - {
@@ -191,7 +191,7 @@ Returns: Solr JSON result or "error"</pre>
 
     - "facet_counts": {
 
-         - "facet_fields": {                        // With adequate mapping we can get object categorization (see Configuration)
+         - "facet_fields": {                        // Amb el mapeig adequat, podem obtenir la categorització dels resultats (veure Configuració)
                 - "Birth": [
                     + "1901", "3",
                     + "1975", "2",
@@ -208,12 +208,13 @@ Returns: Solr JSON result or "error"</pre>
         }
 }</pre>
 </div>
-<p><strong>How filtering works</strong></p>
-<p>Constructing filter parameter is quite simple. All we have to do is to chose what category value we want to filter from &#8220;facet_fields&#8221; section of JSON Solr result. Still in previous example, say we want to filter by Birth year and Country with specific values for each. Filter could be: &#8220;Birth:1930,Country:United Kingdom&#8221;.</p>
-<p><strong>Filtering Example</strong></p>
-<div class="highlight-python"><pre>http://internetdomain.org/ac/solr/search?s=James&amp;f=Birth:1930,Country:United+Kingdom   // Space characters can be replaced with "+"</pre>
+<p><strong>Com filtrar els resultats</strong></p>
+<p>El paràmetre de filtre &#8220;f&#8221; es pot construir de forma simple. Dels camps que s&#8217;inclouen dins el bloc &#8220;facet_fields&#8221; del resultat Solr, n&#8217;utilitzem el nom i un valor com a criteri de filtre. Partint de l&#8217;exemple anterior, suposem que volem filtrar per any de neixement i país amb valors especifics. Per exemple: &#8220;Birth:1930,Country:United Kingdom&#8221;.
+Constructing filter parameter is quite simple. All we have to do is to chose what category value we want to filter from &#8220;facet_fields&#8221; section of JSON Solr result. Still in previous example, say we want to filter by Birth year and Country with specific values for each. Filter could be: &#8220;Birth:1930,Country:United Kingdom&#8221;.</p>
+<p><strong>Exemple de filtrat</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/ac/solr/search?s=James&amp;f=Birth:1930,Country:United+Kingdom   // Els espais es poden substituir per signe "+"</pre>
 </div>
-<p><strong>OK Result</strong></p>
+<p><strong>Resultat OK</strong></p>
 <div class="highlight-python"><pre>{
     + "responseHeader": { ... },
     - "response":
@@ -241,23 +242,23 @@ Returns: Solr JSON result or "error"</pre>
         }
 }</pre>
 </div>
-<p>Note that you can filter by two values of the same category (for example: &#8220;Year:1930,Year:1975&#8221;). In this case the filter will be non-exclusive.</p>
+<p>Si es filtra per dos valors de la mateixa categoria (per exemple: &#8220;Year:1930,Year:1975&#8221;), aquest filtre serà no exclusiu.</p>
 </div>
 <div class="section" id="autocomplete">
 <h2>Autocomplete<a class="headerlink" href="#autocomplete" title="Permalink to this headline">¶</a></h2>
-<p>Performs autocomplete of a given search string, JSON result comes straight from Solr engine.</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/autocomplete?s=Search
-HTTP Method: GET
-Returns: Solr JSON result or "error"</pre>
+<p>Realitza un autocompletar donada una cadena de text. El JSON resultat ve directament del motor Solr.</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/solr/autocomplete?s=Search
+Mètode HTTP: GET
+Retorna: Resultat JSOn o "error"</pre>
 </div>
-<p>&#8220;s&#8221; Search parameter, contains general text search.</p>
-<p><strong>Autocomplete Example</strong></p>
+<p>&#8220;s&#8221; Paràmetre de cerca que contindrà la cadena de text</p>
+<p><strong>Example d&#8217;autocompletar</strong></p>
 <div class="highlight-python"><pre>http://internetdomain.org/ac/solr/autocomplete?s=Ja</pre>
 </div>
-<p><strong>OK Result</strong></p>
+<p><strong>Resultat OK</strong></p>
 <div class="highlight-python"><pre>{
-    + "responseHeader": { ... },                    // Not relevant
-    + "response": { ... },                          // In autocomplete main response is neither relevant
+    + "responseHeader": { ... },                    // Irrellevant
+    + "response": { ... },                          // En autocompletar la resposta principal també és irrellevant
     - "facet_counts": {
 
          - "facet_fields": {
@@ -276,12 +277,13 @@ Returns: Solr JSON result or "error"</pre>
         }
 }</pre>
 </div>
-<p>Note that in autocomplete search, the faceted results comprise the fields marked as &#8220;autocomplete&#8221; in mapping.json (see Configuration).</p>
+<p>Fixa&#8217;t que en la cerca d&#8217;autocompletar, els resultats &#8220;facet&#8221; comprenen els camps marcats com &#8220;autocomplete&#8221; al mapping.json (veure Configuració).</p>
 </div>
-<div class="section" id="search-configurations">
-<h2>Search configurations<a class="headerlink" href="#search-configurations" title="Permalink to this headline">¶</a></h2>
-<p>It is possible to customize search modes from server side. This is done by editing or creating the search.json in CONFIGURATIONS_PATH/mapping/ folder. Configuring searches allowes to add extra filtering to client request to focus its searches to a particular scope.
-Say we want that, all searches focus only on Persons and Countries, ignoring other object types, and births from 1900 to 1950; the proper search.json would be as follows:</p>
+<div class="section" id="configuracions-de-cerca">
+<h2>Configuracions de cerca<a class="headerlink" href="#configuracions-de-cerca" title="Permalink to this headline">¶</a></h2>
+<p>És possible personalitzar modes de cerca des del servidor. Això es fa editant o creant l&#8217;arxiu search.json al directori CONFIGURATIONS_PATH/mapping/.
+Configurar cerques permet afegir filtrat addicional a les peticions del client per focalitzar els resultats a una vista particular.
+Suposem que volem que les cerques focalitzin només a persones i països, i per neixements entre 1900 i 1950. L&#8217;adequada configuració del search.json quedaria així:</p>
 <div class="highlight-python"><pre>{
     "name":"mycustomsearch"
     "type":"search",
@@ -291,18 +293,18 @@ Say we want that, all searches focus only on Persons and Countries, ignoring oth
 {
     "name":"default"
     "type":"search"
-    // it can be left blank if we do not need additional filtering
+    // cerca per defecte, es pot deixar en blanc si no volem filtrat adicional
 }</pre>
 </div>
-<p>To use this search configuration, we add &#8220;config&#8221; parameter with value &#8220;mycustomsearch&#8221;</p>
-<p><strong>Search Example</strong></p>
+<p>Per usar aquesta configuració, utilitzem el paràmetre &#8220;config&#8221; amb valor &#8220;mycustomsearch&#8221;</p>
+<p><strong>Example Cerca</strong></p>
 <div class="highlight-python"><pre>http://internetdomain.org/ac/solr/search?s=James&amp;config=mycustomsearch</pre>
 </div>
-<p>If &#8220;config&#8221; is not specified, &#8220;default&#8221; search configuration is used. If there&#8217;s no such configuration or config value is not found in search.json, there&#8217;s no additional filtering.</p>
-<p>To get the available search configurations, you can use this service:</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/configurations
-HTTP Method: GET
-Returns: Solr JSON result or "error"</pre>
+<p>Si la configuració no s&#8217;especifica, l&#8217;utilitza la configuració &#8220;default&#8221;. Si no hi ha el fitxer search.json, no hi ha filtrat adicional.</p>
+<p>Per obtenir les configuracions de cerca disponibles, es pot utilitzar el següent servei:</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/solr/configuration
+Mètode HTTP: GET
+Retorna: Resultat JSON o "error"</pre>
 </div>
 </div>
 </div>
@@ -320,10 +322,10 @@ Returns: Solr JSON result or "error"</pre>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="visualization.html" title="Visualization"
+          <a href="visualization_ca.html" title="Visualització"
              >next</a> |</li>
         <li class="right" >
-          <a href="managing_media.html" title="Managing media"
+          <a href="managing_media_ca.html" title="Gestió de media"
              >previous</a> |</li>
         <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
       </ul>

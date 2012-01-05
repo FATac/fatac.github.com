@@ -9,7 +9,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Managing data &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    <title>Gestió de dades &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,8 +27,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
-    <link rel="next" title="Managing media" href="managing_media.html" />
-    <link rel="prev" title="Configuration" href="configuration.html" />
+    <link rel="next" title="Gestió de media" href="managing_media_ca.html" />
+    <link rel="prev" title="Configuració" href="configuration_ca.html" />
 <link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
 
   </head>
@@ -47,10 +47,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="managing_media.html" title="Managing media"
+          <a href="managing_media_ca.html" title="Gestió de media"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="configuration.html" title="Configuration"
+          <a href="configuration_ca.html" title="Configuració"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
       </ul>
@@ -59,7 +59,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Managing data</a><ul>
+<li><a class="reference internal" href="#">Gestió de dades</a><ul>
 <li><a class="reference internal" href="#upload">Upload</a></li>
 <li><a class="reference internal" href="#read">Read</a></li>
 <li><a class="reference internal" href="#update">Update</a></li>
@@ -69,14 +69,14 @@
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="configuration.html"
-                        title="previous chapter">Configuration</a></p>
+  <p class="topless"><a href="configuration_ca.html"
+                        title="previous chapter">Configuració</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="managing_media.html"
-                        title="next chapter">Managing media</a></p>
+  <p class="topless"><a href="managing_media_ca.html"
+                        title="next chapter">Gestió de media</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/managing_data.txt"
+    <li><a href="_sources/managing_data_ca.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -100,50 +100,50 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="managing-data">
-<h1>Managing data<a class="headerlink" href="#managing-data" title="Permalink to this headline">¶</a></h1>
-<p>AC REST services provide CRUD access to data. All communication is in JSON format.</p>
+  <div class="section" id="gestio-de-dades">
+<h1>Gestió de dades<a class="headerlink" href="#gestio-de-dades" title="Permalink to this headline">¶</a></h1>
+<p>Els serveis REST d&#8217;Arts Combinatòries proporcionen accés CRUD a les dades. Tota comunicació es fa en format JSON.</p>
 <div class="section" id="upload">
 <h2>Upload<a class="headerlink" href="#upload" title="Permalink to this headline">¶</a></h2>
-<p>Creates a new object of specific type and data</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/resource/upload
-HTTP Method: PUT
-Accepted content: */json
-Returns: Identifier of uploaded object or "error"</pre>
+<p>Crea un nou objecte d&#8217;un tipus i amb un conjunt de dades determinades</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/resource/upload
+Mètode HTTP: PUT
+Contingut acceptat: */json
+Retorna: L'identificador de l'objecte creat o bé "error"</pre>
 </div>
-<p>Http request body must contain a JSON list of key-value tuples.</p>
-<p>&#8220;type&#8221; or &#8220;rdf:type&#8221; is a required key, otherwise returns error.</p>
-<p>&#8220;about&#8221; is a recommended key in order to generate proper object identifiers.</p>
-<p>Multilingual properties can be specified with language code prefix for each value (see example).</p>
-<p><strong>PUT Example</strong></p>
+<p>El cos de la crida HTTP ha de contenir una llista JSON de tuples nom-valor.</p>
+<p>&#8220;type&#8221; o &#8220;rdf:type&#8221; és una dada requerida, altrament retorna error.</p>
+<p>&#8220;about&#8221; és una dada recomanada per tal de generar adequadament l&#8217;identificador.</p>
+<p>Les propietats poden contenir valors multilingües, en aquest cas cal incloure el prefix d&#8217;idioma (veure exemple).</p>
+<p><strong>Exemple PUT</strong></p>
 <div class="highlight-python"><pre>http://internetdomain.org/ac/resource/upload</pre>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
     <span class="s">&quot;type&quot;</span><span class="p">:</span><span class="s">&quot;Location&quot;</span><span class="p">,</span>
     <span class="s">&quot;about&quot;</span><span class="p">:</span><span class="s">&quot;New York City&quot;</span><span class="p">,</span>
     <span class="s">&quot;my:name&quot;</span><span class="p">:</span><span class="s">&quot;New York City@en&quot;</span><span class="p">,</span>
-    <span class="s">&quot;my:name&quot;</span><span class="p">:</span><span class="s">&quot;Nueva York@es&quot;</span><span class="p">,</span>
+    <span class="s">&quot;my:name&quot;</span><span class="p">:</span><span class="s">&quot;Nova York@ca&quot;</span><span class="p">,</span>
     <span class="s">&quot;my:abbreviation&quot;</span><span class="p">:</span><span class="s">&quot;NYC&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Note that language prefix is &#8216;&#64;&#8217; plus language code.</p>
-<p><strong>OK Result</strong></p>
+<p>El prefix d&#8217;idioma és &#8216;&#64;&#8217; més el codi d&#8217;idioma.</p>
+<p><strong>Resultat OK</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;New_York_City&quot;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="read">
 <h2>Read<a class="headerlink" href="#read" title="Permalink to this headline">¶</a></h2>
-<p>Retrieves specific object data</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/resource/{identifier}
-HTTP Method: GET
-Returns: JSON object data</pre>
+<p>Retorna les dades d&#8217;un objecte específic</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/resource/{identifier}
+Mètode HTTP: GET
+Retorna: dades JSON</pre>
 </div>
-<p><strong>GET Example</strong></p>
+<p><strong>Exemple GET</strong></p>
 <div class="highlight-python"><pre>http://internetdomain.org/ac/resource/New_York_City</pre>
 </div>
-<p><strong>OK Result</strong></p>
+<p><strong>Resultat OK</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
     <span class="s">&quot;rdf:type&quot;</span><span class="p">:</span><span class="s">&quot;Location&quot;</span><span class="p">,</span>
     <span class="s">&quot;about&quot;</span><span class="p">:</span><span class="s">&quot;New York City&quot;</span><span class="p">,</span>
@@ -156,37 +156,37 @@ Returns: JSON object data</pre>
 </div>
 <div class="section" id="update">
 <h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
-<p>Updates specified object data.</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/resource/{identifier}/update
-HTTP Method: POST
-Accepted content: */json
-Returns: "success" or "error"</pre>
+<p>Actualitza les dades d&#8217;un objecte específic.</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/resource/{identifier}/update
+Mètode HTTP: POST
+Contingut acceptat: */json
+Retorna: "success" o "error"</pre>
 </div>
-<p>Http request body must contain a JSON list of key-value tuples.</p>
-<p>In order to remove any existing property, this must be sent with empty value. Unsent properties remain unchanged.</p>
-<p>Identifier and type cannot be changed.</p>
-<p><strong>POST Example</strong></p>
+<p>El cos de la crida HTTP ha de contenir una llista JSON de tuples nom-valor.</p>
+<p>Per tal d&#8217;esborrar alguna propietat existent, aquesta s&#8217;ha d&#8217;enviar amb un valor buit. Les propietats no enviades no pateixen cap modificació.</p>
+<p>L&#8217;identificador i el tipus no es poden canviar.</p>
+<p><strong>Exemple POST</strong></p>
 <div class="highlight-python"><pre>http://internetdomain.org/ac/resource/New_York_City/update</pre>
 </div>
-<div class="highlight-python"><pre>    // Starting from previous example
+<div class="highlight-python"><pre>    // Partint de l'exemple anterior
 {
-    "type":"Person",            // has no effect (same with "rdf:type")
-    "name":"City of New York"   // changes property value (and turns to a single-value property)
-    "abbrevitation":"",         // removes property
-    "population":"8175133",     // creates property
+    "type":"Person",            // no té cap efecte (el mateix per "rdf:type")
+    "name":"City of New York"   // canvia el valor (i passa a tenir un sol valor)
+    "abbrevitation":"",         // esborra la propietat
+    "population":"8175133",     // crea la propietat
 }</pre>
 </div>
-<p><strong>OK Result</strong></p>
+<p><strong>Resultat OK</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;success&quot;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="delete">
 <h2>Delete<a class="headerlink" href="#delete" title="Permalink to this headline">¶</a></h2>
-<p>Deletes specified object</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/resource/{identifier}/delete
-HTTP Method: DELETE
-Returns: "success" or "error"</pre>
+<p>Esborra un objecte específic</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/resource/{identifier}/delete
+Mètode HTTP: DELETE
+Retorna: "success" o "error"</pre>
 </div>
 </div>
 </div>
@@ -204,10 +204,10 @@ Returns: "success" or "error"</pre>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="managing_media.html" title="Managing media"
+          <a href="managing_media_ca.html" title="Gestió de media"
              >next</a> |</li>
         <li class="right" >
-          <a href="configuration.html" title="Configuration"
+          <a href="configuration_ca.html" title="Configuració"
              >previous</a> |</li>
         <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
       </ul>

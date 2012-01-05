@@ -10,9 +10,11 @@ REST service that generates Ontology object view based on its corresponding temp
 
 ::
 
-    Service path: http://{host:port}/{appname}/resource/{identifier}/view
+    Service path: http://{host:port}/{appname}/resource/{identifier}/view?section=SECTION NAME
     HTTP Method: GET
     Returns: JSON data or "error"
+    
+"section" parameter allows to select a specific section, or a few of them (sepparated by coma ","). If this parameter is not specified, all sections are returned. 
 
 Template processing result of a Person (with template defined at Configuration) would be as follows:
 
@@ -93,12 +95,12 @@ The **first approach**, can be described as: from all other objects related to o
             {
                 "name":"RelatedPeople",                  
                 "type":"string",                
-                "path":["Person.knows"]      
+                "path":["my:Person.my:knows"]      
             }
         ]
     }
 
-In the template we use this criteria to get all related objects:
+In the template we use this indexed field to get all related objects:
 
 (Person.json)
 ::
@@ -114,7 +116,7 @@ In the template we use this criteria to get all related objects:
 		        	{
 					    "name":"Related",
 					    "type":"search",
-                        "path:["Person.id"],
+                        "path:["my:Person.id"],
                         "value":["RelatedPeople:"],
                         "categories":["Year", "Location"]
 				    }
@@ -150,7 +152,7 @@ Since according to our mapping Solr indexated all related people for each Person
 
 ::
 
-    http://internetdomain.org/rest-path/solr/search?f=RelatedPeople:James_Bond_ID
+    http://internetdomain.org/ac/solr/search?f=RelatedPeople:James_Bond_ID
 
 **OK Result**
 
@@ -215,7 +217,7 @@ The **second approach** has the inverse description: from one specific object to
 		        	{
 					    "name":"Related",
 					    "type":"search",
-                        "path:["Person.knows"],
+                        "path:["my:Person.my:knows"],
                         "value":["id:"],                    // 'id' is a default indexated field and it is the identifier of every object
                         "categories":["Year", "Location"]
 				    }
@@ -251,7 +253,7 @@ That must be traduced to Solr search call (that will lead to same results as pre
 
 ::
 
-    http://internetdomain.org/rest-path/solr/search?f=id:M_Id,id:Q_Id,id:Miss_Moneypenny_ID,id:Dr_No_ID
+    http://internetdomain.org/ac/solr/search?f=id:M_Id,id:Q_Id,id:Miss_Moneypenny_ID,id:Dr_No_ID
 
 It's worth mentioning a last element of JSON template: "categories" list describe which of the available categories described in mapping.json are suitable for this scope.
 
@@ -272,6 +274,8 @@ Image generation will first search for any related image to object. It's done by
 
 Thubmnail generation is object recursive, which means that thumbnails of objects related to other objects will be a composition of related objects thumbnails.
 
+Still, thumbnail generation is customizable. If "thumbnail" section is created in the template, this section data will be exclusively used for thumbnail generation. 
+
 **Example**
 
 Suppose template of a class Country that is composed of Locations
@@ -291,7 +295,7 @@ Suppose template of a class Country that is composed of Locations
 		        	{
 					    "name":"Name",
 					    "type":"text",
-					    "path":["Country.name"]
+					    "path":["my:Country.my:name"]
 				    },
 
                     /* ... more JSON data */
@@ -305,7 +309,25 @@ Suppose template of a class Country that is composed of Locations
 			     	{
 			            "name":"Locations",
 			            "type":"objects",
-			            "path":["Cuntry.hasLocation"]       // Note that 'hasLocation' is an object property, so path resolves to identifier
+			            "path":["my:Country.my:hasLocation"]       // 'hasLocator' is a relation, so it resolves to an identifier
+			        },
+			        
+			        {
+			            "name":"RellevantPeople",
+			            "type":"objects",
+			            "path":["my:Cuntry.my:hasPerson"]       // 'hasPerson' is a relation, so it resolves to an identifier
+			        }
+			    ]  
+		    },
+		    
+		    {
+			    "name":"thumbnail",						// "thumbnail" section invalidates all any other section for thumbnail generation
+			    "data":[								// In this example: it's necessary to repeat "Locations" data as we only need a thumbnail composed by the Country's locations. 
+			
+			     	{
+			            "name":"Locations",
+			            "type":"objects",
+			            "path":["my:Cuntry.my:hasLocation"]       
 			        }
 			    ]  
 		    }
@@ -327,26 +349,33 @@ Suppose template of a class Country that is composed of Locations
 		        	{
 					    "name":"Name",
 					    "type":"text",
-					    "path":["Location.name"]
+					    "path":["my:Location.my:name"]
 				    },
 
                     /* ... more JSON data */
 			    ]
 		    },
-		
+		    
 		    {
 			    "name":"body",
+			    "data":[ ... ]  
+		    },
+		
+		    {
+			    "name":"thumbnail",
 			    "data":[
 			
 			     	{
 			            "name":"Representation",
 			            "type":"media",
-			            "path":["Location.imageUrl"]       // Media type should resolve to an URL containing any media (image, video, etc.)
+			            "path":["my:Location.my:imageUrl"]       // Media type should resolve to an URL containing any media (image, video, etc.)
 			        }
 			    ]  
 		    }
 	    ]
     }
+    
+Note that in Location template there is no "thumbnail" section, so any other section can be used for thumbnail generation.    
 
 Possible Country template resolution for object "United Kingdom" could be as follows
 
@@ -370,9 +399,14 @@ Possible Country template resolution for object "United Kingdom" could be as fol
                     /* ... more JSON data */
 			    ]
 		    },
-		
+		    
 		    {
 			    "name":"body",
+			    "data":[ ... ]  
+		    },
+		
+		    {
+			    "name":"thumbnail",
 			    "data":[
 			
 			     	{
@@ -428,13 +462,13 @@ Upon call to service
 
 ::
 
-    http://internetdomain.org/rest-path/resource/United_Kingdom/thumbnail
+    http://internetdomain.org/ac/resource/United_Kingdom/thumbnail
 
 thumbnails of related Location objects will be generated first, by accessing to their media (if there's more than one media url, as shown in example, there's an image composition). Next, thumbnail of Country will be generated as a composition of related object thumbnails.
 
-If there are both "media" and "objects" data types in the template, "media" references have priority for thumbnail generation. 
+If there are both "media" and "objects" data types in the template, "media" references have priority for thumbnail generation for they are considered to be more reliable for object representation.
 
-All generated thumbnails are saved in folder (MEDIA_PATH)/thumbnails to avoid regenerating at every access. If you need them to be regenerated, you have to remove their corresponding thumbnail image files.
+All generated thumbnails are saved in folder (MEDIA_PATH)/thumbnails to avoid regenerating on every access. If you need them to be regenerated, you have to remove their corresponding thumbnail image files.
 
 
 Class list and tree
@@ -452,6 +486,6 @@ Service that returns Ontology classes list in JSON
 
 ::
 
-    Service path: http://{host:port}/{appname}/classes/list?c=PARENT CLASS
+    Service path: http://{host:port}/{appname}/classes/list?c=ROOT CLASS
     HTTP Method: GET
     Returns: JSON list or "error"

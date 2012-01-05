@@ -9,7 +9,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Visualization &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    <title>Visualització &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,8 +27,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
-    <link rel="next" title="Legal" href="legal.html" />
-    <link rel="prev" title="Managing Solr" href="managing_solr.html" />
+    <link rel="next" title="Legal" href="legal_ca.html" />
+    <link rel="prev" title="Ús del Solr" href="managing_solr_ca.html" />
 <link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
 
   </head>
@@ -47,10 +47,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="legal.html" title="Legal"
+          <a href="legal_ca.html" title="Legal"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="managing_solr.html" title="Managing Solr"
+          <a href="managing_solr_ca.html" title="Ús del Solr"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
       </ul>
@@ -59,24 +59,24 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Visualization</a><ul>
+<li><a class="reference internal" href="#">Visualització</a><ul>
 <li><a class="reference internal" href="#object-view">Object view</a></li>
-<li><a class="reference internal" href="#search-in-object-template">Search in object template</a></li>
-<li><a class="reference internal" href="#object-thumbnail">Object thumbnail</a></li>
-<li><a class="reference internal" href="#class-list-and-tree">Class list and tree</a></li>
+<li><a class="reference internal" href="#cerca-dins-del-patro-d-objecte">Cerca dins del patró d&#8217;objecte</a></li>
+<li><a class="reference internal" href="#miniatura-d-objecte">Miniatura d&#8217;objecte</a></li>
+<li><a class="reference internal" href="#llista-i-arbre-de-classes">Llista i arbre de classes</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="managing_solr.html"
-                        title="previous chapter">Managing Solr</a></p>
+  <p class="topless"><a href="managing_solr_ca.html"
+                        title="previous chapter">Ús del Solr</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="legal.html"
+  <p class="topless"><a href="legal_ca.html"
                         title="next chapter">Legal</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/visualization.txt"
+    <li><a href="_sources/visualization_ca.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -100,18 +100,18 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="visualization">
-<h1>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h1>
-<p>AC supports several data visualization functions, such as templating and object thumbnail generation. This feature uses many concepts explained in previous sections, which will be constantly referred to.</p>
+  <div class="section" id="visualitzacio">
+<h1>Visualització<a class="headerlink" href="#visualitzacio" title="Permalink to this headline">¶</a></h1>
+<p>Arts Combinatòries suporta diverses funcions de visualització de les dades, així com patrons i miniatures. Aquesta característica utilitza molts dels conceptes explicats en seccions posteriors, a les quals es faran contínues referències.</p>
 <div class="section" id="object-view">
 <h2>Object view<a class="headerlink" href="#object-view" title="Permalink to this headline">¶</a></h2>
-<p>REST service that generates Ontology object view based on its corresponding template. That is the template with name of current object class, or one of its superclasses. If there&#8217;s no such template service returns error.</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/resource/{identifier}/view?section=SECTION NAME
-HTTP Method: GET
-Returns: JSON data or "error"</pre>
+<p>Servei que genera una vista JSON de l&#8217;objecte ontològic basant-se en el seu patró corresponent. Aquest és el patró amb el nom de la classe de l&#8217;objecte, o d&#8217;alguna de les seves superclasses. Si no hi ha cap template que correspongui, el servei retorna error.</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/resource/{identifier}/view?section=NOM SECCIO
+Mètode HTTP: GET
+Retorna: JSON data or "error"</pre>
 </div>
-<p>&#8220;section&#8221; parameter allows to select a specific section, or a few of them (sepparated by coma &#8221;,&#8221;). If this parameter is not specified, all sections are returned.</p>
-<p>Template processing result of a Person (with template defined at Configuration) would be as follows:</p>
+<p>&#8220;section&#8221; permet especificar quina secció del patró-vista volem obtenir. Se&#8217;n poden especificar diverses, separant-les per coma &#8221;,&#8221;. Si no s&#8217;especifica cap secció, s&#8217;obtenen totes les seccions de la vista.</p>
+<p>Utilitzant el patró definit a la Configuració. Un objecte Person específic tindria la següent vista:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
         <span class="s">&quot;className&quot;</span><span class="p">:</span><span class="s">&quot;Person&quot;</span><span class="p">,</span>
 
@@ -136,7 +136,7 @@ Returns: JSON data or "error"</pre>
                 <span class="p">{</span>
                                         <span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;BirthPlace&quot;</span><span class="p">,</span>
                                         <span class="s">&quot;type&quot;</span><span class="p">:</span><span class="s">&quot;linkedObject&quot;</span><span class="p">,</span>
-                                        <span class="s">&quot;value&quot;</span><span class="p">:[</span><span class="s">&quot;United Kingdom&quot;</span><span class="p">]</span>
+                                        <span class="s">&quot;value&quot;</span><span class="p">:[</span><span class="s">&quot;Regne Unit&quot;</span><span class="p">]</span>
                                 <span class="p">}</span>
                         <span class="p">]</span>
                 <span class="p">},</span>
@@ -148,7 +148,7 @@ Returns: JSON data or "error"</pre>
                             <span class="p">{</span>
                                 <span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;Biography&quot;</span><span class="p">,</span>
                                 <span class="s">&quot;type&quot;</span><span class="p">:</span><span class="s">&quot;text&quot;</span><span class="p">,</span>
-                                <span class="s">&quot;value&quot;</span><span class="p">:[</span><span class="s">&quot;Secret agent in the service of the Queen&quot;</span><span class="p">]</span>
+                                <span class="s">&quot;value&quot;</span><span class="p">:[</span><span class="s">&quot;Agent secret al servei de la Reina&quot;</span><span class="p">]</span>
                             <span class="p">}</span>
                         <span class="p">]</span>
                 <span class="p">},</span>
@@ -170,15 +170,16 @@ Returns: JSON data or "error"</pre>
 </pre></div>
 </div>
 </div>
-<div class="section" id="search-in-object-template">
-<h2>Search in object template<a class="headerlink" href="#search-in-object-template" title="Permalink to this headline">¶</a></h2>
-<p>As described in Configuration Step 5, a template can have a specific object data type called &#8220;search&#8221;. It indicates that Solr search sould be performed in order to fill that part of the template with data. The aim of this feature is that some objects can relate to many other objects, and we want to be able to perform search and filtering of this particular scope. There are to possible approaches that lead to same result.</p>
-<p>The <strong>first approach</strong>, can be described as: from all other objects related to one specific object. What we do is to map (in mapping.json) the filtering criteria that will be used to scope a particular object group. For example:</p>
+<div class="section" id="cerca-dins-del-patro-d-objecte">
+<h2>Cerca dins del patró d&#8217;objecte<a class="headerlink" href="#cerca-dins-del-patro-d-objecte" title="Permalink to this headline">¶</a></h2>
+<p>Tal com s&#8217;ha explicat a la Configuració, un template pot tenir un tipus de dada específica anomenat &#8220;search&#8221;. Indica que s&#8217;hauria de realitzar una cerca Solr per tal d&#8217;omplir aquesta secció del patró. El motiu d&#8217;aquesta funcionalitat, és que alguns objectes poden referenciar un conjunt ampli d&#8217;objectes, i s&#8217;ha de permetre realitzar cerces sobre aquest conjunt.</p>
+<p>Hi ha dues possibles aproximacions que porten al mateix resultat.</p>
+<p>La <strong>primera aproximació</strong>, es pot descriure com a: des del conjunt d&#8217;objectes relacionats a un objecte específic. El que fem és mapejar (a mapping.json) el criteri del filtre que serà usat per a focalitzar els resultats a aquest conjunt d&#8217;objectes. Per exemple:</p>
 <p>(mapping.json)</p>
 <div class="highlight-python"><pre>{
     "data":
         [
-        /* .. rest of json*/
+        /* .. resta del json */
 
         {
             "name":"RelatedPeople",
@@ -188,10 +189,10 @@ Returns: JSON data or "error"</pre>
     ]
 }</pre>
 </div>
-<p>In the template we use this indexed field to get all related objects:</p>
+<p>Al patró, usem aquest camp indexat per tal d&#8217;obtenir tots els objectes relacionats.</p>
 <p>(Person.json)</p>
 <div class="highlight-python"><pre>{
-            /* ... rest of json */
+            /* ... resta del json */
 
         {
                         "name":"footer",
@@ -209,9 +210,9 @@ Returns: JSON data or "error"</pre>
         ]
 }</pre>
 </div>
-<p>Which after template process &#8220;James Bond&#8221; object results to following code:</p>
+<p>Després de crear la vista de l&#8217;objecte &#8220;James Bond&#8221;, resulta en el següent:</p>
 <div class="highlight-python"><pre>{
-            /* ... rest of json */
+            /* ... resta del json */
 
         {
                         "name":"footer",
@@ -228,7 +229,7 @@ Returns: JSON data or "error"</pre>
         ]
 }</pre>
 </div>
-<p>Since according to our mapping Solr indexated all related people for each Person, it makes sense to call Solr search filtering by &#8220;RelatedPeople&#8221; and value &#8220;James_Bond_ID&#8221; to get all related objects to this specific object.</p>
+<p>Ja que d&#8217;acord amb el nostre mapeig, el Solr ha indexat totes les persones relacionades amb cada persona (Person.knows), té sentit cridar la cerca solr filtrant per &#8220;RelatedPeople&#8221; i valor &#8220;James_Bond_ID&#8221; per obtenir el conjunt d&#8217;objectes relacionats amb aquest.</p>
 <div class="highlight-python"><pre>http://internetdomain.org/ac/solr/search?f=RelatedPeople:James_Bond_ID</pre>
 </div>
 <p><strong>OK Result</strong></p>
@@ -273,11 +274,11 @@ Returns: JSON data or "error"</pre>
         }
 }</pre>
 </div>
-<p>Basing all our searches on this scope (&#8220;RelatedPeople:James_Bond_ID&#8221;) we can perform more specific searches.</p>
-<p>The <strong>second approach</strong> has the inverse description: from one specific object to all other related objects. There is no additional mapping, and template file</p>
+<p>A partir d&#8217;aquest domini inicial (&#8220;RelatedPeople:James_Bond_ID&#8221;) es podrà procedir a afinar les cerques mitjançant els filtres.</p>
+<p>La <strong>segona aproximació</strong> té el sentit invers: des de l&#8217;objecte específic a tots els altres objectes relacionats. Aquí no hi ha mapeig adicional, i el patró és:</p>
 <p>(Person.json)</p>
 <div class="highlight-python"><pre>{
-            /* ... rest of json */
+            /* ... resta del json */
 
         {
                         "name":"footer",
@@ -287,7 +288,7 @@ Returns: JSON data or "error"</pre>
                                         "name":"Related",
                                         "type":"search",
                     "path:["my:Person.my:knows"],
-                    "value":["id:"],                    // 'id' is a default indexated field and it is the identifier of every object
+                    "value":["id:"],                    // 'id' és un camp indexat per defecte, i és l'identificador de cada objecte
                     "categories":["Year", "Location"]
                                 }
                         ]
@@ -295,9 +296,9 @@ Returns: JSON data or "error"</pre>
         ]
 }</pre>
 </div>
-<p>Which after template process &#8220;James Bond&#8221; object results to following code:</p>
+<p>El qual, després del realitzar la vista per l&#8217;objecte &#8220;James Bond&#8221;, queda de la següent manera:</p>
 <div class="highlight-python"><pre>{
-            /* ... rest of json */
+            /* ... resta del json */
 
         {
                         "name":"footer",
@@ -314,24 +315,24 @@ Returns: JSON data or "error"</pre>
         ]
 }</pre>
 </div>
-<p>That must be traduced to Solr search call (that will lead to same results as previous approach):</p>
+<p>El valor de la cerca ha de ser traduït a una crida a Solr (que portarà als mateixos resultats que l&#8217;aproximació anterior):</p>
 <div class="highlight-python"><pre>http://internetdomain.org/ac/solr/search?f=id:M_Id,id:Q_Id,id:Miss_Moneypenny_ID,id:Dr_No_ID</pre>
 </div>
-<p>It&#8217;s worth mentioning a last element of JSON template: &#8220;categories&#8221; list describe which of the available categories described in mapping.json are suitable for this scope.</p>
+<p>Val la pena mencionar un darrer element, la llista de &#8220;categories&#8221; que descriu quines de les categories disponibles descrite al mapping.json s&#8217;adequen a aquesta vista.</p>
 </div>
-<div class="section" id="object-thumbnail">
-<h2>Object thumbnail<a class="headerlink" href="#object-thumbnail" title="Permalink to this headline">¶</a></h2>
-<p>Calling thumbnail service you can get an autogenerated image representing the object.</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/resource/{identifier}/thumbnail
-HTTP Method: GET
-Returns: jpg image</pre>
+<div class="section" id="miniatura-d-objecte">
+<h2>Miniatura d&#8217;objecte<a class="headerlink" href="#miniatura-d-objecte" title="Permalink to this headline">¶</a></h2>
+<p>Cridant el servei &#8220;thumbnail&#8221; es pot obtenir una imatge autogenerada que representi l&#8217;objecte.</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/resource/{identifier}/thumbnail
+Mètode HTTP: GET
+Retorna: imatge jpg</pre>
 </div>
-<p>Thumbnail length and width can be Configured.</p>
-<p>Image generation will first search for any related image to object. It&#8217;s done by resolving any existing &#8220;objects&#8221; data type in object template, otherwise it tries to resolve any existing &#8220;media&#8221; data type in such template. If no template or none of those data types can be found in template, it generates a generic thumbnail according to the object class. This generic thumbnail must be placed in (MEDIA_PATH)/thumbnails/classes as (Class-name).jpg, where class-name can be the object&#8217;s or one of it&#8217;s superclasses. The last resort for thumbnail generation is &#8220;default.jpg&#8221; placed in mentioned directory.</p>
-<p>Thubmnail generation is object recursive, which means that thumbnails of objects related to other objects will be a composition of related objects thumbnails.</p>
-<p>Still, thumbnail generation is customizable. If &#8220;thumbnail&#8221; section is created in the template, this section data will be exclusively used for thumbnail generation.</p>
-<p><strong>Example</strong></p>
-<p>Suppose template of a class Country that is composed of Locations</p>
+<p>Les mides de la miniatura s&#8217;especifiquen a la Configuració.</p>
+<p>La generació de la imatge buscarà primer qualsevol imatge relacionada amb l&#8217;objecte. Això es fa resolent la dada tipus &#8220;objects&#8221; de la vista-patró de l&#8217;objecte. Altrament intenta el mateix amb la dada tipus &#8220;media&#8221; d&#8217;aquest patró. Si no hi ha patró o no es pot trobar cap d&#8217;aquestes dades, genera una miniatura genèrica segons la classe de l&#8217;objecte. Aquesta miniatura genèrica ha de situar-se  a (MEDIA_PATH)/thumbnails/classes com a (Nom-classe).jpg, on el nom de la classe pot ser el de l&#8217;objecte o el d&#8217;una de les seves superclasses. Com a últim recurs, la generació de miniatures recórre l&#8217;arxiu &#8220;default.jpg&#8221; del directori mencionat.</p>
+<p>La generació de miniatures és recursiva per objectes, el que implica que objectes relacionats amb altres objectes seran una composició de les miniatures dels objectes relacionats.</p>
+<p>És possible a més, personalitzar la generació de la miniatura. Si es crea al patró-vista una secció anomenada &#8220;thumbnail&#8221; les dades d&#8217;aquesta secció seran exclusivament usades per a la generació de la miniatura.</p>
+<p><strong>Exemple</strong></p>
+<p>Suposem el patró de la classe &#8220;Country&#8221; que està composta per objectes &#8220;Location&#8221; i &#8220;Person&#8221;:</p>
 <p>(Country.json)</p>
 <div class="highlight-python"><pre>{
         "className":"Country",
@@ -348,7 +349,7 @@ Returns: jpg image</pre>
                                         "path":["my:Country.my:name"]
                                 },
 
-                /* ... more JSON data */
+                /* ... més dades */
                         ]
                 },
 
@@ -359,25 +360,25 @@ Returns: jpg image</pre>
                             {
                                 "name":"Locations",
                                 "type":"objects",
-                                "path":["my:Country.my:hasLocation"]       // 'hasLocator' is a relation, so it resolves to an identifier
+                                "path":["my:Country.my:hasLocation"]       // 'hasLocator' és una relació, per tant la ruta resol sempre a un identificador
                             },
 
                             {
                                 "name":"RellevantPeople",
                                 "type":"objects",
-                                "path":["my:Cuntry.my:hasPerson"]       // 'hasPerson' is a relation, so it resolves to an identifier
+                                "path":["my:Country.my:hasPerson"]       // 'hasPerson' és una relació, per tant la ruta resol sempre a un identificador
                             }
                         ]
                 },
 
                 {
-                        "name":"thumbnail",                                         // "thumbnail" section invalidates all any other section for thumbnail generation
-                        "data":[                                                            // In this example: it's necessary to repeat "Locations" data as we only need a thumbnail composed by the Country's locations.
+                        "name":"thumbnail",                                         // L'existència d'aquesta secció "thumbnail" invalida la resta de seccions alhora de generar la miniatura
+                        "data":[                                                            // En aquest exemple es fa necessari repetir la dada "Locations" perquè volem generar la miniatura només a partir dels llocs del país
 
                             {
                                 "name":"Locations",
                                 "type":"objects",
-                                "path":["my:Cuntry.my:hasLocation"]
+                                "path":["my:Country.my:hasLocation"]
                             }
                         ]
                 }
@@ -400,31 +401,26 @@ Returns: jpg image</pre>
                                         "path":["my:Location.my:name"]
                                 },
 
-                /* ... more JSON data */
+                /* ... més dades */
                         ]
                 },
 
                 {
                         "name":"body",
-                        "data":[ ... ]
-                },
-
-                {
-                        "name":"thumbnail",
                         "data":[
 
                             {
                                 "name":"Representation",
                                 "type":"media",
-                                "path":["my:Location.my:imageUrl"]       // Media type should resolve to an URL containing any media (image, video, etc.)
+                                "path":["my:Location.my:imageUrl"]       // El tipus "media" hauria de resultar en una URL que contingui el media que podrà ser usat per generar la miniatura (una imatge o vídeo)
                             }
                         ]
                 }
         ]
 }</pre>
 </div>
-<p>Note that in Location template there is no &#8220;thumbnail&#8221; section, so any other section can be used for thumbnail generation.</p>
-<p>Possible Country template resolution for object &#8220;United Kingdom&#8221; could be as follows</p>
+<p>Fixem-nos que al patró &#8220;Location&#8221; no hi ha una secció &#8220;thumbnail&#8221;, per tant es podran utilitzar totes les seccions per a generar la miniatura.</p>
+<p>Una possible vista generada per l&#8217;objecte &#8220;Regne Unit&#8221; podria ser així:</p>
 <div class="highlight-python"><pre>{
         "className":"Country",
 
@@ -437,10 +433,10 @@ Returns: jpg image</pre>
                             {
                                         "name":"Name",
                                         "type":"text",
-                                        "value":["United Kingdom"]
+                                        "value":["Regne Unit"]
                                 },
 
-                /* ... more JSON data */
+                /* ... més dades */
                         ]
                 },
 
@@ -456,14 +452,14 @@ Returns: jpg image</pre>
                             {
                                 "name":"Locations",
                                 "type":"objects",
-                                "value":["London", "Birmingham", "Glasgow", "Liverpool", "Leeds", "Sheffield"]       // They look like names but they're ids in fact
+                                "value":["London", "Birmingham", "Glasgow", "Liverpool", "Leeds", "Sheffield"]       // Semblen noms però són de fet identificadors
                             }
                         ]
                 }
         ]
 }</pre>
 </div>
-<p>And resolution of &#8220;London&#8221;...</p>
+<p>La generació de &#8220;London&#8221;...</p>
 <div class="highlight-python"><pre>{
         "className":"Location",
 
@@ -476,10 +472,10 @@ Returns: jpg image</pre>
                             {
                                         "name":"Name",
                                         "type":"text",
-                                        "value":["London"]
+                                        "value":["Londres"]
                                 },
 
-                /* ... more JSON data */
+                /* ... més dades */
                         ]
                 },
 
@@ -499,24 +495,24 @@ Returns: jpg image</pre>
         ]
 }</pre>
 </div>
-<p>Upon call to service</p>
+<p>Amb la crida al servei</p>
 <div class="highlight-python"><pre>http://internetdomain.org/ac/resource/United_Kingdom/thumbnail</pre>
 </div>
-<p>thumbnails of related Location objects will be generated first, by accessing to their media (if there&#8217;s more than one media url, as shown in example, there&#8217;s an image composition). Next, thumbnail of Country will be generated as a composition of related object thumbnails.</p>
-<p>If there are both &#8220;media&#8221; and &#8220;objects&#8221; data types in the template, &#8220;media&#8221; references have priority for thumbnail generation for they are considered to be more reliable for object representation.</p>
-<p>All generated thumbnails are saved in folder (MEDIA_PATH)/thumbnails to avoid regenerating on every access. If you need them to be regenerated, you have to remove their corresponding thumbnail image files.</p>
+<p>les miniatures dels llocs (Locations) seran generats primer, accedint al seu &#8220;media&#8221; (si hi ha més d&#8217;una url, com a l&#8217;exmeple, es fa una composició). A continuació, la miniatura del país (Country) serà generada com una composició de les miniatures dels llocs relacionats.</p>
+<p>Si hi ha tant dades tipus &#8220;media&#8221; com &#8220;objects&#8221; al patró, el &#8220;media&#8221; tenen prioritat perquè s&#8217;entén que tenen una relació més directa amb l&#8217;objecte.</p>
+<p>Totes les miniatures generades es desen al directori (MEDIA_PATH)/thumbnails per evitar haver-los de regenerar cada cop que es sol·liciten. Si cal que siguin regenerats, caldrà esborrar la imatge de la seva miniatura corresponent.</p>
 </div>
-<div class="section" id="class-list-and-tree">
-<h2>Class list and tree<a class="headerlink" href="#class-list-and-tree" title="Permalink to this headline">¶</a></h2>
-<p>Service that returns Ontology classes tree in JSON</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/classes/tree?c=ROOT CLASS
-HTTP Method: GET
-Returns: JSON tree or "error"</pre>
+<div class="section" id="llista-i-arbre-de-classes">
+<h2>Llista i arbre de classes<a class="headerlink" href="#llista-i-arbre-de-classes" title="Permalink to this headline">¶</a></h2>
+<p>Servei que retorna l&#8217;arbre de classes JSON</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/classes/tree?c=CLASSE ARREL
+Mètode HTTP: GET
+Retorna: Arbre JSON o "error"</pre>
 </div>
-<p>Service that returns Ontology classes list in JSON</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/classes/list?c=ROOT CLASS
-HTTP Method: GET
-Returns: JSON list or "error"</pre>
+<p>Servei que retorna la llista de classes JSON</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/classes/list?c=CLASSE ARREL
+Mètode HTTP: GET
+Retorna: Llista JSON o "error"</pre>
 </div>
 </div>
 </div>
@@ -534,10 +530,10 @@ Returns: JSON list or "error"</pre>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="legal.html" title="Legal"
+          <a href="legal_ca.html" title="Legal"
              >next</a> |</li>
         <li class="right" >
-          <a href="managing_solr.html" title="Managing Solr"
+          <a href="managing_solr_ca.html" title="Ús del Solr"
              >previous</a> |</li>
         <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
       </ul>

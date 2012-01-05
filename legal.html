@@ -27,6 +27,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
+    <link rel="next" title="Introducció" href="introduction_ca.html" />
     <link rel="prev" title="Visualization" href="visualization.html" />
 <link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
 
@@ -45,6 +46,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="introduction_ca.html" title="Introducció"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="visualization.html" title="Visualization"
              accesskey="P">previous</a> |</li>
@@ -66,6 +70,9 @@
   <h4>Previous topic</h4>
   <p class="topless"><a href="visualization.html"
                         title="previous chapter">Visualization</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="introduction_ca.html"
+                        title="next chapter">Introducció</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/legal.txt"
@@ -94,13 +101,13 @@
             
   <div class="section" id="legal">
 <h1>Legal<a class="headerlink" href="#legal" title="Permalink to this headline">¶</a></h1>
-<p>The purpose of this section is to guide user through the process of protecting objects from unauthorized access regarding their license and/or administrator preferences. First steps are explained in Configuration section and self-explained in legal.json script.</p>
+<p>The purpose of this feature is to guide user through the process of protecting objects from unauthorized access regarding their license and/or administrator preferences. First steps are explained in Configuration section and self-explained in legal.json script.</p>
 <div class="section" id="legal-accessing">
 <h2>Legal accessing<a class="headerlink" href="#legal-accessing" title="Permalink to this headline">¶</a></h2>
 <p>In the legal process, the user will go through a scripted form (see Configuration) that will require the data to be resolved to a color result. This color will be used to determine who can access to object. You can assign access authorization to Plone groups by defining their Plone group names in Configuration variables USER_LEVEL.</p>
 <p><strong>Example</strong></p>
-<p>(Coniguration properties)</p>
-<div class="highlight-python"><pre>USER_LEVEL = *, MyUserGroup1, MyUserGroup2 MyUserGroup3, MyUserGroup4</pre>
+<p>(config.json)</p>
+<div class="highlight-python"><pre>"USER_LEVEL": { "*", "MyUserGroup1", "MyUserGroup2+MyUserGroup3", "MyUserGroup4" }</pre>
 </div>
 <p>In this example, all users (specified by &#8220;*&#8221; character) are given &#8220;green&#8221; access. Users of MyUserGroup1 are given &#8220;yellow&#8221; access. Users of MyUserGroup2 and MyUserGroup3 are given &#8220;orange&#8221; access. Finally, MyUserGroup4 users are given &#8220;red&#8221; access. Note that any user of more restrictive authorization color can also access to less restrictive authorization colors.</p>
 </div>
@@ -112,7 +119,7 @@
 /resource/{identifier}/thumbnail
 /media/{identifier}</pre>
 </div>
-<p>They all do accept parameter &#8220;uid&#8221;, its value must be current user identifier. This user identifier is internally used to resolve user group which is used to get user access level. If user level is equal or greater than object color level, this can be viewed/accessed. Objects with no access color can be viewed by anyone. If &#8220;uid&#8221; is not specified, access level is minimum (&#8220;green&#8221; and no color).</p>
+<p>They all do accept parameter &#8220;uid&#8221;, its value must be current user identifier. This user identifier is internally used to resolve user group which is used to get user access level. If user level is equal or greater than object color level, this can be viewed/accessed. Objects with no access color can be viewed by anyone, which is equivalent to &#8220;green&#8221;. If &#8220;uid&#8221; is not specified, access level is minimum (&#8220;green&#8221;).</p>
 <p>All data modification services which are:</p>
 <div class="highlight-python"><pre>/resource/{identifier}/upload
 /resource/{identifier}/update
@@ -138,7 +145,7 @@ Returns: JSON code of next form or result</pre>
 HTTP Method: GET
 Returns: JSON code of generated temporary user identifier and first form</pre>
 </div>
-<p>Support service that retrieves information concerning a specified key-value pair. This key must be specified at legal script using &#8220;autodata&#8221; clause. This should be called background (using AJAX) to fill current form with recurrent data to save user time from data introduction.</p>
+<p>Support service that retrieves information concerning a specified key-value pair. This key must be specified at legal script using &#8220;reference&#8221; clause. This should be called background (using AJAX) to fill current form with recurrent data to save user time from data introduction.</p>
 </div>
 </div>
 
@@ -154,6 +161,9 @@ Returns: JSON code of generated temporary user identifier and first form</pre>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="introduction_ca.html" title="Introducció"
+             >next</a> |</li>
         <li class="right" >
           <a href="visualization.html" title="Visualization"
              >previous</a> |</li>

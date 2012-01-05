@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Arts Combinatòries FAT project documentation
+Welcome to Arts Combinatòries project documentation
 ======================================================================================
 
-This document gathers information concerning purposes, development, reusability and configuration of Fundació Antoni Tàpies (FAT_) project.
+This document gathers information concerning purposes, development, reusability and configuration of **Fundació Antoni Tàpies** (FAT_) Arts Combinatòries project.
 
 Source code
 -------------------
@@ -25,6 +25,8 @@ Contents
 .. _PivotalTracker: https://www.pivotaltracker.com/projects/266493
 .. _FAT: http://www.fundaciotapies.org
 
+**English**
+
 .. toctree::
    :maxdepth: 2
 
@@ -35,4 +37,18 @@ Contents
    managing_solr
    visualization
    legal
+   
+**Català**
+
+.. toctree::
+   :maxdepth: 2
+   
+   introduction_ca
+   configuration_ca
+   managing_data_ca
+   managing_media_ca
+   managing_solr_ca
+   visualization_ca
+   legal_ca
+   
    

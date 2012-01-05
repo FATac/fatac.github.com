@@ -6,7 +6,7 @@
 Configuration
 ======================================================================================
 
-There are several aspects that must be defined in order to get the Semantic Web (SW) working with a new Ontology. This configuration guide is organized step-by-step.
+There are several aspects that must be defined in order to get Arts Combinatòries (AC) working with a new Ontology. This configuration guide is organized step-by-step.
 
 Step 1: Virtuoso
 ---------------------------
@@ -74,64 +74,74 @@ Next, click "RDF" tab, and click "Namespaces", you must add here all linked onto
 Step 2: Solr
 ---------------------------
 
-Uppon Solr installation, a specific schema.xml must be used. It is generated according to mapping specifications (see Step 6) and according to a base schema. This base schema must be placed in conf/ directory of Solr as "schema.xml-EMPTY", with exactly the next content:
+Upon Solr installation, a specific schema.xml must be used. This is generated according to mapping specifications (see Step 6) and to a base schema. This base schema is a file placed in "solr" directory (referenced in "SOLR_PATH" at Step 3), containing exactly the next content:
 
 ::
 
-        <?xml version="1.0" encoding="UTF-8" ?>
-
-        <schema name="mySchema" version="1.4">
-            <types>
-                <fieldType name="identifier" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
-                <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/>
-                <fieldType name="long" class="solr.TrieLongField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/> 
-                <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
-                <fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/> 
-
-                <fieldType name="string" class="solr.TextField" sortMissingLast="true" omitNorms="true">
-                  <analyzer type="index">
-                    <tokenizer class="solr.KeywordTokenizerFactory"/>
-                  </analyzer>
-                  <analyzer type="query">
-                    <tokenizer class="solr.KeywordTokenizerFactory"/>
-                  </analyzer>
-                </fieldType>
-
-                <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
-                  <analyzer type="index">
-                    <tokenizer class="solr.StandardTokenizerFactory"/>
-                    <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
-                  </analyzer>
-                  <analyzer type="query">
-                    <tokenizer class="solr.StandardTokenizerFactory"/>
-                    <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
-                  </analyzer>
-                </fieldType>
-            </types>
-
-            <!-- FIELDS_INSERTION_MARK -->
-
-            <uniqueKey>id</uniqueKey>
-            <defaultSearchField>id</defaultSearchField>
-            <solrQueryParser defaultOperator="OR"/>
-        </schema>
-
+	<?xml version="1.0" encoding="UTF-8" ?>
+	
+	<schema name="mySchema" version="1.4">
+	
+	 <types>
+	    <fieldType name="identifier" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+	    <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/>
+	    <fieldType name="long" class="solr.TrieLongField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/> 
+	    <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
+	    <fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/> 
+	
+	    <fieldType name="string" class="solr.TextField" sortMissingLast="true" omitNorms="true">
+	      <analyzer type="index">
+	        <tokenizer class="solr.KeywordTokenizerFactory"/>
+	        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
+	      </analyzer>
+	      <analyzer type="query">
+	        <tokenizer class="solr.KeywordTokenizerFactory"/>
+	        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
+	      </analyzer>
+	    </fieldType>
+	
+	    <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
+	      <analyzer type="index">
+	        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+	        <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
+	        <filter class="solr.LowerCaseFilterFactory" />
+	        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
+	      </analyzer>
+	      <analyzer type="query">
+	        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+	        <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
+	        <filter class="solr.LowerCaseFilterFactory" />
+	        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
+	      </analyzer>
+	    </fieldType>
+	 </types>
+	
+	<!-- FIELDS_INSERTION_MARK -->
+	
+	 <uniqueKey>id</uniqueKey>
+	
+	 <defaultSearchField>id</defaultSearchField>
+	
+	 <solrQueryParser defaultOperator="OR"/>
+	
+	</schema>
+	
 Step 3: Main properties
 ----------------------------
 
-Once installed (see Installation) and Virtuoso is configured, the first thing we have to do is to configure the 'config.json' file, you may place them on your current directory (when running on Tomcat, it is: $TOMCAT_HOME/webapps/ROOT/). Here's a sample with some explanations:
+The first thing we have to do is to configure the 'config.json' file, you may place them on your current directory. If you don't know which is the current dir you can see the AC log. Here's a sample with required properties and possible values: 
 
 ::
 
     {	
-            "__comment_0":"Mixed config",
+        "__comment_0":"Mixed config",
 
 	    "THUMBNAIL_WIDTH":250,
 	    "THUMBNAIL_HEIGHT":180,
 	    "MEDIA_CONVERSION_PROFILES":["dv", "mpg", "avi", "aif", "mov"],
             "MEDIA_AUTOCONVERT":"false",
 	    "LANGUAGE_LIST":["ca", "en", "es", "fr", "it", "de"],							
-	    "USER_LEVEL":["*", "Member", "Manager Reviewer", "Site Administrator"],	    
+	    "USER_LEVEL":["*", "Member", "Manager+Reviewer", "Site Administrator"],	    
 	
 	    "__comment_1":"Services base URLs and connection strings",
 
@@ -142,7 +152,7 @@ Once installed (see Installation) and Virtuoso is configured, the first thing we
 	    "SOLR_URL":"http://myhost:8080/solr/",
 	    "VIDEO_SERVICES_URL":"http://myhost:8080/videoservices/rest/",
 	
-            "__comment_2":"Ontology namespaces (After any change, all existing triples must be fixed)",
+        "__comment_2":"Ontology namespaces (After any change, all existing triples must be fixed)",
 
 	    "RESOURCE_URI_NS":"http://localhost:8080/ArtsCombinatoriesRest/resource/",		
 	    "RESOURCE_PREFIX":"ac_res",
@@ -153,7 +163,7 @@ Once installed (see Installation) and Virtuoso is configured, the first thing we
 		    "http://dublincore.org/2010/10/11/dcterms.rdf#", "dcterms"
 	    ],
 	
-	    "__comment_3":"File system paths. It's recommended that they all have project home folder as parent",
+	    "__comment_3":"Base directories that will be used by AC to allocate or access content and contiguratios",
 
 	    "CONFIGURATIONS_PATH":"/achome/json/",
 	    "SOLR_PATH":"/achome/solr/",
@@ -169,9 +179,9 @@ MEDIA_AUTOCONVERT set to "true" if you require that video/audo files to be conve
 
 LANGUAGE_LIST enumerates codes of languages that are expected to be used in data base fields (the first one is used as default language).
 
-USER_LEVEL specifies the degree of legal access that have each user role, ordered from more to less restrictions ("*" means any role).
+USER_LEVEL specifies the degree of legal access that have each user role, ordered from more to less restrictions ("*" means any role). This list should contain only 4 elements as there are only 4 restriction levels. Each elements may contain more than one role, separated by '+' (p.ex: "Manager+Reviewer") 
 
-ONTOLOGY_NAMESPACES stablishes a prefix for each ontology/schema namespace, this prefix must also appear on namespaces list in Virtuoso (see Step 0). The first specified ontology must be the one specially created for this project (myOntology in the example), other specified ontologies/schemas must be the ones included on the first one. Generally, RDF and RDFS schemas should be always included.
+ONTOLOGY_NAMESPACES stablishes a prefix for each ontology/schema namespace, this prefix must also appear on namespaces list in Virtuoso (see Step 1). The first specified ontology must be the one specially created for this project (myOntology in the example), other specified ontologies/schemas must be the ones included on the first one. Generally, RDF and RDFS schemas should be always included.
 
 AC requires the next folder and file structure in order to allocate and use its files:
 
@@ -210,11 +220,11 @@ Otherwise, for safety, "confirm" must be filled with current server date and tim
 
 ::
 
-    http://internetdomain.org/rest-path/reset?option=ontology               // ontologies reload
+    http://internetdomain.org/ac/reset?option=ontology               // ontologies reload
 
 ::
 
-    http://internetdomain.org/rest-path/reset?confirm=11/11/2011 23:11      // data reset and ontologies reload
+    http://internetdomain.org/ac/reset?confirm=11/11/2011 23:11      // data reset and ontologies reload
 
 
 
@@ -403,7 +413,7 @@ The resulting template file must be placed as "Person.json" (generally, (Class-n
 Data 'type' clause has not much to do with 'type' defined in previous step. The following types are all the ones available for templates:
 
 - **text**: suitable for most cases, it resolves path to literal value with no modification.
-- **linkedObject**: it shows resolved data path along with the referenced object id, separated by '@'. For example: London@my_london_id, this allows to create an hyperlink to the referenced object, which would be http://internetdomain.org/rest-path/resource/my_london_id/...
+- **linkedObject**: it shows resolved data path along with the referenced object id, separated by '@'. For example: London@my_london_id, this allows to create an hyperlink to the referenced object, which would be http://internetdomain.org/ac/resource/my_london_id/...
 - **objects**: resolves path to identifier value.
 - **media**: resolves path to media url value.
 - **date**: and its parts (**date.year**, **date.day**, **date.month**). Same effect as date defined at step 3.
