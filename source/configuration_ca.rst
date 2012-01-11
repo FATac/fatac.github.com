@@ -153,6 +153,7 @@ El primer que hem de fer per a configurar AC és definir l'arxiu de propietats "
 	    "REST_URL":"http://myhost:8080/rest/",
 	    "SOLR_URL":"http://myhost:8080/solr/",
 	    "VIDEO_SERVICES_URL":"http://myhost:8080/videoservices/rest/",
+	    "USER_ROLE_SERVICE_URL":"http://myotherhost:8080/myapp/getUserRole?userId=",
 	
         "__comment_2":"Les ontologies i els namespaces (qualsevo canvi implicarà corregir tots els registres existents a la BD)",
 
@@ -183,26 +184,25 @@ LANGUAGE_LIST enumera els codis d'idioma que s'espera que siguin emprats en els 
 
 USER_LEVEL especifica el grau d'accés legal que té cada rol d'usuari, ordenats de més a menys restricció ("*" significa qualsevol rol). Com que només hi ha 4 nivells de restricció, aquesta llista hauria de contenir sempre 4 elements. Cada element pot contenir més d'un rol, separat per '+' (p.ex: "Manager+Reviewer").
 
+USER_ROLE_SERVICE_URL és una URL a un servei específic. Aquest servei és emprat per AC per obtenir els grups d'usuari que determinaran el permís d'accés de l'usuari. El servei ha d'acceptar un identificador (a la cadena de la URL) i hauria de retornar un dels grups d'usuari especificats a USER_LEVEL.
+
 ONTOLOGY_NAMESPACES estableix un prefix per a cada namespace d'Ontologia, aquesta relació també ha d'aparèixer la llista "namespaces" del Virtuoso (veure Pas 1r). La primera ontologia especificada ha de ser necessariament aquella que hagi estat creada (o escollida) especialment per la web semàntica (corresponent a l'arxiu especificat a la variable "ONTOLOGY_PATH") i la resta d'ontologies seran aquelles importades a l'ontologia principal. Generalment, els esquemes RDF i RDFS haurien de ser inclosos sempre. 
 
 AC requereix la següent estructura de directoris:
 
 - [CONFIGURATIONS_PATH]
-    - legal
-        - legal.json (requerit)
-    - mapping
-        - mapping.json (requerit)
-        - search.json (opcional)
-        - (opcionalment, un arxiu json per a cada classe de l'Ontologia, amb el seu prefix, per exemple "foaf:Person.json")
-- [SOLR_PATH] (no confondre amb el directory Home del Solr)
-    - schema.xml-EMPTY (requerit)
-    - data.xml (autogenerat per l'aplicació cada cop que es faci una indexació a Solr, i contindrà les dades indexades)
+    - legal/legal.json (requerit)
+    - mapping/mapping.json (requerit)
+    - mapping/search.json (opcional)
+    - mapping/ (opcionalment, un arxiu json per a cada classe de l'Ontologia, amb el seu prefix, per exemple "foaf:Person.json")
+- [SOLR_PATH] (directori Home del Solr)
+    - conf/schema.xml-EMPTY (requerit)
+    - data/data.xml (autogenerat per l'aplicació cada cop que es faci una indexació a Solr, i contindrà les dades indexades)
 - [MEDIA_PATH]
-    - thumbnail 
-        - classes
-            - default.jpg (requerit. Miniatura per defecte de tots els objectes. No té perquè ser d'una mida específica)
-            - (Opcionalment, una miniatura per defecte per a cada classe amb el seu prefix, exemple "foaf:Person.jpg")
-- [ONTOLOGY_PATH] (Ruta completa a l'arxiu que conté l'ontologia principal del projecte)
+    - thumbnail/
+    - thumbnail/classes/default.jpg (requerit. Miniatura per defecte de tots els objectes. No té perquè ser d'una mida específica)
+    - thumbnail/classes/ (opcionalment, una miniatura per defecte per a cada classe amb el seu prefix, exemple "foaf:Person.jpg")
+- [ONTOLOGY_PATH] (ruta completa a l'arxiu que conté l'ontologia principal del projecte)
 
 Pas 4t: Reiniciar
 -----------------------------
@@ -416,3 +416,20 @@ El tipus de dada dels patrons és diferent del tipus explicat al pas anterior. E
 - **counter**: resol la ruta i agrupa i fa un recompte de les coincidències.
 
 Adoneu-vos que **text**, **objects** and **media** fan el mateix a la pràctica. La diferència és que el valor que resolen es suposa que és per propòsits diferents. Veure la secció Visualització per a més informació sobre els tipus **media** i **objects**.
+
+Manteniment
+----------------------------
+
+Servei que realitza les següents tasques de manteniment regular de l'aplicació:
+
+- Esborrar els fitxers temporals que es creen durant els processo legals
+- Indexació de les dades a Solr (és a dir crida el servei /solr/reload)
+- Actualització de les dades per a OAI-PMH (només si la variable OAI_PATH estigui definida)
+
+::
+
+    Ruta servei: http://{host:port}/{appname}/maintenance
+    Mètode HTTP: GET
+    Retorna: "success" o "error"
+    
+La crida d'aquest servei en un servidor a producció hauria de ser periòdica, a l'hora de menys tràfic d'usuaris/peticions.

@@ -67,6 +67,7 @@
 <li><a class="reference internal" href="#pas-5e-script-legal">Pas 5è: Script legal</a></li>
 <li><a class="reference internal" href="#pas-6e-mapeig-de-dades">Pas 6è: Mapeig de dades</a></li>
 <li><a class="reference internal" href="#pas-7e-patrons-de-classe">Pas 7è: Patrons de classe</a></li>
+<li><a class="reference internal" href="#manteniment">Manteniment</a></li>
 </ul>
 </li>
 </ul>
@@ -238,6 +239,7 @@
         <span class="s">&quot;REST_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myhost:8080/rest/&quot;</span><span class="p">,</span>
         <span class="s">&quot;SOLR_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myhost:8080/solr/&quot;</span><span class="p">,</span>
         <span class="s">&quot;VIDEO_SERVICES_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myhost:8080/videoservices/rest/&quot;</span><span class="p">,</span>
+        <span class="s">&quot;USER_ROLE_SERVICE_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myotherhost:8080/myapp/getUserRole?userId=&quot;</span><span class="p">,</span>
 
     <span class="s">&quot;__comment_2&quot;</span><span class="p">:</span><span class="s">&quot;Les ontologies i els namespaces (qualsevo canvi implicarà corregir tots els registres existents a la BD)&quot;</span><span class="p">,</span>
 
@@ -264,67 +266,41 @@
 <p>MEDIA_AUTOCONVERT posat a &#8220;true&#8221; si cal que cada cop que es pugi un fitxer mèdia, aquest sigui convertit automàticament d&#8217;acord amb els perfils i la propietat anterior. En altre cas sempre hi haurà disponible el servei &#8220;convert&#8221; (veure secció Gestió de Medias).</p>
 <p>LANGUAGE_LIST enumera els codis d&#8217;idioma que s&#8217;espera que siguin emprats en els camps de les propietats (el primer de la llista serà el considerat com l&#8217;idioma d&#8217;accés per defecte).</p>
 <p>USER_LEVEL especifica el grau d&#8217;accés legal que té cada rol d&#8217;usuari, ordenats de més a menys restricció (&#8220;*&#8221; significa qualsevol rol). Com que només hi ha 4 nivells de restricció, aquesta llista hauria de contenir sempre 4 elements. Cada element pot contenir més d&#8217;un rol, separat per &#8216;+&#8217; (p.ex: &#8220;Manager+Reviewer&#8221;).</p>
+<p>USER_ROLE_SERVICE_URL és una URL a un servei específic. Aquest servei és emprat per AC per obtenir els grups d&#8217;usuari que determinaran el permís d&#8217;accés de l&#8217;usuari. El servei ha d&#8217;acceptar un identificador (a la cadena de la URL) i hauria de retornar un dels grups d&#8217;usuari especificats a USER_LEVEL.</p>
 <p>ONTOLOGY_NAMESPACES estableix un prefix per a cada namespace d&#8217;Ontologia, aquesta relació també ha d&#8217;aparèixer la llista &#8220;namespaces&#8221; del Virtuoso (veure Pas 1r). La primera ontologia especificada ha de ser necessariament aquella que hagi estat creada (o escollida) especialment per la web semàntica (corresponent a l&#8217;arxiu especificat a la variable &#8220;ONTOLOGY_PATH&#8221;) i la resta d&#8217;ontologies seran aquelles importades a l&#8217;ontologia principal. Generalment, els esquemes RDF i RDFS haurien de ser inclosos sempre.</p>
 <p>AC requereix la següent estructura de directoris:</p>
 <ul>
 <li><dl class="first docutils">
 <dt>[CONFIGURATIONS_PATH]</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>legal</dt>
 <dd><ul class="first last simple">
-<li>legal.json (requerit)</li>
+<li>legal/legal.json (requerit)</li>
+<li>mapping/mapping.json (requerit)</li>
+<li>mapping/search.json (opcional)</li>
+<li>mapping/ (opcionalment, un arxiu json per a cada classe de l&#8217;Ontologia, amb el seu prefix, per exemple &#8220;foaf:Person.json&#8221;)</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>mapping</dt>
+<dt>[SOLR_PATH] (directori Home del Solr)</dt>
 <dd><ul class="first last simple">
-<li>mapping.json (requerit)</li>
-<li>search.json (opcional)</li>
-<li>(opcionalment, un arxiu json per a cada classe de l&#8217;Ontologia, amb el seu prefix, per exemple &#8220;foaf:Person.json&#8221;)</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>[SOLR_PATH] (no confondre amb el directory Home del Solr)</dt>
-<dd><ul class="first last simple">
-<li>schema.xml-EMPTY (requerit)</li>
-<li>data.xml (autogenerat per l&#8217;aplicació cada cop que es faci una indexació a Solr, i contindrà les dades indexades)</li>
+<li>conf/schema.xml-EMPTY (requerit)</li>
+<li>data/data.xml (autogenerat per l&#8217;aplicació cada cop que es faci una indexació a Solr, i contindrà les dades indexades)</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt>[MEDIA_PATH]</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>thumbnail</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>classes</dt>
 <dd><ul class="first last simple">
-<li>default.jpg (requerit. Miniatura per defecte de tots els objectes. No té perquè ser d&#8217;una mida específica)</li>
-<li>(Opcionalment, una miniatura per defecte per a cada classe amb el seu prefix, exemple &#8220;foaf:Person.jpg&#8221;)</li>
+<li>thumbnail/</li>
+<li>thumbnail/classes/default.jpg (requerit. Miniatura per defecte de tots els objectes. No té perquè ser d&#8217;una mida específica)</li>
+<li>thumbnail/classes/ (opcionalment, una miniatura per defecte per a cada classe amb el seu prefix, exemple &#8220;foaf:Person.jpg&#8221;)</li>
 </ul>
 </dd>
 </dl>
 </li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p class="first">[ONTOLOGY_PATH] (Ruta completa a l&#8217;arxiu que conté l&#8217;ontologia principal del projecte)</p>
+<li><p class="first">[ONTOLOGY_PATH] (ruta completa a l&#8217;arxiu que conté l&#8217;ontologia principal del projecte)</p>
 </li>
 </ul>
 </div>
@@ -508,6 +484,20 @@ Returns: "success" or "error"</pre>
 <li><strong>counter</strong>: resol la ruta i agrupa i fa un recompte de les coincidències.</li>
 </ul>
 <p>Adoneu-vos que <strong>text</strong>, <strong>objects</strong> and <strong>media</strong> fan el mateix a la pràctica. La diferència és que el valor que resolen es suposa que és per propòsits diferents. Veure la secció Visualització per a més informació sobre els tipus <strong>media</strong> i <strong>objects</strong>.</p>
+</div>
+<div class="section" id="manteniment">
+<h2>Manteniment<a class="headerlink" href="#manteniment" title="Permalink to this headline">¶</a></h2>
+<p>Servei que realitza les següents tasques de manteniment regular de l&#8217;aplicació:</p>
+<ul class="simple">
+<li>Esborrar els fitxers temporals que es creen durant els processo legals</li>
+<li>Indexació de les dades a Solr (és a dir crida el servei /solr/reload)</li>
+<li>Actualització de les dades per a OAI-PMH (només si la variable OAI_PATH estigui definida)</li>
+</ul>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/maintenance
+Mètode HTTP: GET
+Retorna: "success" o "error"</pre>
+</div>
+<p>La crida d&#8217;aquest servei en un servidor a producció hauria de ser periòdica, a l&#8217;hora de menys tràfic d&#8217;usuaris/peticions.</p>
 </div>
 </div>
 
