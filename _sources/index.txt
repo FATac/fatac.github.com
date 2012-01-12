@@ -37,6 +37,7 @@ Contents
    managing_solr
    visualization
    legal
+   oai
    
 **Català**
 
@@ -50,5 +51,6 @@ Contents
    managing_solr_ca
    visualization_ca
    legal_ca
+   oai_ca
    
    

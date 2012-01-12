@@ -1,0 +1,174 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>OAI-PMH Support &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0a1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
+<link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
+
+  </head>
+  <body>
+<div class="header">
+    <a href="#">
+        <img alt="Logo" src="_static/logo.jpg" class="logo" />
+    </a>
+</div>
+    
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">OAI-PMH Support</a><ul>
+<li><a class="reference internal" href="#configure">Configure</a></li>
+<li><a class="reference internal" href="#mapping">Mapping</a></li>
+<li><a class="reference internal" href="#export">Export</a></li>
+<li><a class="reference internal" href="#oaicat">OAICat</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/oai.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="oai-pmh-support">
+<h1>OAI-PMH Support<a class="headerlink" href="#oai-pmh-support" title="Permalink to this headline">¶</a></h1>
+<p><strong>OAI-PMH</strong> (Open Archive Initiative - Protocol for Metadata Hervesting) standarizes archive data transmission between organizations. Arts Combinatòries allows to configure XML data export to make them avialable to <a class="reference internal" href="#oaicat">OAICAT</a> module, which must be incorporated.</p>
+<p>To have our data available in OAI-PMH, following steps must be considered:</p>
+<div class="section" id="configure">
+<h2>Configure<a class="headerlink" href="#configure" title="Permalink to this headline">¶</a></h2>
+<p>A proper configuration of main application properties is required (Configuration Sep 3).</p>
+<p>Also, OAI_PATH property must be set with directory path where XML files will be used by OAICat.</p>
+<p>OAICat module must be configured the next way:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>In file WEB-INF/oaicat.properties</li>
+<li>Put in <strong>FileSystemOAICatalog.homeDir</strong> the directory path specified at OAI_PATH property</li>
+<li>Put in <strong>FileMap2oai_dc.xsltName</strong> the absolute path to XSL file WEB-INF/etdms2dc.xsl (or any other customized XSL)</li>
+<li>It might be necessary to configure &lt;context-param&gt;&lt;param-name&gt;properties (...) of web.xml, setting in &lt;param-value&gt; the absolute path to oaicat.properties file</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="mapping">
+<h2>Mapping<a class="headerlink" href="#mapping" title="Permalink to this headline">¶</a></h2>
+<p>&#8220;oai-mapping.json&#8221; file must be added in (CONFIG_PATH)/mapping/ with a sort of content:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+        <span class="s">&quot;xmlHeader&quot;</span><span class="p">:</span><span class="s">&quot;&lt;oai_etdms:thesis xmlns:oai_etdms=</span><span class="se">\&quot;</span><span class="s">http://www.ndltd.org/standards/metadata/etdms/1.0/</span><span class="se">\&quot;</span><span class="s"> xmlns:xsi=</span><span class="se">\&quot;</span><span class="s">http://www.w3.org/2001/XMLSchema-instance</span><span class="se">\&quot;</span><span class="s"> xsi:schemaLocation=</span><span class="se">\&quot;</span><span class="s">http://www.ndltd.org/standards/metadata/etdms/1.0/ http://www.ndltd.org/standards/metadata/etdms/1.0/etdms.xsd</span><span class="se">\&quot;</span><span class="s">&gt;&quot;</span><span class="p">,</span>
+        <span class="s">&quot;xmlFooter&quot;</span><span class="p">:</span><span class="s">&quot;&lt;/oai_etdms:thesis&gt;&quot;</span><span class="p">,</span>
+        <span class="s">&quot;xmlPrefix&quot;</span><span class="p">:</span><span class="s">&quot;oai_etdms&quot;</span><span class="p">,</span>
+
+        <span class="s">&quot;data&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+                <span class="p">{</span>
+                        <span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;title&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;path&quot;</span><span class="p">:[</span><span class="s">&quot;my:Document.my:Title&quot;</span><span class="p">]</span>
+                <span class="p">},</span>
+
+                <span class="p">{</span>
+                        <span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;description&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;path&quot;</span><span class="p">:[</span><span class="s">&quot;my:Document.my:Description&quot;</span><span class="p">]</span>
+                <span class="p">},</span>
+
+                <span class="p">{</span>
+                        <span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;language&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;path&quot;</span><span class="p">:[</span><span class="s">&quot;my:Document.my:hasTranslation=my:Language.my:Name&quot;</span><span class="p">]</span>
+                <span class="p">}</span>
+
+                <span class="o">//</span> <span class="o">...</span>
+        <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note that it&#8217;s a mapping language equivalent to Solr indexation&#8217;s. <strong>xmlHeader</strong>, <strong>xmlFooter</strong>, <strong>xmlPrefix</strong> depend on XSL that is used. Terms correspond to Dublin Core (DC) specification: title, creator, description, subject, date, type, identifier, etc.</p>
+</div>
+<div class="section" id="export">
+<h2>Export<a class="headerlink" href="#export" title="Permalink to this headline">¶</a></h2>
+<p>In order to having our data exported according to our mapping, next service should be used:</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/oai
+HTTP Method: GET
+Returns: "success" or "error"</pre>
+</div>
+<p>This service call will lead to having a set of XML located in OAI_PATH</p>
+</div>
+<div class="section" id="oaicat">
+<h2>OAICat<a class="headerlink" href="#oaicat" title="Permalink to this headline">¶</a></h2>
+<p>Upon file generation, our data is fully available for being harvested by third parties (for instance: <a class="reference external" href="http://host:port/oaicat">http://host:port/oaicat</a>)</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, FAT - UPCnet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

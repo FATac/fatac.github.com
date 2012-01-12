@@ -171,7 +171,8 @@ El primer que hem de fer per a configurar AC és definir l'arxiu de propietats "
 	    "CONFIGURATIONS_PATH":"/achome/json/",
 	    "SOLR_PATH":"/achome/solr/",
 	    "MEDIA_PATH":"/achome/media/",
-	    "ONTOLOGY_PATH":"/achome/myontology.owl"
+	    "ONTOLOGY_PATH":"/achome/myontology.owl",
+	    "OAI_PATH":"..."
     }
 
 THUMBNAIL_WIDTH i THUMBNAIL_HEIGHT determina la mida de les miniatures generades.
@@ -203,6 +204,8 @@ AC requereix la següent estructura de directoris:
     - thumbnail/classes/default.jpg (requerit. Miniatura per defecte de tots els objectes. No té perquè ser d'una mida específica)
     - thumbnail/classes/ (opcionalment, una miniatura per defecte per a cada classe amb el seu prefix, exemple "foaf:Person.jpg")
 - [ONTOLOGY_PATH] (ruta completa a l'arxiu que conté l'ontologia principal del projecte)
+
+OAI_PATH és una propietat opcional. S'explica amb detall a la secció Suport per OAI PMH
 
 Pas 4t: Reiniciar
 -----------------------------
