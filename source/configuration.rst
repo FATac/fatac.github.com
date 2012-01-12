@@ -169,7 +169,8 @@ The first thing we have to do is to configure the 'config.json' file, you may pl
 	    "CONFIGURATIONS_PATH":"/achome/json/",
 	    "SOLR_PATH":"/achome/solr/",
 	    "MEDIA_PATH":"/achome/media/",
-	    "ONTOLOGY_PATH":"/achome/myontology.owl"
+	    "ONTOLOGY_PATH":"/achome/myontology.owl",
+	    "OAI_PATH":"..."
     }
 
 THUMBNAIL_WIDTH and THUMBNAIL_HEIGHT determines the size of generated thumbnails.
@@ -201,6 +202,8 @@ AC requires the next folder and file structure in order to allocate and use its 
     - thumbnail/classes/default.jpg (required. Default thumbnail for all objects. Does not need to fit a specific size)
     - thumbnail/classes/ (optionally, default thumbnail for any classes Ontology class named with prefix, example "foaf:Person.jpg")
 - [ONTOLOGY_PATH] (path to file containing the project's Ontology)
+
+OAI_PATH is an optinal property explained in detail in OAI PMH Support section
 
 Step 4: Reset
 -----------------------------
