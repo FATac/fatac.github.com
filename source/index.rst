@@ -31,6 +31,7 @@ Contents
    :maxdepth: 2
 
    introduction
+   install
    configuration
    managing_data
    managing_media
@@ -45,6 +46,7 @@ Contents
    :maxdepth: 2
    
    introduction_ca
+   install_ca
    configuration_ca
    managing_data_ca
    managing_media_ca
