@@ -69,7 +69,7 @@ Per exportar les dades d'acord amb el mapeig anterior, cal utilitzar el servei s
     Mètode HTTP: GET
     Retorna: "success" o "error"
     
-El resultat d'aquest crida serà un conjunt d'arxius XML localitzats a OAI_PATH
+El resultat d'aquesta crida serà un conjunt d'arxius XML localitzats a OAI_PATH
 
 OAICat
 ----------------

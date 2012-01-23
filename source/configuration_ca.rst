@@ -80,53 +80,69 @@ Un cop instal·lat el Solr, cal utilitzar un schema.xml específic. Aquest es ge
 
 ::
 
-	<?xml version="1.0" encoding="UTF-8" ?>
-	
-	<schema name="mySchema" version="1.4">
-	
-		 <types>
-		    <fieldType name="identifier" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
-		    <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/>
-		    <fieldType name="long" class="solr.TrieLongField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/> 
-		    <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
-		    <fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/> 
-		
-		    <fieldType name="string" class="solr.TextField" sortMissingLast="true" omitNorms="true">
-		      <analyzer type="index">
-		        <tokenizer class="solr.KeywordTokenizerFactory"/>
-		        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
-		      </analyzer>
-		      <analyzer type="query">
-		        <tokenizer class="solr.KeywordTokenizerFactory"/>
-		        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
-		      </analyzer>
-		    </fieldType>
-		
-		    <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
-		      <analyzer type="index">
-		        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
-		        <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
-		        <filter class="solr.LowerCaseFilterFactory" />
-		        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
-		      </analyzer>
-		      <analyzer type="query">
-		        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
-		        <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
-		        <filter class="solr.LowerCaseFilterFactory" />
-		        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
-		      </analyzer>
-		    </fieldType>
-		 </types>
-		
-		<!-- FIELDS_INSERTION_MARK -->
-		
-		 <uniqueKey>id</uniqueKey>
-		
-		 <defaultSearchField>id</defaultSearchField>
-		
-		 <solrQueryParser defaultOperator="OR"/>
-	
-	</schema>
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <!-- DO NOT MODIFY THIS FILE -->
+
+    <schema name="mySchema" version="1.4">
+
+     <types>
+        <fieldType name="identifier" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+        <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/>
+        <fieldType name="long" class="solr.TrieLongField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/> 
+        <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
+        <fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/> 
+
+        <fieldType name="string" class="solr.TextField" sortMissingLast="true" omitNorms="true">
+          <analyzer type="index">
+            <tokenizer class="solr.KeywordTokenizerFactory"/>
+            <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
+            <charFilter class="solr.HTMLStripCharFilterFactory"/>
+          </analyzer>
+          <analyzer type="query">
+            <tokenizer class="solr.KeywordTokenizerFactory"/>
+            <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
+            <charFilter class="solr.HTMLStripCharFilterFactory"/>
+          </analyzer>
+        </fieldType>
+
+        <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
+          <analyzer type="index">
+            <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+            <filter class="solr.WordDelimiterFilterFactory"
+                            generateWordParts="1" generateNumberParts="1"
+                            catenateWords="1" catenateNumbers="1"
+                            catenateAll="0" preserveOriginal="1" />
+            <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
+            <filter class="solr.LowerCaseFilterFactory" />
+            <filter class="solr.PatternReplaceFilterFactory" pattern="^(\p{Punct}*)(.*?)(\p{Punct}*)$" replacement="$2"/>
+            <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
+            <charFilter class="solr.HTMLStripCharFilterFactory"/>
+          </analyzer>
+          <analyzer type="query">
+            <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+            <filter class="solr.WordDelimiterFilterFactory"
+                            generateWordParts="1" generateNumberParts="1"
+                            catenateWords="0" catenateNumbers="0"
+                            catenateAll="0" preserveOriginal="1" />
+            <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
+            <filter class="solr.LowerCaseFilterFactory" />
+            <filter class="solr.PatternReplaceFilterFactory" pattern="^(\p{Punct}*)(.*?)(\p{Punct}*)$" replacement="$2"/>
+            <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
+            <charFilter class="solr.HTMLStripCharFilterFactory"/>
+          </analyzer>
+        </fieldType>
+     </types>
+
+    <!-- FIELDS_INSERTION_MARK -->
+
+     <uniqueKey>id</uniqueKey>
+
+     <defaultSearchField>id</defaultSearchField>
+
+     <solrQueryParser defaultOperator="OR"/>
+
+    </schema>
+
 
 Pas 3er: Propietats principals
 --------------------------------------
