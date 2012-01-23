@@ -170,50 +170,65 @@
 <h2>Pas 2n: Solr<a class="headerlink" href="#pas-2n-solr" title="Permalink to this headline">¶</a></h2>
 <p>Un cop instal·lat el Solr, cal utilitzar un schema.xml específic. Aquest es genera d&#8217;acord amb les especificacions de mapeig (veure Pas 6è) i d&#8217;acord amb una &#8220;schema&#8221; base. Aquest esquema base és un arxiu situat al directori &#8220;solr&#8221; (referenciat a la variable &#8220;SOLR_PATH&#8221; del Pas 3r), amb exactament el contingut següent:</p>
 <div class="highlight-python"><pre>&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!-- DO NOT MODIFY THIS FILE --&gt;
 
 &lt;schema name="mySchema" version="1.4"&gt;
 
-         &lt;types&gt;
-            &lt;fieldType name="identifier" class="solr.StrField" sortMissingLast="true" omitNorms="true"/&gt;
-            &lt;fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/&gt;
-            &lt;fieldType name="long" class="solr.TrieLongField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
-            &lt;fieldType name="float" class="solr.TrieFloatField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
-            &lt;fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
+ &lt;types&gt;
+    &lt;fieldType name="identifier" class="solr.StrField" sortMissingLast="true" omitNorms="true"/&gt;
+    &lt;fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/&gt;
+    &lt;fieldType name="long" class="solr.TrieLongField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
+    &lt;fieldType name="float" class="solr.TrieFloatField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
+    &lt;fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/&gt;
 
-            &lt;fieldType name="string" class="solr.TextField" sortMissingLast="true" omitNorms="true"&gt;
-              &lt;analyzer type="index"&gt;
-                &lt;tokenizer class="solr.KeywordTokenizerFactory"/&gt;
-                &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
-              &lt;/analyzer&gt;
-              &lt;analyzer type="query"&gt;
-                &lt;tokenizer class="solr.KeywordTokenizerFactory"/&gt;
-                &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
-              &lt;/analyzer&gt;
-            &lt;/fieldType&gt;
+    &lt;fieldType name="string" class="solr.TextField" sortMissingLast="true" omitNorms="true"&gt;
+      &lt;analyzer type="index"&gt;
+        &lt;tokenizer class="solr.KeywordTokenizerFactory"/&gt;
+        &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+        &lt;charFilter class="solr.HTMLStripCharFilterFactory"/&gt;
+      &lt;/analyzer&gt;
+      &lt;analyzer type="query"&gt;
+        &lt;tokenizer class="solr.KeywordTokenizerFactory"/&gt;
+        &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+        &lt;charFilter class="solr.HTMLStripCharFilterFactory"/&gt;
+      &lt;/analyzer&gt;
+    &lt;/fieldType&gt;
 
-            &lt;fieldType name="text_general" class="solr.TextField" positionIncrementGap="100"&gt;
-              &lt;analyzer type="index"&gt;
-                &lt;tokenizer class="solr.WhitespaceTokenizerFactory"/&gt;
-                &lt;filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/&gt;
-                &lt;filter class="solr.LowerCaseFilterFactory" /&gt;
-                &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
-              &lt;/analyzer&gt;
-              &lt;analyzer type="query"&gt;
-                &lt;tokenizer class="solr.WhitespaceTokenizerFactory"/&gt;
-                &lt;filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/&gt;
-                &lt;filter class="solr.LowerCaseFilterFactory" /&gt;
-                &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
-              &lt;/analyzer&gt;
-            &lt;/fieldType&gt;
-         &lt;/types&gt;
+    &lt;fieldType name="text_general" class="solr.TextField" positionIncrementGap="100"&gt;
+      &lt;analyzer type="index"&gt;
+        &lt;tokenizer class="solr.WhitespaceTokenizerFactory"/&gt;
+        &lt;filter class="solr.WordDelimiterFilterFactory"
+                        generateWordParts="1" generateNumberParts="1"
+                        catenateWords="1" catenateNumbers="1"
+                        catenateAll="0" preserveOriginal="1" /&gt;
+        &lt;filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/&gt;
+        &lt;filter class="solr.LowerCaseFilterFactory" /&gt;
+        &lt;filter class="solr.PatternReplaceFilterFactory" pattern="^(\p{Punct}*)(.*?)(\p{Punct}*)$" replacement="$2"/&gt;
+        &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+        &lt;charFilter class="solr.HTMLStripCharFilterFactory"/&gt;
+      &lt;/analyzer&gt;
+      &lt;analyzer type="query"&gt;
+        &lt;tokenizer class="solr.WhitespaceTokenizerFactory"/&gt;
+        &lt;filter class="solr.WordDelimiterFilterFactory"
+                        generateWordParts="1" generateNumberParts="1"
+                        catenateWords="0" catenateNumbers="0"
+                        catenateAll="0" preserveOriginal="1" /&gt;
+        &lt;filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/&gt;
+        &lt;filter class="solr.LowerCaseFilterFactory" /&gt;
+        &lt;filter class="solr.PatternReplaceFilterFactory" pattern="^(\p{Punct}*)(.*?)(\p{Punct}*)$" replacement="$2"/&gt;
+        &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+        &lt;charFilter class="solr.HTMLStripCharFilterFactory"/&gt;
+      &lt;/analyzer&gt;
+    &lt;/fieldType&gt;
+ &lt;/types&gt;
 
-        &lt;!-- FIELDS_INSERTION_MARK --&gt;
+&lt;!-- FIELDS_INSERTION_MARK --&gt;
 
-         &lt;uniqueKey&gt;id&lt;/uniqueKey&gt;
+ &lt;uniqueKey&gt;id&lt;/uniqueKey&gt;
 
-         &lt;defaultSearchField&gt;id&lt;/defaultSearchField&gt;
+ &lt;defaultSearchField&gt;id&lt;/defaultSearchField&gt;
 
-         &lt;solrQueryParser defaultOperator="OR"/&gt;
+ &lt;solrQueryParser defaultOperator="OR"/&gt;
 
 &lt;/schema&gt;</pre>
 </div>

@@ -169,6 +169,7 @@ GRANT ALL PRIVILEGES TO "SPARQL";</pre>
 <h2>Step 2: Solr<a class="headerlink" href="#step-2-solr" title="Permalink to this headline">¶</a></h2>
 <p>Upon Solr installation, a specific schema.xml must be used. This is generated according to mapping specifications (see Step 6) and to a base schema. This base schema is a file placed in &#8220;solr&#8221; directory (referenced in &#8220;SOLR_PATH&#8221; at Step 3), containing exactly the next content:</p>
 <div class="highlight-python"><pre>&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!-- DO NOT MODIFY THIS FILE --&gt;
 
 &lt;schema name="mySchema" version="1.4"&gt;
 
@@ -183,25 +184,39 @@ GRANT ALL PRIVILEGES TO "SPARQL";</pre>
       &lt;analyzer type="index"&gt;
         &lt;tokenizer class="solr.KeywordTokenizerFactory"/&gt;
         &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+        &lt;charFilter class="solr.HTMLStripCharFilterFactory"/&gt;
       &lt;/analyzer&gt;
       &lt;analyzer type="query"&gt;
         &lt;tokenizer class="solr.KeywordTokenizerFactory"/&gt;
         &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+        &lt;charFilter class="solr.HTMLStripCharFilterFactory"/&gt;
       &lt;/analyzer&gt;
     &lt;/fieldType&gt;
 
     &lt;fieldType name="text_general" class="solr.TextField" positionIncrementGap="100"&gt;
       &lt;analyzer type="index"&gt;
         &lt;tokenizer class="solr.WhitespaceTokenizerFactory"/&gt;
+        &lt;filter class="solr.WordDelimiterFilterFactory"
+                        generateWordParts="1" generateNumberParts="1"
+                        catenateWords="1" catenateNumbers="1"
+                        catenateAll="0" preserveOriginal="1" /&gt;
         &lt;filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/&gt;
         &lt;filter class="solr.LowerCaseFilterFactory" /&gt;
+        &lt;filter class="solr.PatternReplaceFilterFactory" pattern="^(\p{Punct}*)(.*?)(\p{Punct}*)$" replacement="$2"/&gt;
         &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+        &lt;charFilter class="solr.HTMLStripCharFilterFactory"/&gt;
       &lt;/analyzer&gt;
       &lt;analyzer type="query"&gt;
         &lt;tokenizer class="solr.WhitespaceTokenizerFactory"/&gt;
+        &lt;filter class="solr.WordDelimiterFilterFactory"
+                        generateWordParts="1" generateNumberParts="1"
+                        catenateWords="0" catenateNumbers="0"
+                        catenateAll="0" preserveOriginal="1" /&gt;
         &lt;filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/&gt;
         &lt;filter class="solr.LowerCaseFilterFactory" /&gt;
+        &lt;filter class="solr.PatternReplaceFilterFactory" pattern="^(\p{Punct}*)(.*?)(\p{Punct}*)$" replacement="$2"/&gt;
         &lt;charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/&gt;
+        &lt;charFilter class="solr.HTMLStripCharFilterFactory"/&gt;
       &lt;/analyzer&gt;
     &lt;/fieldType&gt;
  &lt;/types&gt;
