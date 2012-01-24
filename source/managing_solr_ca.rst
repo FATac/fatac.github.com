@@ -139,8 +139,7 @@ Realitza la cerca, en aquest cas el resultat JSON ve directament del motor Solr.
 
 **Com filtrar els resultats**
 
-El paràmetre de filtre "f" es pot construir de forma simple. Dels camps que s'inclouen dins el bloc "facet_fields" del resultat Solr, n'utilitzem el nom i un valor com a criteri de filtre. Partint de l'exemple anterior, suposem que volem filtrar per any de neixement i país amb valors especifics. Per exemple: "Birth:1930,Country:United Kingdom". 
-Constructing filter parameter is quite simple. All we have to do is to chose what category value we want to filter from "facet_fields" section of JSON Solr result. Still in previous example, say we want to filter by Birth year and Country with specific values for each. Filter could be: "Birth:1930,Country:United Kingdom".
+El paràmetre de filtre "f" es pot construir de forma simple. Dels camps que s'inclouen dins el bloc "facet_fields" del resultat Solr, n'utilitzem el nom i un valor com a criteri de filtre. Partint de l'exemple anterior, suposem que volem filtrar per any de neixement i país amb valors especifics. Per exemple: "Birth:1930,Country:United Kingdom".
 
 **Exemple de filtrat**
 

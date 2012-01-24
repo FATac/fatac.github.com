@@ -209,8 +209,7 @@ Retorna: Resultat JSON o "error"</pre>
 }</pre>
 </div>
 <p><strong>Com filtrar els resultats</strong></p>
-<p>El paràmetre de filtre &#8220;f&#8221; es pot construir de forma simple. Dels camps que s&#8217;inclouen dins el bloc &#8220;facet_fields&#8221; del resultat Solr, n&#8217;utilitzem el nom i un valor com a criteri de filtre. Partint de l&#8217;exemple anterior, suposem que volem filtrar per any de neixement i país amb valors especifics. Per exemple: &#8220;Birth:1930,Country:United Kingdom&#8221;.
-Constructing filter parameter is quite simple. All we have to do is to chose what category value we want to filter from &#8220;facet_fields&#8221; section of JSON Solr result. Still in previous example, say we want to filter by Birth year and Country with specific values for each. Filter could be: &#8220;Birth:1930,Country:United Kingdom&#8221;.</p>
+<p>El paràmetre de filtre &#8220;f&#8221; es pot construir de forma simple. Dels camps que s&#8217;inclouen dins el bloc &#8220;facet_fields&#8221; del resultat Solr, n&#8217;utilitzem el nom i un valor com a criteri de filtre. Partint de l&#8217;exemple anterior, suposem que volem filtrar per any de neixement i país amb valors especifics. Per exemple: &#8220;Birth:1930,Country:United Kingdom&#8221;.</p>
 <p><strong>Exemple de filtrat</strong></p>
 <div class="highlight-python"><pre>http://internetdomain.org/ac/solr/search?s=James&amp;f=Birth:1930,Country:United+Kingdom   // Els espais es poden substituir per signe "+"</pre>
 </div>
