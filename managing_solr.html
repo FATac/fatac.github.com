@@ -117,7 +117,7 @@ Returns: "success" or "error"</pre>
 </div>
 <div class="section" id="commit">
 <h2>Commit<a class="headerlink" href="#commit" title="Permalink to this headline">¶</a></h2>
-<p>Commits recent indexation (not necessary)</p>
+<p>Commits recent index (not necessary)</p>
 <div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/commit
 HTTP Method: GET
 Returns: media file</pre>
@@ -135,7 +135,7 @@ Returns: "success" or "error"</pre>
 <div class="section" id="reload">
 <h2>Reload<a class="headerlink" href="#reload" title="Permalink to this headline">¶</a></h2>
 <p>Peforms an update removing any existing data index. This process may take some time.</p>
-<p>Solr indexation can be found at (SOLR_PATH)/data.xml</p>
+<p>Solr index can be found at (SOLR_PATH)/data.xml</p>
 <div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/reload
 HTTP Method: GET
 Returns: "success" or "error"</pre>
@@ -143,10 +143,10 @@ Returns: "success" or "error"</pre>
 </div>
 <div class="section" id="update">
 <h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
-<p>Indexates new data according to mapping JSON configuration. This process may take some time.</p>
-<p>Solr indexation can be found at (SOLR_PATH)/data.xml</p>
-<p>This call is not recommended as there may remain indexed documents of unexisting objects in ontology.</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/update
+<p>Indexes objects introduced or modified within the last M minutes (default is 60 minutes).</p>
+<p>Solr index can be found at (SOLR_PATH)/data.xml</p>
+<p>Note that this service does not update index reflecting objects that have been deleted, to do so, use &#8220;reload&#8221; service.</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/solr/update?time=MINUTES
 HTTP Method: GET
 Returns: "success" or "error"</pre>
 </div>

@@ -143,10 +143,10 @@ Retorna: "success" o "error"</pre>
 </div>
 <div class="section" id="update">
 <h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
-<p>Realitza una actualització (servei update del Solr) mantenint les dades prèvies. Aquest procés por trigar una mica.</p>
+<p>Realitza una actualització (servei update del Solr) de l&#8217;index amb els objectes actualitzats o introduïts en els darrers M minuts (per defecte són 60 minuts).</p>
 <p>La indexació Solr resultant es desa a l&#8217;arxiu: (SOLR_PATH)/data.xml</p>
-<p>En principi aquesta crida no es recomana ja que poden romandre documents indexats d&#8217;objectes inexistents a l&#8217;ontologia.</p>
-<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/solr/update
+<p>Aquest servei no actualitza a l&#8217;index els objectes eliminats, per reflectir això cal crider el servei &#8220;reload&#8221;</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/solr/update?time=MINUTS
 Mètode HTTP: GET
 Retorna: "success" or "error"</pre>
 </div>

@@ -79,6 +79,30 @@ Retrieves specific object data
     }
 
 
+Exists
+-------------------
+
+Retrieves whether an specified object exists or not
+
+::
+
+    Service path: http://{host:port}/{appname}/resource/{identifier}/exists
+    HTTP Method: GET
+    Returns: "true" or "false"
+
+**GET Example**
+
+::
+
+    http://internetdomain.org/ac/resource/New_York_City/exists
+
+**OK Result**
+
+::
+
+    "true"
+
+
 Update
 -----------------------
 

@@ -62,6 +62,7 @@
 <li><a class="reference internal" href="#">Managing data</a><ul>
 <li><a class="reference internal" href="#upload">Upload</a></li>
 <li><a class="reference internal" href="#read">Read</a></li>
+<li><a class="reference internal" href="#exists">Exists</a></li>
 <li><a class="reference internal" href="#update">Update</a></li>
 <li><a class="reference internal" href="#delete">Delete</a></li>
 </ul>
@@ -151,6 +152,21 @@ Returns: JSON object data</pre>
     <span class="s">&quot;my:name&quot;</span><span class="p">:</span><span class="s">&quot;Nueva York@es&quot;</span><span class="p">,</span>
     <span class="s">&quot;my:abbreviation&quot;</span><span class="p">:</span><span class="s">&quot;NYC&quot;</span>
 <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exists">
+<h2>Exists<a class="headerlink" href="#exists" title="Permalink to this headline">¶</a></h2>
+<p>Retrieves whether an specified object exists or not</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/resource/{identifier}/exists
+HTTP Method: GET
+Returns: "true" or "false"</pre>
+</div>
+<p><strong>GET Example</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/ac/resource/New_York_City/exists</pre>
+</div>
+<p><strong>OK Result</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;true&quot;</span>
 </pre></div>
 </div>
 </div>

@@ -76,6 +76,29 @@ Retorna les dades d'un objecte específic
         "my:name":"Nueva York@es",
         "my:abbreviation":"NYC"
     }
+    
+Exists
+-------------------
+
+Informa si existeix un determinat objecte
+
+::
+
+    Ruta servei: http://{host:port}/{appname}/resource/{identifier}/exists
+    Mètode HTTP: GET
+    Retorna: "true" o "false"
+
+**Exemple GET**
+
+::
+
+    http://internetdomain.org/ac/resource/New_York_City/exists
+
+**Resultat OK**
+
+::
+
+    "true"
 
 
 Update

@@ -54,15 +54,15 @@ La indexació Solr resultant es desa a l'arxiu: (SOLR_PATH)/data.xml
 Update
 ----------------
 
-Realitza una actualització (servei update del Solr) mantenint les dades prèvies. Aquest procés por trigar una mica.
+Realitza una actualització (servei update del Solr) de l'index amb els objectes actualitzats o introduïts en els darrers M minuts (per defecte són 60 minuts).
 
 La indexació Solr resultant es desa a l'arxiu: (SOLR_PATH)/data.xml
 
-En principi aquesta crida no es recomana ja que poden romandre documents indexats d'objectes inexistents a l'ontologia.
+Aquest servei no actualitza a l'index els objectes eliminats, per reflectir això cal crider el servei "reload"
 
 ::
 
-    Ruta servei: http://{host:port}/{appname}/solr/update
+    Ruta servei: http://{host:port}/{appname}/solr/update?time=MINUTS
     Mètode HTTP: GET
     Retorna: "success" or "error"
 

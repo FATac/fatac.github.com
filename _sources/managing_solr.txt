@@ -17,7 +17,7 @@ Clears all indexed data (commits automatically)
 Commit
 ----------------
 
-Commits recent indexation (not necessary)
+Commits recent index (not necessary)
 
 ::
 
@@ -43,7 +43,7 @@ Reload
 
 Peforms an update removing any existing data index. This process may take some time.
 
-Solr indexation can be found at (SOLR_PATH)/data.xml
+Solr index can be found at (SOLR_PATH)/data.xml
 
 ::
 
@@ -54,15 +54,15 @@ Solr indexation can be found at (SOLR_PATH)/data.xml
 Update
 ----------------
 
-Indexates new data according to mapping JSON configuration. This process may take some time.
+Indexes objects introduced or modified within the last M minutes (default is 60 minutes). 
 
-Solr indexation can be found at (SOLR_PATH)/data.xml
+Solr index can be found at (SOLR_PATH)/data.xml
 
-This call is not recommended as there may remain indexed documents of unexisting objects in ontology. 
+Note that this service does not update index reflecting objects that have been deleted, to do so, use "reload" service.
 
 ::
 
-    Service path: http://{host:port}/{appname}/solr/update
+    Service path: http://{host:port}/{appname}/solr/update?time=MINUTES
     HTTP Method: GET
     Returns: "success" or "error"
 

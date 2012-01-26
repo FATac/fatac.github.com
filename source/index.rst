@@ -39,6 +39,7 @@ Contents
    visualization
    legal
    oai
+   issues
    
 **Català**
 
@@ -54,5 +55,6 @@ Contents
    visualization_ca
    legal_ca
    oai_ca
+   issues_ca
    
    
