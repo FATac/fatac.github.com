@@ -32,3 +32,5 @@ This project is composed of different components that must be installed (see Ins
 - Tomcat 7: Stores the core application that implements REST services, Solr search engine, and Video services.
 - Plone 4: View layer that act as the REST services client and generates HTML content.
 - Openlink Virtuoso: Triplestore database to store Ontology (OWL specification), RDF data, and to process SPARQL and reasoning.
+
+.. image:: esquema.jpg

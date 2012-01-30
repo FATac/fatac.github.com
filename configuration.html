@@ -348,6 +348,9 @@ Returns: "success" or "error"</pre>
 <li>Block rules: data evaluation using boolean expressions. It can result to a next block, indicaded by &#8216;block&#8217; keyword, or to a color indicated by &#8216;result&#8217; keyword. Color consequences is explained next.</li>
 </ul>
 <p>There are four &#8220;trafic light&#8221; colors that can be assigned to any object as a result of the legal process. From less to more restrictive: &#8220;green&#8221;, &#8220;yellow&#8221;, &#8220;orange&#8221; and &#8220;red&#8221;. Each of one corresponding to one accessing right level from 1 to 4. On every call to a service that provides media data, the accessing level must be specified. Service will fail if user accessing level is lower than object restriction level. Eg. User level = 1 , Object level = 2 &#8211;&gt; Fail / User level = 2 , Object level = 2 &#8211;&gt; OK.</p>
+<ul class="simple">
+<li>Besides color result, license can also be assigned to the object. This is achieved by &#8220;license&#8221; clause. Its value can be as &#8220;my:hasLicense=License_ID&#8221;, in other words: property name, &#8220;=&#8221; sign, and the ontologic object that corresponds to a license (for instance &#8220;Creative_Commons_ID&#8221;). This process does not check at all the consistency of the assigned license, this could even be any type of object. It corresponds to the user to seek the consistency of this process.</li>
+</ul>
 </div>
 <div class="section" id="step-6-data-mapping">
 <h2>Step 6: Data mapping<a class="headerlink" href="#step-6-data-mapping" title="Permalink to this headline">¶</a></h2>
@@ -432,6 +435,50 @@ Returns: "success" or "error"</pre>
         }
 
         /* rest of json ... */
+    ]</pre>
+</div>
+<p>Recommended practice:
+- Group all text data -this is, all those that must be searched in word-by-word basis- inside the same data block, as &#8220;text&#8221; type.
+- If it is required, also, categorize all results of some data already included in previous block, create a new block of type &#8220;string&#8221; and refer to the same data &#8220;path&#8221;, and use clause &#8220;category:yes&#8221;.
+- If it is required, also, to use this data to sort results, create a new block of type &#8220;string&#8221; and again, refer to same data &#8220;path&#8221;, and use clause &#8220;sort:yes&#8221;-
+- About previous point, if sorting must be over different data of the same kind, include them all in the same block.</p>
+<p>In short, it&#8217;s recommended to sepparate data blocks by its function (search, category or sorting). Next mapping example shows all explained practices:</p>
+<div class="highlight-python"><pre>"data":
+    [
+        {
+            "name":"Word_by_word_text_search",
+            "type":"text",
+            "path":[
+                    "my:Person.my:fullName",                                                        // allows finding persons by name
+                    "my:Person.my:biography",                                                       // allows finding persons by bio
+                    "my:Person.my:BirthPlace=my:Location.my:Name",          // allows finding persons by birthplace
+                    "my:Location.my:Name",                                                          // allows finding places by name
+                    "my:Location.my:description"                                            // allows finding places by description
+            ],
+            "search":"yes",
+            "autocomplete":"yes"
+        },
+
+        {
+            "name":"Place_category",
+            "type":"string",
+            "path":[
+                    "my:Location.my:Name",                                                          // categorizes places
+                    "my:Person.my:BirthPlace=my:Location.my:Name"           // categorizes persons birthplace
+            ]
+            "category":"yes"
+        },
+
+        {
+            "name":"Year_sorting",
+            "type":"date.year",
+            "path":[
+                    "my:Person.my:BirthDate",                                                       // allows sorting by birth year
+                    "my:Location.my:FoundationDate"                                 // allows sorting by foundation year
+            ]
+            "sort":"yes"
+        }
+
     ]</pre>
 </div>
 </div>

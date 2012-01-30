@@ -263,6 +263,8 @@ There is a self-explanatory sample named 'legal.json' in json directory, 'legal'
 
 There are four "trafic light" colors that can be assigned to any object as a result of the legal process. From less to more restrictive: "green", "yellow", "orange" and "red". Each of one corresponding to one accessing right level from 1 to 4. On every call to a service that provides media data, the accessing level must be specified. Service will fail if user accessing level is lower than object restriction level. Eg. User level = 1 , Object level = 2 --> Fail / User level = 2 , Object level = 2 --> OK.
 
+- Besides color result, license can also be assigned to the object. This is achieved by "license" clause. Its value can be as "my:hasLicense=License_ID", in other words: property name, "=" sign, and the ontologic object that corresponds to a license (for instance "Creative_Commons_ID"). This process does not check at all the consistency of the assigned license, this could even be any type of object. It corresponds to the user to seek the consistency of this process. 
+
 Step 6: Data mapping
 ------------------------------
 
@@ -359,6 +361,53 @@ For example: 'Name' data (that is, person and location name) is interesting for 
             /* rest of json ... */
         ]
 
+Recommended practice:
+- Group all text data -this is, all those that must be searched in word-by-word basis- inside the same data block, as "text" type.
+- If it is required, also, categorize all results of some data already included in previous block, create a new block of type "string" and refer to the same data "path", and use clause "category:yes".
+- If it is required, also, to use this data to sort results, create a new block of type "string" and again, refer to same data "path", and use clause "sort:yes"-
+- About previous point, if sorting must be over different data of the same kind, include them all in the same block.
+
+In short, it's recommended to sepparate data blocks by its function (search, category or sorting). Next mapping example shows all explained practices: 
+
+::
+
+    "data":
+        [
+            {
+                "name":"Word_by_word_text_search",                                  
+                "type":"text",                                
+                "path":[
+                	"my:Person.my:fullName",							// allows finding persons by name
+                	"my:Person.my:biography",							// allows finding persons by bio
+                	"my:Person.my:BirthPlace=my:Location.my:Name",		// allows finding persons by birthplace
+                	"my:Location.my:Name",								// allows finding places by name
+                	"my:Location.my:description"						// allows finding places by description
+                ],         
+                "search":"yes",
+                "autocomplete":"yes"
+            },
+
+            {
+                "name":"Place_category",                                  
+                "type":"string",                                
+                "path":[
+                	"my:Location.my:Name",								// categorizes places
+                	"my:Person.my:BirthPlace=my:Location.my:Name"		// categorizes persons birthplace
+                ]
+                "category":"yes"
+            },
+            
+            {
+                "name":"Year_sorting",                                  
+                "type":"date.year",                                
+                "path":[
+                	"my:Person.my:BirthDate",							// allows sorting by birth year
+                	"my:Location.my:FoundationDate"					// allows sorting by foundation year
+                ]
+                "sort":"yes"
+            }
+
+        ]
 
 Step 7: Object template
 ------------------------------------

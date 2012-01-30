@@ -349,6 +349,9 @@ Returns: "success" or "error"</pre>
 <li>Regles del block: evaluació lògica mitjançant expressions booleanes de les dades introduïdes en el procés. Aquesta evaluació por portar a un nou block indicat per la paraula &#8220;block&#8221; keyword, o a un color legal indicat per la paraula &#8216;result&#8217;. Les conseqüències funcionals de cada color s&#8217;expliquen a continuació:</li>
 </ul>
 <p>Hi ha quatre &#8220;colors de semàfor&#8221; que poden ser assignats a cada objecte. De menys a més restrictiu: &#8220;green&#8221;, &#8220;yellow&#8221;, &#8220;orange&#8221; i &#8220;red&#8221;. Cada un correspon a un nivell d&#8217;accés de 1 a 4. Per cada crida a un servei que proveeix audiovisuals o urls a audiovisual,l&#8217;identificador d&#8217;usuari ha de ser especificiat, en funció d&#8217;això i de la configuració (variable USER_LEVEL) se n&#8217;obtindrà el nivell. Exemple. User level = 1 , Object level = 2 &#8211;&gt; Fail / User level = 2 , Object level = 2 &#8211;&gt; OK.</p>
+<ul class="simple">
+<li>A més del color, es pot triar la llicència que s&#8217;assigna a l&#8217;objecte. Això es fa amb la clàusula &#8220;license&#8221;. El valor pot ser com &#8220;my:hasLicense=License_ID&#8221;, és a dir: el nom de la relació, el signe &#8220;=&#8221;, i l&#8217;identificador de l&#8217;objecte ontològic que correspon a una llicència. Cal tenir en compte que el procés no comprova la consistència d&#8217;aquesta assignació. L&#8217;objecte relacionat podria ser de qualsevol tipus. Correspon doncs a l&#8217;usuari d&#8217;assegurar aquesta coherència.</li>
+</ul>
 </div>
 <div class="section" id="pas-6e-mapeig-de-dades">
 <h2>Pas 6è: Mapeig de dades<a class="headerlink" href="#pas-6e-mapeig-de-dades" title="Permalink to this headline">¶</a></h2>
@@ -426,6 +429,50 @@ Returns: "success" or "error"</pre>
         }
 
         /* resta del json ... */
+    ]</pre>
+</div>
+<p>És una pràctica molt recomanable:
+- Agrupar totes aquelles dades tipus text -és a dir totes aquelles sobre les que s&#8217;ha de poder fer cerques paraula per paraula- dins d&#8217;un mateix bloc de tipus &#8220;text&#8221;.
+- Si es vol, a més, categoritzar els resultats d&#8217;acord amb alguna dada concreta ja inclosa al bloc tipus &#8220;string&#8221;, crear un bloc apart tipus &#8220;string&#8221; i tornar a fer referència a la mateixa dada amb el &#8220;path&#8221; i clàusula &#8220;category:yes&#8221;.
+- Si es vol, a més, que aquesta dada pugui ser utilitzada per ordenar els resultats, crear encara un altre bloc tipus &#8220;string&#8221; i tornar a fer referència a la mateixa dada amb el &#8220;path&#8221; i clàusula &#8220;sort:yes&#8221;.
+- Respecte el punt anterior, si es vol la possibilitat d&#8217;ordenar per diferents dades però totes tenen la mateixa tipologia, es poden incloure al mateix bloc.</p>
+<p>En resum, es recomana separar els blocs de dades segons la seva funció (sigui de cerca, categorització o ordenació). Aquest exemple de mapeig conté totes les pràctiques explicades:</p>
+<div class="highlight-python"><pre>"data":
+    [
+        {
+            "name":"Cerca_en_text_paraula_per_paraula",
+            "type":"text",
+            "path":[
+                    "my:Person.my:fullName",                                                        // permet trobar persones pel seu nom
+                    "my:Person.my:biography",                                                       // permet trobar persones per la seva biografia
+                    "my:Person.my:BirthPlace=my:Location.my:Name",          // permet trobar persones pel seu lloc de neixement
+                    "my:Location.my:Name",                                                          // permet trobar llocs pel seu nom
+                    "my:Location.my:description"                                            // permet trobar llocs per la seva descripció
+            ],
+            "search":"yes",
+            "autocomplete":"yes"
+        },
+
+        {
+            "name":"Lloc_categoria",
+            "type":"string",
+            "path":[
+                    "my:Location.my:Name",                                                          // categoritza llocs
+                    "my:Person.my:BirthPlace=my:Location.my:Name"           // categoritza llocs de neixement de les persones
+            ]
+            "category":"yes"
+        },
+
+        {
+            "name":"Ordenacio_any",
+            "type":"date.year",
+            "path":[
+                    "my:Person.my:BirthDate",                                                       // permet ordenar per any de neixement
+                    "my:Location.my:FoundationDate"                                 // permet ordenar per any de fundació
+            ]
+            "sort":"yes"
+        }
+
     ]</pre>
 </div>
 </div>

@@ -32,3 +32,5 @@ Aquest projecte es composa de diferens components que han de ser instal·lats (v
 - Tomcat 7: Allotja l'aplicació bàsica que implemente els serveis REST, el Solr, i els serveis de vídeo.
 - Plone 4: Capa de visió que actua com a client dels serveis REST i genera els continguts HTML.
 - Openlink Virtuoso: Base de Dades de tripletes RDF per allotjar l'Ontologia, les dades RDF, processant SPARQL amb raonament.
+
+.. image:: esquema.jpg

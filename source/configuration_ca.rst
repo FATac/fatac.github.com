@@ -266,6 +266,8 @@ Hi ha un exemple auto-explicatiu a "legal.json" al directori de configuració, s
 
 Hi ha quatre "colors de semàfor" que poden ser assignats a cada objecte. De menys a més restrictiu: "green", "yellow", "orange" i "red". Cada un correspon a un nivell d'accés de 1 a 4. Per cada crida a un servei que proveeix audiovisuals o urls a audiovisual,l'identificador d'usuari ha de ser especificiat, en funció d'això i de la configuració (variable USER_LEVEL) se n'obtindrà el nivell. Exemple. User level = 1 , Object level = 2 --> Fail / User level = 2 , Object level = 2 --> OK.
 
+- A més del color, es pot triar la llicència que s'assigna a l'objecte. Això es fa amb la clàusula "license". El valor pot ser com "my:hasLicense=License_ID", és a dir: el nom de la relació, el signe "=", i l'identificador de l'objecte ontològic que correspon a una llicència. Cal tenir en compte que el procés no comprova la consistència d'aquesta assignació. L'objecte relacionat podria ser de qualsevol tipus. Correspon doncs a l'usuari d'assegurar aquesta coherència.
+
 Pas 6è: Mapeig de dades
 ------------------------------
 
@@ -353,6 +355,54 @@ Per exemple: la dada "Nom" abans descrita (nom de persona o lloc), és interessa
             }
 
             /* resta del json ... */
+        ]
+
+És una pràctica molt recomanable:
+- Agrupar totes aquelles dades tipus text -és a dir totes aquelles sobre les que s'ha de poder fer cerques paraula per paraula- dins d'un mateix bloc de tipus "text".
+- Si es vol, a més, categoritzar els resultats d'acord amb alguna dada concreta ja inclosa al bloc tipus "string", crear un bloc apart tipus "string" i tornar a fer referència a la mateixa dada amb el "path" i clàusula "category:yes". 
+- Si es vol, a més, que aquesta dada pugui ser utilitzada per ordenar els resultats, crear encara un altre bloc tipus "string" i tornar a fer referència a la mateixa dada amb el "path" i clàusula "sort:yes".
+- Respecte el punt anterior, si es vol la possibilitat d'ordenar per diferents dades però totes tenen la mateixa tipologia, es poden incloure al mateix bloc.
+
+En resum, es recomana separar els blocs de dades segons la seva funció (sigui de cerca, categorització o ordenació). Aquest exemple de mapeig conté totes les pràctiques explicades:
+
+::
+
+    "data":
+        [
+            {
+                "name":"Cerca_en_text_paraula_per_paraula",                                  
+                "type":"text",                                
+                "path":[
+                	"my:Person.my:fullName",							// permet trobar persones pel seu nom
+                	"my:Person.my:biography",							// permet trobar persones per la seva biografia
+                	"my:Person.my:BirthPlace=my:Location.my:Name",		// permet trobar persones pel seu lloc de neixement
+                	"my:Location.my:Name",								// permet trobar llocs pel seu nom
+                	"my:Location.my:description"						// permet trobar llocs per la seva descripció
+                ],         
+                "search":"yes",
+                "autocomplete":"yes"
+            },
+
+            {
+                "name":"Lloc_categoria",                                  
+                "type":"string",                                
+                "path":[
+                	"my:Location.my:Name",								// categoritza llocs
+                	"my:Person.my:BirthPlace=my:Location.my:Name"		// categoritza llocs de neixement de les persones
+                ]
+                "category":"yes"
+            },
+            
+            {
+                "name":"Ordenacio_any",                                  
+                "type":"date.year",                                
+                "path":[
+                	"my:Person.my:BirthDate",							// permet ordenar per any de neixement
+                	"my:Location.my:FoundationDate"					// permet ordenar per any de fundació
+                ]
+                "sort":"yes"
+            }
+
         ]
 
 
