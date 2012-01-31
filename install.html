@@ -1,0 +1,214 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Requirements &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0a1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
+    <link rel="next" title="Configuration" href="configuration.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" />
+<link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
+
+  </head>
+  <body>
+<div class="header">
+    <a href="#">
+        <img alt="Logo" src="_static/logo.jpg" class="logo" />
+    </a>
+</div>
+    
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="configuration.html" title="Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Requirements</a><ul>
+<li><a class="reference internal" href="#operating-system">Operating System</a></li>
+<li><a class="reference internal" href="#basic-software">Basic Software</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#install-basic-software">Install basic software</a></li>
+<li><a class="reference internal" href="#arts-combinatories-install">Arts Combinatòries install</a><ul>
+<li><a class="reference internal" href="#run-the-processes-of-the-project-software-stack">Run the processes of the project software stack</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="configuration.html"
+                        title="next chapter">Configuration</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/install.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <p>This section describes the steps required to build and run an instance of the software and services stack of Arts Combinatòries.</p>
+<div class="section" id="requirements">
+<h1>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h1>
+<p>You should meet all the requirements described below.</p>
+<div class="section" id="operating-system">
+<h2>Operating System<a class="headerlink" href="#operating-system" title="Permalink to this headline">¶</a></h2>
+<p>Due to technological limitations, the project is able to run on *nix based machines. From now on all the examples shown will be based under a assumption of having a Ubuntu Linux 11.04 (Natty) distribution.</p>
+</div>
+<div class="section" id="basic-software">
+<h2>Basic Software<a class="headerlink" href="#basic-software" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>GCC compiler suite to build native Python extensions (Zope contains C code for optimized parts)</li>
+<li>Python 2.6 (other versions are <em>not</em> ok for Plone 4)</li>
+<li>Python Imaging Library installed for your Python interpreter (more below)</li>
+<li>Python <a class="reference external" href="http://pypi.python.org/pypi/distribute">Distribute</a> installation tool, provided by your operating system</li>
+</ul>
+<blockquote>
+<div>or installed by hand</div></blockquote>
+<ul class="simple">
+<li>Gawk</li>
+<li>Git</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="install-basic-software">
+<h1>Install basic software<a class="headerlink" href="#install-basic-software" title="Permalink to this headline">¶</a></h1>
+<p>GCC, Python 2.6 and additional software and libraries:</p>
+<div class="highlight-python"><pre>sudo apt-get install python2.6 python-imaging wget build-essential python2.6-dev python-setuptools git-core</pre>
+</div>
+<p>Python Distribute:</p>
+<div class="highlight-python"><pre>wget http://python-distribute.org/distribute_setup.py
+sudo python2.6 distribute_setup.py</pre>
+</div>
+<p>Gawk:</p>
+<div class="highlight-python"><pre>sudo apt-get install gawk</pre>
+</div>
+</div>
+<div class="section" id="arts-combinatories-install">
+<h1>Arts Combinatòries install<a class="headerlink" href="#arts-combinatories-install" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://www.buildout.org">Buildout</a> is a tool which automatically downloads, installs and configures Python and other software. Arts Combinatòries uses buildout.</p>
+<p>This build system uses a file (<cite>buildout.cfg</cite>) which provides all the configuration information to build the complete stack of required software.</p>
+<p>We should download the buildout code from Github:</p>
+<div class="highlight-python"><pre>git clone git://github.com/FATac/fatac.buildout.git</pre>
+</div>
+<p>Access to the recently created folder <cite>fatac.buildout</cite>:</p>
+<div class="highlight-python"><pre>cd fatac.buildout</pre>
+</div>
+<p>Execute the buildout process:</p>
+<div class="highlight-python"><pre>python2.6 bootstrap.py
+./bin/buildout</pre>
+</div>
+<p>..note:</p>
+<div class="highlight-python"><pre>Alguns serveis com Virtuoso i el servidor d'aplicacions Tomcat necessiten una configuració posterior que depén del vostre entorn i necessitats, tal i com es detalla en el apartat `Configuració` d'aquesta mateixa documentació.</pre>
+</div>
+<div class="section" id="run-the-processes-of-the-project-software-stack">
+<h2>Run the processes of the project software stack<a class="headerlink" href="#run-the-processes-of-the-project-software-stack" title="Permalink to this headline">¶</a></h2>
+<p>TODO:</p>
+<dl class="docutils">
+<dt>These are the processes needed by Arts Combinatòries:</dt>
+<dd><ul class="first last simple">
+<li>Plone (frontend)</li>
+<li>Tomcat (API REST)</li>
+<li>Virtuoso (BBDD)</li>
+</ul>
+</dd>
+</dl>
+<p>Plone:</p>
+<div class="highlight-python"><pre>./bin/instance start</pre>
+</div>
+<p>Tomcat:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">XX</span>
+</pre></div>
+</div>
+<p>Virtuoso:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">XX</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="configuration.html" title="Configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             >previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, FAT - UPCnet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

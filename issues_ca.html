@@ -1,0 +1,148 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Problemes coneguts &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0a1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
+    <link rel="prev" title="Suport per OAI-PMH" href="oai_ca.html" />
+<link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
+
+  </head>
+  <body>
+<div class="header">
+    <a href="#">
+        <img alt="Logo" src="_static/logo.jpg" class="logo" />
+    </a>
+</div>
+    
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="oai_ca.html" title="Suport per OAI-PMH"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Problemes coneguts</a><ul>
+<li><a class="reference internal" href="#ontologies-duplicades">Ontologies duplicades</a></li>
+<li><a class="reference internal" href="#canvi-de-url-del-servidor">Canvi de URL del servidor</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="oai_ca.html"
+                        title="previous chapter">Suport per OAI-PMH</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/issues_ca.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="problemes-coneguts">
+<h1>Problemes coneguts<a class="headerlink" href="#problemes-coneguts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ontologies-duplicades">
+<h2>Ontologies duplicades<a class="headerlink" href="#ontologies-duplicades" title="Permalink to this headline">¶</a></h2>
+<p>Després de cridar el servei &#8220;reset&#8221;, totes les ontologies especificades a ONTOLOGY_NAMESPACES (config.json) es carreguen de nou. Com que han d&#8217;acabar amb el caràcter &#8220;#&#8221;, el Virtuoso les carregarà dues vegades: una pel namespace acabat en &#8220;#&#8221;, un altra pel namespace sense acabar en &#8220;#&#8221;. Això no afecta el comportament normal de l&#8217;aplicació, però pot ser molest.</p>
+<p>Pots esborrar les ontologies duplicades accedint a Virtuoso Conductor, clic a la pestanya RDF -&gt; Pestanya &#8220;Graph&#8221; i esborrar les ontologies duplicades que NO acabin amb &#8220;#&#8221; (Compte d&#8217;esborrar grafs que no són ontologies, com el graf de les dades).</p>
+</div>
+<div class="section" id="canvi-de-url-del-servidor">
+<h2>Canvi de URL del servidor<a class="headerlink" href="#canvi-de-url-del-servidor" title="Permalink to this headline">¶</a></h2>
+<p>Si la URL del servidor canvia per qualsevol motiu, cal efectuar alguns canvis:</p>
+<ul class="simple">
+<li>Anar a config.json a establir la variable REST_URL amb la URL del nou host.</li>
+<li>Substituir totes les referències existents a la URL anterior amb la nova. Per a fer-ho, utilitzar el servei &#8220;replaceUri&#8221;:</li>
+</ul>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/replaceUri?uriField=URI_FIELD&amp;oldUri=OLD_URI&amp;newUri=NEW_URI
+Mètode HTTP: GET
+Retorna: "success" o "error"</pre>
+</div>
+<p><strong>Exemple</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/ac/replaceUri?uriField=**my:Uri**&amp;oldUri=**www.oldhost.com**&amp;newUri=**www.newhost.com**</pre>
+</div>
+<p><strong>OK Result</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;success&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Posar la URL a Plone &#8220;fatac settings&#8221;: /fatac/&#64;&#64;fatac_settings</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="oai_ca.html" title="Suport per OAI-PMH"
+             >previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, FAT - UPCnet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

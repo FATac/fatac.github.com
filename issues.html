@@ -1,0 +1,158 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Known issues &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0a1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
+    <link rel="next" title="Introducció" href="introduction_ca.html" />
+    <link rel="prev" title="OAI-PMH Support" href="oai.html" />
+<link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
+
+  </head>
+  <body>
+<div class="header">
+    <a href="#">
+        <img alt="Logo" src="_static/logo.jpg" class="logo" />
+    </a>
+</div>
+    
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="introduction_ca.html" title="Introducció"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="oai.html" title="OAI-PMH Support"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Known issues</a><ul>
+<li><a class="reference internal" href="#ontology-duplication">Ontology duplication</a></li>
+<li><a class="reference internal" href="#server-url-change">Server URL change</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="oai.html"
+                        title="previous chapter">OAI-PMH Support</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="introduction_ca.html"
+                        title="next chapter">Introducció</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/issues.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="known-issues">
+<h1>Known issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ontology-duplication">
+<h2>Ontology duplication<a class="headerlink" href="#ontology-duplication" title="Permalink to this headline">¶</a></h2>
+<p>Upon calling &#8220;reset&#8221; service, all specified ontologies in ONTOLOGY_NAMESPACES (config.json) are reloaded. As they have to end with &#8220;#&#8221; character, Virtuoso will load them twice, one for the ontology namespace ended with &#8220;#&#8221; and another one for the namespace without this ending character. This does not affect the normal behaviour of the application, but it can be annoying.</p>
+<p>You can delete duplicate ontologies by acessing to Virtuoso Conductor, click RDF tab -&gt; Graphs tab -&gt; And delete the loaded ontologies that does NOT end with &#8220;#&#8221; (Beware of deleting other non-ontology graphs such as data graph).</p>
+</div>
+<div class="section" id="server-url-change">
+<h2>Server URL change<a class="headerlink" href="#server-url-change" title="Permalink to this headline">¶</a></h2>
+<p>If server URL is changed by any reason, some changes must be performed:</p>
+<ul class="simple">
+<li>Go to config.json and set REST_URL with the new host URL.</li>
+<li>Replace all existing references from the previous host URL to the new one. To do so, use &#8220;replaceUri&#8221; service:</li>
+</ul>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/replaceUri?uriField=URI_FIELD&amp;oldUri=OLD_URI&amp;newUri=NEW_URI
+HTTP Method: GET
+Returns: "success" or "error"</pre>
+</div>
+<p><strong>Example</strong></p>
+<div class="highlight-python"><pre>http://internetdomain.org/ac/replaceUri?uriField=**my:Uri**&amp;oldUri=**www.oldhost.com**&amp;newUri=**www.newhost.com**</pre>
+</div>
+<p><strong>OK Result</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;success&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Set new URL at Plone fatac settings: /fatac/&#64;&#64;fatac_settings</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="introduction_ca.html" title="Introducció"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="oai.html" title="OAI-PMH Support"
+             >previous</a> |</li>
+        <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, FAT - UPCnet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>
