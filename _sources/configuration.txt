@@ -490,19 +490,3 @@ Data 'type' clause has not much to do with 'type' defined in previous step. The 
 
 Please note that **text**, **objects** and **media** have the same effect. They resolve the path the same way but resulting value type is supposed to be different. See Visualization Object Thumbnail section to further in **media** and **objects** types.
 
-Maintenance
-----------------------------
-
-Service that performs the next platform maintenance tasks:
-
-- Delete all temporary files generated during legal process
-- Index all data to Solr (this is a call to service /solr/reload)
-- Updates data for OAI-PMH (if variable OAI_PATH is set)
-
-::
-
-    Service path: http://{host:port}/{appname}/maintenance
-    HTTP Method: GET
-    Returns: "success" or "error"
-    
-In a production server call to this service should be scheduled, called at the time when there is less traffic.

@@ -67,7 +67,6 @@
 <li><a class="reference internal" href="#pas-5e-script-legal">Pas 5è: Script legal</a></li>
 <li><a class="reference internal" href="#pas-6e-mapeig-de-dades">Pas 6è: Mapeig de dades</a></li>
 <li><a class="reference internal" href="#pas-7e-patrons-de-classe">Pas 7è: Patrons de classe</a></li>
-<li><a class="reference internal" href="#manteniment">Manteniment</a></li>
 </ul>
 </li>
 </ul>
@@ -548,20 +547,6 @@ Returns: "success" or "error"</pre>
 <li><strong>counter</strong>: resol la ruta i agrupa i fa un recompte de les coincidències.</li>
 </ul>
 <p>Adoneu-vos que <strong>text</strong>, <strong>objects</strong> and <strong>media</strong> fan el mateix a la pràctica. La diferència és que el valor que resolen es suposa que és per propòsits diferents. Veure la secció Visualització per a més informació sobre els tipus <strong>media</strong> i <strong>objects</strong>.</p>
-</div>
-<div class="section" id="manteniment">
-<h2>Manteniment<a class="headerlink" href="#manteniment" title="Permalink to this headline">¶</a></h2>
-<p>Servei que realitza les següents tasques de manteniment regular de l&#8217;aplicació:</p>
-<ul class="simple">
-<li>Esborrar els fitxers temporals que es creen durant els processo legals</li>
-<li>Indexació de les dades a Solr (és a dir crida el servei /solr/reload)</li>
-<li>Actualització de les dades per a OAI-PMH (només si la variable OAI_PATH estigui definida)</li>
-</ul>
-<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/maintenance
-Mètode HTTP: GET
-Retorna: "success" o "error"</pre>
-</div>
-<p>La crida d&#8217;aquest servei en un servidor a producció hauria de ser periòdica, a l&#8217;hora de menys tràfic d&#8217;usuaris/peticions.</p>
 </div>
 </div>
 

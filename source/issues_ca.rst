@@ -36,6 +36,29 @@ Si la URL del servidor canvia per qualsevol motiu, cal efectuar alguns canvis:
 	
 - Posar la URL a Plone "fatac settings": /fatac/@@fatac_settings
 
+Còpia de seguretat
+----------------------------
 
+Per tal d'efectuar una copia de seguretat completa, cal copiar els elements següents:
+
+- Tots els directoris especificats a la configuració (les propietats acabades en "PATH").
+- Base de dades Virtuosos. Cal cridar "checkpoint;" des de la pantalla "Interactive SQL" del Virtuoso Conductor. Els fitxers a copiar són: virtuoso.db i virtuoso.trx localitzats a (directori virtuoso)/var/lib/virtuoso/db/
+
+Servei de manteniment
+----------------------------
+
+Servei que realitza les següents tasques de manteniment regular de l'aplicació:
+
+- Esborrar els fitxers temporals que es creen durant els processo legals
+- Indexació de les dades a Solr (és a dir crida el servei /solr/reload)
+- Actualització de les dades per a OAI-PMH (només si la variable OAI_PATH estigui definida)
+
+::
+
+    Ruta servei: http://{host:port}/{appname}/maintenance
+    Mètode HTTP: GET
+    Retorna: "success" o "error"
+    
+La crida d'aquest servei en un servidor a producció hauria de ser periòdica, a l'hora de menys tràfic d'usuaris/peticions.
 
 

@@ -58,6 +58,8 @@
 <li><a class="reference internal" href="#">Problemes coneguts</a><ul>
 <li><a class="reference internal" href="#ontologies-duplicades">Ontologies duplicades</a></li>
 <li><a class="reference internal" href="#canvi-de-url-del-servidor">Canvi de URL del servidor</a></li>
+<li><a class="reference internal" href="#copia-de-seguretat">Còpia de seguretat</a></li>
+<li><a class="reference internal" href="#servei-de-manteniment">Servei de manteniment</a></li>
 </ul>
 </li>
 </ul>
@@ -119,6 +121,28 @@ Retorna: "success" o "error"</pre>
 <ul class="simple">
 <li>Posar la URL a Plone &#8220;fatac settings&#8221;: /fatac/&#64;&#64;fatac_settings</li>
 </ul>
+</div>
+<div class="section" id="copia-de-seguretat">
+<h2>Còpia de seguretat<a class="headerlink" href="#copia-de-seguretat" title="Permalink to this headline">¶</a></h2>
+<p>Per tal d&#8217;efectuar una copia de seguretat completa, cal copiar els elements següents:</p>
+<ul class="simple">
+<li>Tots els directoris especificats a la configuració (les propietats acabades en &#8220;PATH&#8221;).</li>
+<li>Base de dades Virtuosos. Cal cridar &#8220;checkpoint;&#8221; des de la pantalla &#8220;Interactive SQL&#8221; del Virtuoso Conductor. Els fitxers a copiar són: virtuoso.db i virtuoso.trx localitzats a (directori virtuoso)/var/lib/virtuoso/db/</li>
+</ul>
+</div>
+<div class="section" id="servei-de-manteniment">
+<h2>Servei de manteniment<a class="headerlink" href="#servei-de-manteniment" title="Permalink to this headline">¶</a></h2>
+<p>Servei que realitza les següents tasques de manteniment regular de l&#8217;aplicació:</p>
+<ul class="simple">
+<li>Esborrar els fitxers temporals que es creen durant els processo legals</li>
+<li>Indexació de les dades a Solr (és a dir crida el servei /solr/reload)</li>
+<li>Actualització de les dades per a OAI-PMH (només si la variable OAI_PATH estigui definida)</li>
+</ul>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/maintenance
+Mètode HTTP: GET
+Retorna: "success" o "error"</pre>
+</div>
+<p>La crida d&#8217;aquest servei en un servidor a producció hauria de ser periòdica, a l&#8217;hora de menys tràfic d&#8217;usuaris/peticions.</p>
 </div>
 </div>
 

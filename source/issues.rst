@@ -1,4 +1,4 @@
-Known issues
+Maintenance notes
 ==================================
 
 Ontology duplication
@@ -36,6 +36,27 @@ If server URL is changed by any reason, some changes must be performed:
 	
 - Set new URL at Plone fatac settings: /fatac/@@fatac_settings
 
+Data backup
+----------------------------
 
+In order to perform a complete data backup, next elements are necessary to be safely copied:
 
+- All directories specified in configuration ("PATH" ended properties).
+- Virtuoso database. "checkpoint;" must be called in Virtuoso conductor "Interactive SQL". The files to be copied are: virtuoso.db and virtuoso.trx located in (virtuoso directory)/var/lib/virtuoso/db/
 
+Maintenance service
+-------------------------------
+
+Service that performs the next platform maintenance tasks:
+
+- Delete all temporary files generated during legal process
+- Index all data to Solr (this is a call to service /solr/reload)
+- Updates data for OAI-PMH (if variable OAI_PATH is set)
+
+::
+
+    Service path: http://{host:port}/{appname}/maintenance
+    HTTP Method: GET
+    Returns: "success" or "error"
+    
+In a production server call to this service should be scheduled, called at the time when there is less traffic.

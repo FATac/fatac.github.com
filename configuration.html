@@ -67,7 +67,6 @@
 <li><a class="reference internal" href="#step-5-legal-script">Step 5: Legal script</a></li>
 <li><a class="reference internal" href="#step-6-data-mapping">Step 6: Data mapping</a></li>
 <li><a class="reference internal" href="#step-7-object-template">Step 7: Object template</a></li>
-<li><a class="reference internal" href="#maintenance">Maintenance</a></li>
 </ul>
 </li>
 </ul>
@@ -555,20 +554,6 @@ Returns: "success" or "error"</pre>
 <li><strong>counter</strong>: groups and counts same value results.</li>
 </ul>
 <p>Please note that <strong>text</strong>, <strong>objects</strong> and <strong>media</strong> have the same effect. They resolve the path the same way but resulting value type is supposed to be different. See Visualization Object Thumbnail section to further in <strong>media</strong> and <strong>objects</strong> types.</p>
-</div>
-<div class="section" id="maintenance">
-<h2>Maintenance<a class="headerlink" href="#maintenance" title="Permalink to this headline">¶</a></h2>
-<p>Service that performs the next platform maintenance tasks:</p>
-<ul class="simple">
-<li>Delete all temporary files generated during legal process</li>
-<li>Index all data to Solr (this is a call to service /solr/reload)</li>
-<li>Updates data for OAI-PMH (if variable OAI_PATH is set)</li>
-</ul>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/maintenance
-HTTP Method: GET
-Returns: "success" or "error"</pre>
-</div>
-<p>In a production server call to this service should be scheduled, called at the time when there is less traffic.</p>
 </div>
 </div>
 

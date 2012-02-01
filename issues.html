@@ -9,7 +9,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Known issues &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
+    <title>Maintenance notes &mdash; FAT Arts Combinatòries 1.0a1 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -59,9 +59,11 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Known issues</a><ul>
+<li><a class="reference internal" href="#">Maintenance notes</a><ul>
 <li><a class="reference internal" href="#ontology-duplication">Ontology duplication</a></li>
 <li><a class="reference internal" href="#server-url-change">Server URL change</a></li>
+<li><a class="reference internal" href="#data-backup">Data backup</a></li>
+<li><a class="reference internal" href="#maintenance-service">Maintenance service</a></li>
 </ul>
 </li>
 </ul>
@@ -98,8 +100,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="known-issues">
-<h1>Known issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="maintenance-notes">
+<h1>Maintenance notes<a class="headerlink" href="#maintenance-notes" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="ontology-duplication">
 <h2>Ontology duplication<a class="headerlink" href="#ontology-duplication" title="Permalink to this headline">¶</a></h2>
 <p>Upon calling &#8220;reset&#8221; service, all specified ontologies in ONTOLOGY_NAMESPACES (config.json) are reloaded. As they have to end with &#8220;#&#8221; character, Virtuoso will load them twice, one for the ontology namespace ended with &#8220;#&#8221; and another one for the namespace without this ending character. This does not affect the normal behaviour of the application, but it can be annoying.</p>
@@ -126,6 +128,28 @@ Returns: "success" or "error"</pre>
 <ul class="simple">
 <li>Set new URL at Plone fatac settings: /fatac/&#64;&#64;fatac_settings</li>
 </ul>
+</div>
+<div class="section" id="data-backup">
+<h2>Data backup<a class="headerlink" href="#data-backup" title="Permalink to this headline">¶</a></h2>
+<p>In order to perform a complete data backup, next elements are necessary to be safely copied:</p>
+<ul class="simple">
+<li>All directories specified in configuration (&#8220;PATH&#8221; ended properties).</li>
+<li>Virtuoso database. &#8220;checkpoint;&#8221; must be called in Virtuoso conductor &#8220;Interactive SQL&#8221;. The files to be copied are: virtuoso.db and virtuoso.trx located in (virtuoso directory)/var/lib/virtuoso/db/</li>
+</ul>
+</div>
+<div class="section" id="maintenance-service">
+<h2>Maintenance service<a class="headerlink" href="#maintenance-service" title="Permalink to this headline">¶</a></h2>
+<p>Service that performs the next platform maintenance tasks:</p>
+<ul class="simple">
+<li>Delete all temporary files generated during legal process</li>
+<li>Index all data to Solr (this is a call to service /solr/reload)</li>
+<li>Updates data for OAI-PMH (if variable OAI_PATH is set)</li>
+</ul>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/maintenance
+HTTP Method: GET
+Returns: "success" or "error"</pre>
+</div>
+<p>In a production server call to this service should be scheduled, called at the time when there is less traffic.</p>
 </div>
 </div>
 

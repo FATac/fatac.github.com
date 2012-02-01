@@ -486,19 +486,3 @@ El tipus de dada dels patrons és diferent del tipus explicat al pas anterior. E
 
 Adoneu-vos que **text**, **objects** and **media** fan el mateix a la pràctica. La diferència és que el valor que resolen es suposa que és per propòsits diferents. Veure la secció Visualització per a més informació sobre els tipus **media** i **objects**.
 
-Manteniment
-----------------------------
-
-Servei que realitza les següents tasques de manteniment regular de l'aplicació:
-
-- Esborrar els fitxers temporals que es creen durant els processo legals
-- Indexació de les dades a Solr (és a dir crida el servei /solr/reload)
-- Actualització de les dades per a OAI-PMH (només si la variable OAI_PATH estigui definida)
-
-::
-
-    Ruta servei: http://{host:port}/{appname}/maintenance
-    Mètode HTTP: GET
-    Retorna: "success" o "error"
-    
-La crida d'aquest servei en un servidor a producció hauria de ser periòdica, a l'hora de menys tràfic d'usuaris/peticions.
