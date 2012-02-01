@@ -1,4 +1,4 @@
-Problemes coneguts
+Notes de manteniment
 ==================================
 
 Ontologies duplicades
