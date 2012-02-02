@@ -161,26 +161,23 @@ sudo python2.6 distribute_setup.py</pre>
 </div>
 <div class="section" id="run-the-processes-of-the-project-software-stack">
 <h2>Run the processes of the project software stack<a class="headerlink" href="#run-the-processes-of-the-project-software-stack" title="Permalink to this headline">¶</a></h2>
-<p>TODO:</p>
-<dl class="docutils">
-<dt>These are the processes needed by Arts Combinatòries:</dt>
-<dd><ul class="first last simple">
+<p>These are the processes needed by Arts Combinatòries:</p>
+<blockquote>
+<div><ul class="simple">
 <li>Plone (frontend)</li>
 <li>Tomcat (API REST)</li>
 <li>Virtuoso (BBDD)</li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 <p>Plone:</p>
-<div class="highlight-python"><pre>./bin/instance start</pre>
+<div class="highlight-python"><pre>(plone path)/bin/instance start</pre>
 </div>
 <p>Tomcat:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">XX</span>
-</pre></div>
+<div class="highlight-python"><pre>(tomcat path)/bin/startup.sh</pre>
 </div>
 <p>Virtuoso:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">XX</span>
-</pre></div>
+<div class="highlight-python"><pre>cd (virtuoso path)/var/lib/virtuoso/db/
+../../../../bin/virtuoso-t -f &amp;</pre>
 </div>
 </div>
 </div>

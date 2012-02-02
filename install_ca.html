@@ -158,21 +158,23 @@ sudo python2.6 distribute_setup.py</pre>
 </div>
 <div class="section" id="arrencada-dels-serveis-relacionats-amb-arts-combinatories">
 <h2>Arrencada dels serveis relacionats amb Arts Combinatòries<a class="headerlink" href="#arrencada-dels-serveis-relacionats-amb-arts-combinatories" title="Permalink to this headline">¶</a></h2>
-<p>TODO:</p>
-<p>Els processos necessaris per al bon funcionament del servei són:
-* Plone (frontend)
-* Tomcat (API REST)
-* Virtuoso (BBDD)</p>
+<p>Els processos necessaris per al bon funcionament del servei són:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Plone (frontend)</li>
+<li>Tomcat (API REST)</li>
+<li>Virtuoso (BBDD)</li>
+</ul>
+</div></blockquote>
 <p>Plone:</p>
-<div class="highlight-python"><pre>./bin/instance start</pre>
+<div class="highlight-python"><pre>(directori plone)/bin/instance start</pre>
 </div>
 <p>Tomcat:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">XX</span>
-</pre></div>
+<div class="highlight-python"><pre>(directori tomcat)/bin/startup.sh</pre>
 </div>
 <p>Virtuoso:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">XX</span>
-</pre></div>
+<div class="highlight-python"><pre>cd (directori virtuoso)/var/lib/virtuoso/db/
+../../../../bin/virtuoso-t -f &amp;</pre>
 </div>
 </div>
 </div>

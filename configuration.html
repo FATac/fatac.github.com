@@ -354,7 +354,7 @@ Returns: "success" or "error"</pre>
 <div class="section" id="step-6-data-mapping">
 <h2>Step 6: Data mapping<a class="headerlink" href="#step-6-data-mapping" title="Permalink to this headline">¶</a></h2>
 <p>Data &#8220;mapping.json&#8221; (placed in json/mapping folder) is a must-have specification file that defines what ontology data must be indexed in Solr, and how this must be done. Data mapping is not a simple direct Owl to Solr mapping. It must be defined in a way that it later can be used for specific object domain searches (See Step 4), and provide additional information of the field nature to get Solr treating the data properly.</p>
-<p>Let&#8217;s say we have the Person class defined in our Ontology, and that we want to indexate several useful person data such as: name, biography, date of birth and birth place. Person indexation should be specified this way:</p>
+<p>Let&#8217;s say we have the Person class defined in our Ontology, and that we want to indexate several useful person data such as: name, biography, date of birth and birth place. Person indexing should be specified this way:</p>
 <div class="highlight-python"><pre>{
         "data":
         [
@@ -384,7 +384,7 @@ Returns: "success" or "error"</pre>
     ]
 }</pre>
 </div>
-<p>Note that path is a json array, this makes it possible to specify various object indexation. Let&#8217;s suppose that we want to indexate one more object: Locations (with property Name). Code should be modified as follows:</p>
+<p>Note that path is a json array, this makes it possible to specify various object indexing. Let&#8217;s suppose that we want to indexate one more object: Locations (with property Name). Code should be modified as follows:</p>
 <div class="highlight-python"><pre>"data":
     [
         {

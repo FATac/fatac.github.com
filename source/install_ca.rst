@@ -59,21 +59,22 @@ Esperem fins a que finalitzi. Un cop finalitzar, tindrem tots els serveis llesto
 
 Arrencada dels serveis relacionats amb Arts Combinatòries
 ----------------------------------------------------------
-TODO:
 
 Els processos necessaris per al bon funcionament del servei són:
-* Plone (frontend)
-* Tomcat (API REST)
-* Virtuoso (BBDD)
+
+ - Plone (frontend)
+ - Tomcat (API REST)
+ - Virtuoso (BBDD)
 
 Plone::
     
-    ./bin/instance start
+    (directori plone)/bin/instance start
 
 Tomcat::
 
-    XX
+    (directori tomcat)/bin/startup.sh
 
 Virtuoso::
 
-    XX
+    cd (directori virtuoso)/var/lib/virtuoso/db/
+    ../../../../bin/virtuoso-t -f &

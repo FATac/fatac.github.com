@@ -58,21 +58,22 @@ Execute the buildout process::
 
 Run the processes of the project software stack
 ------------------------------------------------
-TODO:
 
 These are the processes needed by Arts Combinatòries:
- * Plone (frontend)
- * Tomcat (API REST)
- * Virtuoso (BBDD)
+
+ - Plone (frontend)
+ - Tomcat (API REST)
+ - Virtuoso (BBDD)
 
 Plone::
     
-    ./bin/instance start
+    (plone path)/bin/instance start
 
 Tomcat::
 
-    XX
+    (tomcat path)/bin/startup.sh
 
 Virtuoso::
 
-    XX
+    cd (virtuoso path)/var/lib/virtuoso/db/
+    ../../../../bin/virtuoso-t -f &

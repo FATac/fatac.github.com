@@ -270,7 +270,7 @@ Step 6: Data mapping
 
 Data "mapping.json" (placed in json/mapping folder) is a must-have specification file that defines what ontology data must be indexed in Solr, and how this must be done. Data mapping is not a simple direct Owl to Solr mapping. It must be defined in a way that it later can be used for specific object domain searches (See Step 4), and provide additional information of the field nature to get Solr treating the data properly.
 
-Let's say we have the Person class defined in our Ontology, and that we want to indexate several useful person data such as: name, biography, date of birth and birth place. Person indexation should be specified this way:
+Let's say we have the Person class defined in our Ontology, and that we want to indexate several useful person data such as: name, biography, date of birth and birth place. Person indexing should be specified this way:
 
 ::
 
@@ -303,7 +303,7 @@ Let's say we have the Person class defined in our Ontology, and that we want to 
         ]
     }
 
-Note that path is a json array, this makes it possible to specify various object indexation. Let's suppose that we want to indexate one more object: Locations (with property Name). Code should be modified as follows:
+Note that path is a json array, this makes it possible to specify various object indexing. Let's suppose that we want to indexate one more object: Locations (with property Name). Code should be modified as follows:
 
 ::
 
