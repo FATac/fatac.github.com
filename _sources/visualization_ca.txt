@@ -76,6 +76,10 @@ Utilitzant el patró definit a la Configuració. Un objecte Person específic ti
 		    }
 	    ]
     }
+    
+** Nota per a modificar literals Plone **
+
+Els noms de les dades "name", cal que siguin traduïts a Plone per tal que es corresponguin amb l'idioma de l'usuari. Això vol dir accedir als fitxers .po que pengen del directori locales i modificar-los adequadament. Per fer efectius els canvis cal executar translations.sh i reiniciar el Plone.
 
 Cerca dins del patró d'objecte
 -----------------------------------------

@@ -32,6 +32,7 @@ Contents
 
    introduction
    install
+   migracio
    configuration
    managing_data
    managing_media
