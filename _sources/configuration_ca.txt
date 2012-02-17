@@ -20,25 +20,17 @@ Some Virtuoso initial configuration is necessary. Access to Virtuoso Conductor c
     -- Base script which creates necessary data structure for managing users, rights and uploaded media and objects
 	-- Suitable (only?) for Openlink Virtuoso sql implementation
 	
-	DROP TABLE db.dba._media;
-	DROP TABLE db.dba._thumbnail;
-	DROP TABLE db.dba._right;
-	DROP TABLE db.dba._identifier_counter;
-	DROP TABLE db.dba._autodata;
-	DROP TABLE db.dba._resource_statistics;
+    -- DROP TABLE db.dba._thumbnail;
+    -- DROP TABLE db.dba._right;
+    -- DROP TABLE db.dba._identifier_counter;
+    -- DROP TABLE db.dba._autodata;
+    -- DROP TABLE db.dba._resource_statistics;
 	
 	CREATE TABLE db.dba._resource_statistics (
 		identifier VARCHAR(150),
 		visitCounter BIGINT,
 		creationMoment BIGINT,
 		lastMoment BIGINT
-	)
-	
-	CREATE TABLE db.dba._media (
-		SID INT IDENTITY,
-		mediaId VARCHAR(60),
-		path VARCHAR(500),
-		moment TIMESTAMP
 	)
 	
 	CREATE TABLE db.dba._thumbnail (
@@ -69,7 +61,7 @@ Some Virtuoso initial configuration is necessary. Access to Virtuoso Conductor c
 	--GRANT EXECUTE ON DB.DBA.SPARQL_DELETE_DICT_CONTENT TO "SPARQL";
 	GRANT ALL PRIVILEGES TO "SPARQL";
 
-(Es pot descomentar els "drops" per netejar les taules)
+(Es poden descomentar els "drops" per netejar les taules)
 
 A continuació, clic a la pestanya "RDF" i després "Namespaces". Cal afegir aquí totes les ontologies relacionades que no apareguin a la llista, aquestes ontologies són les especificades a la propietat "ONTOLOGY_NAMESPACES" (Pas 3r).
 
@@ -166,7 +158,7 @@ El primer que hem de fer per a configurar AC és definir l'arxiu de propietats "
 	    "RDFDB_URL":"jdbc:virtuoso://myhost:1111",
 	    "RDFDB_USER":"dba",
 	    "RDFDB_PASS":"dba",
-	    "REST_URL":"http://myhost:8080/rest/",
+	    "MEDIA_URL":"http://myhost:8080/rest/media/",
 	    "SOLR_URL":"http://myhost:8080/solr/",
 	    "VIDEO_SERVICES_URL":"http://myhost:8080/videoservices/rest/",
 	    "USER_ROLE_SERVICE_URL":"http://myotherhost:8080/myapp/getUserRole?userId=",
@@ -191,19 +183,25 @@ El primer que hem de fer per a configurar AC és definir l'arxiu de propietats "
 	    "OAI_PATH":"..."
     }
 
-THUMBNAIL_WIDTH i THUMBNAIL_HEIGHT determina la mida de les miniatures generades.
+**THUMBNAIL_WIDTH** i **THUMBNAIL_HEIGHT** determina la mida de les miniatures generades.
 
-MEDIA_CONVERSION_PROFILES enumera extensions vídeo/àudio adequats per una conversió, ordenats per número de perfil (p.ex: "dv" és perfil 1, "mpg" és perfil 2, etc.).
+**MEDIA_CONVERSION_PROFILES** enumera extensions vídeo/àudio adequats per una conversió, ordenats per número de perfil (p.ex: "dv" és perfil 1, "mpg" és perfil 2, etc.).
 
-MEDIA_AUTOCONVERT posat a "true" si cal que cada cop que es pugi un fitxer mèdia, aquest sigui convertit automàticament d'acord amb els perfils i la propietat anterior. En altre cas sempre hi haurà disponible el servei "convert" (veure secció Gestió de Medias).
+**MEDIA_AUTOCONVERT** posat a "true" si cal que cada cop que es pugi un fitxer mèdia, aquest sigui convertit automàticament d'acord amb els perfils i la propietat anterior. En altre cas sempre hi haurà disponible el servei "convert" (veure secció Gestió de Medias).
 
-LANGUAGE_LIST enumera els codis d'idioma que s'espera que siguin emprats en els camps de les propietats (el primer de la llista serà el considerat com l'idioma d'accés per defecte).
+**LANGUAGE_LIST** enumera els codis d'idioma que s'espera que siguin emprats en els camps de les propietats (el primer de la llista serà el considerat com l'idioma d'accés per defecte).
 
-USER_LEVEL especifica el grau d'accés legal que té cada rol d'usuari, ordenats de més a menys restricció ("*" significa qualsevol rol). Com que només hi ha 4 nivells de restricció, aquesta llista hauria de contenir sempre 4 elements. Cada element pot contenir més d'un rol, separat per '+' (p.ex: "Manager+Reviewer").
+**USER_LEVEL** especifica el grau d'accés legal que té cada rol d'usuari, ordenats de més a menys restricció ("*" significa qualsevol rol). Com que només hi ha 4 nivells de restricció, aquesta llista hauria de contenir sempre 4 elements. Cada element pot contenir més d'un rol, separat per '+' (p.ex: "Manager+Reviewer").
 
-USER_ROLE_SERVICE_URL és una URL a un servei específic. Aquest servei és emprat per AC per obtenir els grups d'usuari que determinaran el permís d'accés de l'usuari. El servei ha d'acceptar un identificador (a la cadena de la URL) i hauria de retornar un dels grups d'usuari especificats a USER_LEVEL.
+**USER_ROLE_SERVICE_URL** és una URL a un servei específic. Aquest servei és emprat per AC per obtenir els grups d'usuari que determinaran el permís d'accés de l'usuari. El servei ha d'acceptar un identificador (a la cadena de la URL) i hauria de retornar un dels grups d'usuari especificats a USER_LEVEL.
 
-ONTOLOGY_NAMESPACES estableix un prefix per a cada namespace d'Ontologia, aquesta relació també ha d'aparèixer la llista "namespaces" del Virtuoso (veure Pas 1r). La primera ontologia especificada ha de ser necessariament aquella que hagi estat creada (o escollida) especialment per la web semàntica (corresponent a l'arxiu especificat a la variable "ONTOLOGY_PATH") i la resta d'ontologies seran aquelles importades a l'ontologia principal. Generalment, els esquemes RDF i RDFS haurien de ser inclosos sempre. 
+**ONTOLOGY_NAMESPACES** estableix un prefix per a cada namespace d'Ontologia, aquesta relació també ha d'aparèixer la llista "namespaces" del Virtuoso (veure Pas 1r). La primera ontologia especificada ha de ser necessariament aquella que hagi estat creada (o escollida) especialment per la web semàntica (corresponent a l'arxiu especificat a la variable "ONTOLOGY_PATH") i la resta d'ontologies seran aquelles importades a l'ontologia principal. Generalment, els esquemes RDF i RDFS haurien de ser inclosos sempre.
+
+**MEDIA_URL** es la URL on els medias seran accessibles, es pot apuntar al nostre propi servei media del servidor Tomcat (com mostra a l'exemple) o bé apuntar a un servidor de streaming com Lighttpd. A diferència de les altres URLs que poden apuntar a localhost si aplica, aquesta NECESSÀRIAMENT ha de ser la URL externa del servidor, encara que estigui executant-se desde la pròpia màquina del Tomcat, o sigui el Tomcat mateix.
+
+**Nota**
+
+Si s'opta per utilitzar el Lighttpd cal configurar adequadament lighttpd.conf, i la variable **server.document-root** ha d'apuntar al mateix directori que "MEDIA_PATH" de la nostra configuració. 
 
 AC requereix la següent estructura de directoris:
 
@@ -219,6 +217,7 @@ AC requereix la següent estructura de directoris:
     - thumbnail/
     - thumbnail/classes/default.jpg (requerit. Miniatura per defecte de tots els objectes. No té perquè ser d'una mida específica)
     - thumbnail/classes/ (opcionalment, una miniatura per defecte per a cada classe amb el seu prefix, exemple "foaf:Person.jpg")
+    - tmp/ (requerit. Directori buit)
 - [ONTOLOGY_PATH] (ruta completa a l'arxiu que conté l'ontologia principal del projecte)
 
 OAI_PATH és una propietat opcional. S'explica amb detall a la secció Suport per OAI PMH

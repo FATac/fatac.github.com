@@ -33,7 +33,7 @@ Parameter "fn" is required, and it is the file name including format extension.
 
 ::
 
-    "_media_file_123"       // auto-generated id
+    "http://myhost:8080/rest/media/myimage_276yt5o9l81cn8.jpg"       // URL with auto-generated id
 
 
 Get
@@ -46,12 +46,28 @@ Retrieves stored media
     Service path: http://{host:port}/{appname}/media/{identifier}
     HTTP Method: GET
     Returns: media file
+    
+Identifier can contain profile index if media is eligible for conversion (such as audio and video), this is the file name with "_master", or "_1", "_2", etc.
 
 **GET Example**
 
 ::
 
-    http://myhost:8080/rest/media/_media_file_123
+    http://myhost:8080/rest/media/myimage_276yt5o9l81cn8.jpg
+
+**OK Result**
+
+::
+
+    [Media file binary content]
+    
+**GET Example (with profiles)**
+
+::
+
+    http://myhost:8080/rest/media/myvideo_chy9laj842qg3v_master.jpg
+    http://myhost:8080/rest/media/myvideo_chy9laj842qg3v_1.jpg
+    http://myhost:8080/rest/media/myvideo_chy9laj842qg3v_2.jpg
 
 **OK Result**
 
@@ -74,7 +90,7 @@ Media file extension is also requestable
 
 ::
 
-    http://myhost:8080/rest/media/_media_file_123/format
+    http://myhost:8080/rest/media/myimage_276yt5o9l81cn8.jpg/format
 
 **OK Result**
 
@@ -94,32 +110,6 @@ Proceed to media conversion (if applicable, this is having defined this media fo
     Returns: "success" or "error"
 
 Upon conversion, a "master" (this is, a copy of the original) media file will be created and a converted file will be generated for each applicable profile. To access each generated media we use a profile clause as described next.
-
-Get (with profile)
----------------------
-
-Retrieves stored media according to specified profile
-
-::
-
-    Service path: http://{host:port}/{appname}/media/{identifier}/profile/{profile}
-    HTTP Method: GET
-    Returns: media file
-
-**GET Examples**
-
-::
-
-    http://myhost:8080/rest/media/_media_file_123/profile/master    // returns original file
-    http://myhost:8080/rest/media/_media_file_123/profile/1         // returns the first profile conversion of this file, this is equivalent to calling the simple get service.
-    http://myhost:8080/rest/media/_media_file_123/profile/2         // returns the second profile conversion
-
-**OK Result**
-
-::
-
-    [Media file binary content]
-
 
 
 Delete

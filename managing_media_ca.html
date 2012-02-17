@@ -64,7 +64,6 @@
 <li><a class="reference internal" href="#get">Get</a></li>
 <li><a class="reference internal" href="#get-format">Get format</a></li>
 <li><a class="reference internal" href="#convert">Convert</a></li>
-<li><a class="reference internal" href="#get-amb-perfil">Get (amb perfil)</a></li>
 <li><a class="reference internal" href="#delete">Delete</a></li>
 </ul>
 </li>
@@ -131,11 +130,17 @@ Retorna: la URL completa del media o bé error</pre>
 Mètode HTTP: GET
 Retorna: arxiu media</pre>
 </div>
+<p>L&#8217;identifier pot contenir l&#8217;index del perfil si el media és apte per a conversió (com l&#8217;àudio i el vídeo), això és un nom d&#8217;arxiu amb &#8220;_master, o &#8220;_1, &#8220;_2&#8221;, etc.</p>
 <p><strong>Exemple GET</strong></p>
-<div class="highlight-python"><pre>http://myhost:8080/rest/media/_media_file_123</pre>
+<div class="highlight-python"><pre>http://myhost:8080/rest/media/myimage_276yt5o9l81cn8.jpg</pre>
 </div>
 <p><strong>Resultat OK</strong></p>
 <div class="highlight-python"><pre>[Contingut binari de l'arxiu media]</pre>
+</div>
+<p><strong>Exemple GET (amb perfils)</strong></p>
+<div class="highlight-python"><pre>http://myhost:8080/rest/media/myvideo_chy9laj842qg3v_master.jpg
+http://myhost:8080/rest/media/myvideo_chy9laj842qg3v_1.jpg
+http://myhost:8080/rest/media/myvideo_chy9laj842qg3v_2.jpg</pre>
 </div>
 </div>
 <div class="section" id="get-format">
@@ -161,22 +166,6 @@ Mètode HTTP: GET
 Retorna: "success" o "error"</pre>
 </div>
 <p>Un cop convertit, es crearà un arxiu &#8220;master&#8221; (és a dir, una còpia de l&#8217;original), i es crearà un arxiu convertit per a cada perfil aplicable. Per accedir a cada media utilitzem el següent servei.</p>
-</div>
-<div class="section" id="get-amb-perfil">
-<h2>Get (amb perfil)<a class="headerlink" href="#get-amb-perfil" title="Permalink to this headline">¶</a></h2>
-<p>Retorna el media específic d&#8217;acord amb el perfil indicat.</p>
-<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/media/{identifier}/profile/{profile}
-Mètode HTTP: GET
-Retorna: arxiu media</pre>
-</div>
-<p><strong>Exemple GET</strong></p>
-<div class="highlight-python"><pre>http://myhost:8080/rest/media/_media_file_123/profile/master    // retorna l'arxiu original
-http://myhost:8080/rest/media/_media_file_123/profile/1         // retorna la conversió del media al primer perfil, això és equivalent no especificar cap perfil
-http://myhost:8080/rest/media/_media_file_123/profile/2         // retorna la conversió del media al segon perfil</pre>
-</div>
-<p><strong>OK Result</strong></p>
-<div class="highlight-python"><pre>[Contingut binari de l'arxiu media]</pre>
-</div>
 </div>
 <div class="section" id="delete">
 <h2>Delete<a class="headerlink" href="#delete" title="Permalink to this headline">¶</a></h2>

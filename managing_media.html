@@ -64,7 +64,6 @@
 <li><a class="reference internal" href="#get">Get</a></li>
 <li><a class="reference internal" href="#get-format">Get format</a></li>
 <li><a class="reference internal" href="#convert">Convert</a></li>
-<li><a class="reference internal" href="#get-with-profile">Get (with profile)</a></li>
 <li><a class="reference internal" href="#delete">Delete</a></li>
 </ul>
 </li>
@@ -121,7 +120,7 @@ Returns: full media URL or "error"</pre>
 <div class="highlight-python"><pre>[Media file binary content]</pre>
 </div>
 <p><strong>OK Result</strong></p>
-<div class="highlight-python"><pre>"_media_file_123"       // auto-generated id</pre>
+<div class="highlight-python"><pre>"http://myhost:8080/rest/media/myimage_276yt5o9l81cn8.jpg"       // URL with auto-generated id</pre>
 </div>
 </div>
 <div class="section" id="get">
@@ -131,8 +130,17 @@ Returns: full media URL or "error"</pre>
 HTTP Method: GET
 Returns: media file</pre>
 </div>
+<p>Identifier can contain profile index if media is eligible for conversion (such as audio and video), this is the file name with &#8220;_master&#8221;, or &#8220;_1&#8221;, &#8220;_2&#8221;, etc.</p>
 <p><strong>GET Example</strong></p>
-<div class="highlight-python"><pre>http://myhost:8080/rest/media/_media_file_123</pre>
+<div class="highlight-python"><pre>http://myhost:8080/rest/media/myimage_276yt5o9l81cn8.jpg</pre>
+</div>
+<p><strong>OK Result</strong></p>
+<div class="highlight-python"><pre>[Media file binary content]</pre>
+</div>
+<p><strong>GET Example (with profiles)</strong></p>
+<div class="highlight-python"><pre>http://myhost:8080/rest/media/myvideo_chy9laj842qg3v_master.jpg
+http://myhost:8080/rest/media/myvideo_chy9laj842qg3v_1.jpg
+http://myhost:8080/rest/media/myvideo_chy9laj842qg3v_2.jpg</pre>
 </div>
 <p><strong>OK Result</strong></p>
 <div class="highlight-python"><pre>[Media file binary content]</pre>
@@ -146,7 +154,7 @@ HTTP Method: GET
 Returns: file extension</pre>
 </div>
 <p><strong>GET Example</strong></p>
-<div class="highlight-python"><pre>http://myhost:8080/rest/media/_media_file_123/format</pre>
+<div class="highlight-python"><pre>http://myhost:8080/rest/media/myimage_276yt5o9l81cn8.jpg/format</pre>
 </div>
 <p><strong>OK Result</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">jpg</span>
@@ -161,22 +169,6 @@ HTTP Method: GET
 Returns: "success" or "error"</pre>
 </div>
 <p>Upon conversion, a &#8220;master&#8221; (this is, a copy of the original) media file will be created and a converted file will be generated for each applicable profile. To access each generated media we use a profile clause as described next.</p>
-</div>
-<div class="section" id="get-with-profile">
-<h2>Get (with profile)<a class="headerlink" href="#get-with-profile" title="Permalink to this headline">¶</a></h2>
-<p>Retrieves stored media according to specified profile</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/media/{identifier}/profile/{profile}
-HTTP Method: GET
-Returns: media file</pre>
-</div>
-<p><strong>GET Examples</strong></p>
-<div class="highlight-python"><pre>http://myhost:8080/rest/media/_media_file_123/profile/master    // returns original file
-http://myhost:8080/rest/media/_media_file_123/profile/1         // returns the first profile conversion of this file, this is equivalent to calling the simple get service.
-http://myhost:8080/rest/media/_media_file_123/profile/2         // returns the second profile conversion</pre>
-</div>
-<p><strong>OK Result</strong></p>
-<div class="highlight-python"><pre>[Media file binary content]</pre>
-</div>
 </div>
 <div class="section" id="delete">
 <h2>Delete<a class="headerlink" href="#delete" title="Permalink to this headline">¶</a></h2>

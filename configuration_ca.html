@@ -113,25 +113,17 @@
 <div class="highlight-python"><pre>-- Base script which creates necessary data structure for managing users, rights and uploaded media and objects
     -- Suitable (only?) for Openlink Virtuoso sql implementation
 
-    DROP TABLE db.dba._media;
-    DROP TABLE db.dba._thumbnail;
-    DROP TABLE db.dba._right;
-    DROP TABLE db.dba._identifier_counter;
-    DROP TABLE db.dba._autodata;
-    DROP TABLE db.dba._resource_statistics;
+-- DROP TABLE db.dba._thumbnail;
+-- DROP TABLE db.dba._right;
+-- DROP TABLE db.dba._identifier_counter;
+-- DROP TABLE db.dba._autodata;
+-- DROP TABLE db.dba._resource_statistics;
 
     CREATE TABLE db.dba._resource_statistics (
             identifier VARCHAR(150),
             visitCounter BIGINT,
             creationMoment BIGINT,
             lastMoment BIGINT
-    )
-
-    CREATE TABLE db.dba._media (
-            SID INT IDENTITY,
-            mediaId VARCHAR(60),
-            path VARCHAR(500),
-            moment TIMESTAMP
     )
 
     CREATE TABLE db.dba._thumbnail (
@@ -162,7 +154,7 @@
     --GRANT EXECUTE ON DB.DBA.SPARQL_DELETE_DICT_CONTENT TO "SPARQL";
     GRANT ALL PRIVILEGES TO "SPARQL";</pre>
 </div>
-<p>(Es pot descomentar els &#8220;drops&#8221; per netejar les taules)</p>
+<p>(Es poden descomentar els &#8220;drops&#8221; per netejar les taules)</p>
 <p>A continuació, clic a la pestanya &#8220;RDF&#8221; i després &#8220;Namespaces&#8221;. Cal afegir aquí totes les ontologies relacionades que no apareguin a la llista, aquestes ontologies són les especificades a la propietat &#8220;ONTOLOGY_NAMESPACES&#8221; (Pas 3r).</p>
 </div>
 <div class="section" id="pas-2n-solr">
@@ -250,7 +242,7 @@
         <span class="s">&quot;RDFDB_URL&quot;</span><span class="p">:</span><span class="s">&quot;jdbc:virtuoso://myhost:1111&quot;</span><span class="p">,</span>
         <span class="s">&quot;RDFDB_USER&quot;</span><span class="p">:</span><span class="s">&quot;dba&quot;</span><span class="p">,</span>
         <span class="s">&quot;RDFDB_PASS&quot;</span><span class="p">:</span><span class="s">&quot;dba&quot;</span><span class="p">,</span>
-        <span class="s">&quot;REST_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myhost:8080/rest/&quot;</span><span class="p">,</span>
+        <span class="s">&quot;MEDIA_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myhost:8080/rest/media/&quot;</span><span class="p">,</span>
         <span class="s">&quot;SOLR_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myhost:8080/solr/&quot;</span><span class="p">,</span>
         <span class="s">&quot;VIDEO_SERVICES_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myhost:8080/videoservices/rest/&quot;</span><span class="p">,</span>
         <span class="s">&quot;USER_ROLE_SERVICE_URL&quot;</span><span class="p">:</span><span class="s">&quot;http://myotherhost:8080/myapp/getUserRole?userId=&quot;</span><span class="p">,</span>
@@ -276,13 +268,16 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>THUMBNAIL_WIDTH i THUMBNAIL_HEIGHT determina la mida de les miniatures generades.</p>
-<p>MEDIA_CONVERSION_PROFILES enumera extensions vídeo/àudio adequats per una conversió, ordenats per número de perfil (p.ex: &#8220;dv&#8221; és perfil 1, &#8220;mpg&#8221; és perfil 2, etc.).</p>
-<p>MEDIA_AUTOCONVERT posat a &#8220;true&#8221; si cal que cada cop que es pugi un fitxer mèdia, aquest sigui convertit automàticament d&#8217;acord amb els perfils i la propietat anterior. En altre cas sempre hi haurà disponible el servei &#8220;convert&#8221; (veure secció Gestió de Medias).</p>
-<p>LANGUAGE_LIST enumera els codis d&#8217;idioma que s&#8217;espera que siguin emprats en els camps de les propietats (el primer de la llista serà el considerat com l&#8217;idioma d&#8217;accés per defecte).</p>
-<p>USER_LEVEL especifica el grau d&#8217;accés legal que té cada rol d&#8217;usuari, ordenats de més a menys restricció (&#8220;*&#8221; significa qualsevol rol). Com que només hi ha 4 nivells de restricció, aquesta llista hauria de contenir sempre 4 elements. Cada element pot contenir més d&#8217;un rol, separat per &#8216;+&#8217; (p.ex: &#8220;Manager+Reviewer&#8221;).</p>
-<p>USER_ROLE_SERVICE_URL és una URL a un servei específic. Aquest servei és emprat per AC per obtenir els grups d&#8217;usuari que determinaran el permís d&#8217;accés de l&#8217;usuari. El servei ha d&#8217;acceptar un identificador (a la cadena de la URL) i hauria de retornar un dels grups d&#8217;usuari especificats a USER_LEVEL.</p>
-<p>ONTOLOGY_NAMESPACES estableix un prefix per a cada namespace d&#8217;Ontologia, aquesta relació també ha d&#8217;aparèixer la llista &#8220;namespaces&#8221; del Virtuoso (veure Pas 1r). La primera ontologia especificada ha de ser necessariament aquella que hagi estat creada (o escollida) especialment per la web semàntica (corresponent a l&#8217;arxiu especificat a la variable &#8220;ONTOLOGY_PATH&#8221;) i la resta d&#8217;ontologies seran aquelles importades a l&#8217;ontologia principal. Generalment, els esquemes RDF i RDFS haurien de ser inclosos sempre.</p>
+<p><strong>THUMBNAIL_WIDTH</strong> i <strong>THUMBNAIL_HEIGHT</strong> determina la mida de les miniatures generades.</p>
+<p><strong>MEDIA_CONVERSION_PROFILES</strong> enumera extensions vídeo/àudio adequats per una conversió, ordenats per número de perfil (p.ex: &#8220;dv&#8221; és perfil 1, &#8220;mpg&#8221; és perfil 2, etc.).</p>
+<p><strong>MEDIA_AUTOCONVERT</strong> posat a &#8220;true&#8221; si cal que cada cop que es pugi un fitxer mèdia, aquest sigui convertit automàticament d&#8217;acord amb els perfils i la propietat anterior. En altre cas sempre hi haurà disponible el servei &#8220;convert&#8221; (veure secció Gestió de Medias).</p>
+<p><strong>LANGUAGE_LIST</strong> enumera els codis d&#8217;idioma que s&#8217;espera que siguin emprats en els camps de les propietats (el primer de la llista serà el considerat com l&#8217;idioma d&#8217;accés per defecte).</p>
+<p><strong>USER_LEVEL</strong> especifica el grau d&#8217;accés legal que té cada rol d&#8217;usuari, ordenats de més a menys restricció (&#8220;*&#8221; significa qualsevol rol). Com que només hi ha 4 nivells de restricció, aquesta llista hauria de contenir sempre 4 elements. Cada element pot contenir més d&#8217;un rol, separat per &#8216;+&#8217; (p.ex: &#8220;Manager+Reviewer&#8221;).</p>
+<p><strong>USER_ROLE_SERVICE_URL</strong> és una URL a un servei específic. Aquest servei és emprat per AC per obtenir els grups d&#8217;usuari que determinaran el permís d&#8217;accés de l&#8217;usuari. El servei ha d&#8217;acceptar un identificador (a la cadena de la URL) i hauria de retornar un dels grups d&#8217;usuari especificats a USER_LEVEL.</p>
+<p><strong>ONTOLOGY_NAMESPACES</strong> estableix un prefix per a cada namespace d&#8217;Ontologia, aquesta relació també ha d&#8217;aparèixer la llista &#8220;namespaces&#8221; del Virtuoso (veure Pas 1r). La primera ontologia especificada ha de ser necessariament aquella que hagi estat creada (o escollida) especialment per la web semàntica (corresponent a l&#8217;arxiu especificat a la variable &#8220;ONTOLOGY_PATH&#8221;) i la resta d&#8217;ontologies seran aquelles importades a l&#8217;ontologia principal. Generalment, els esquemes RDF i RDFS haurien de ser inclosos sempre.</p>
+<p><strong>MEDIA_URL</strong> es la URL on els medias seran accessibles, es pot apuntar al nostre propi servei media del servidor Tomcat (com mostra a l&#8217;exemple) o bé apuntar a un servidor de streaming com Lighttpd. A diferència de les altres URLs que poden apuntar a localhost si aplica, aquesta NECESSÀRIAMENT ha de ser la URL externa del servidor, encara que estigui executant-se desde la pròpia màquina del Tomcat, o sigui el Tomcat mateix.</p>
+<p><strong>Nota</strong></p>
+<p>Si s&#8217;opta per utilitzar el Lighttpd cal configurar adequadament lighttpd.conf, i la variable <strong>server.document-root</strong> ha d&#8217;apuntar al mateix directori que &#8220;MEDIA_PATH&#8221; de la nostra configuració.</p>
 <p>AC requereix la següent estructura de directoris:</p>
 <ul>
 <li><dl class="first docutils">
@@ -311,6 +306,7 @@
 <li>thumbnail/</li>
 <li>thumbnail/classes/default.jpg (requerit. Miniatura per defecte de tots els objectes. No té perquè ser d&#8217;una mida específica)</li>
 <li>thumbnail/classes/ (opcionalment, una miniatura per defecte per a cada classe amb el seu prefix, exemple &#8220;foaf:Person.jpg&#8221;)</li>
+<li>tmp/ (requerit. Directori buit)</li>
 </ul>
 </dd>
 </dl>

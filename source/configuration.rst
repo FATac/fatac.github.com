@@ -18,7 +18,6 @@ Some Virtuoso initial configuration is necessary. Access to Virtuoso Conductor c
     -- Base script which creates necessary data structure for managing users, rights and uploaded media and objects
     -- Suitable (only?) for Openlink Virtuoso sql implementation
 
-    -- DROP TABLE db.dba._media;
     -- DROP TABLE db.dba._thumbnail;
     -- DROP TABLE db.dba._right;
     -- DROP TABLE db.dba._identifier_counter;
@@ -30,13 +29,6 @@ Some Virtuoso initial configuration is necessary. Access to Virtuoso Conductor c
 	    visitCounter BIGINT,
 	    creationMoment BIGINT,
 	    lastMoment BIGINT
-    )
-
-    CREATE TABLE db.dba._media (
-	    SID INT IDENTITY,
-	    mediaId VARCHAR(60),
-	    path VARCHAR(500),
-	    moment TIMESTAMP
     )
 
     CREATE TABLE db.dba._thumbnail (
@@ -163,7 +155,7 @@ The first thing we have to do is to configure the 'config.json' file, you may pl
 	    "RDFDB_URL":"jdbc:virtuoso://myhost:1111",
 	    "RDFDB_USER":"dba",
 	    "RDFDB_PASS":"dba",
-	    "REST_URL":"http://myhost:8080/rest/",
+	    "MEDIA_URL":"http://myhost:8080/rest/media/",
 	    "SOLR_URL":"http://myhost:8080/solr/",
 	    "VIDEO_SERVICES_URL":"http://myhost:8080/videoservices/rest/",
 	    "USER_ROLE_SERVICE_URL":"http://myotherhost:8080/myapp/getUserRole?userId=",
@@ -188,19 +180,26 @@ The first thing we have to do is to configure the 'config.json' file, you may pl
 	    "OAI_PATH":"..."
     }
 
-THUMBNAIL_WIDTH and THUMBNAIL_HEIGHT determines the size of generated thumbnails.
+**THUMBNAIL_WIDTH** and **THUMBNAIL_HEIGHT** determines the size of generated thumbnails.
 
-MEDIA_CONVERSION_PROFILES enumerates video/audio file extensions suitable for conversion, ordered by profile number (e.g.: "dv" is profile 1, "mpg" is profile 2, etc.).
+**MEDIA_CONVERSION_PROFILES** enumerates video/audio file extensions suitable for conversion, ordered by profile number (e.g.: "dv" is profile 1, "mpg" is profile 2, etc.).
 
-MEDIA_AUTOCONVERT set to "true" if you require that video/audo files to be converted once uploaded. Otherwise you can use "convert" service (see Managing Media section).
+**MEDIA_AUTOCONVERT** set to "true" if you require that video/audo files to be converted once uploaded. Otherwise you can use "convert" service (see Managing Media section).
 
-LANGUAGE_LIST enumerates codes of languages that are expected to be used in data base fields (the first one is used as default language).
+**LANGUAGE_LIST** enumerates codes of languages that are expected to be used in data base fields (the first one is used as default language).
 
-USER_LEVEL specifies the degree of legal access that have each user role, ordered from more to less restrictions ("*" means any role). This list should contain only 4 elements as there are only 4 restriction levels. Each elements may contain more than one role, separated by '+' (p.ex: "Manager+Reviewer")
+**USER_LEVEL** specifies the degree of legal access that have each user role, ordered from more to less restrictions ("*" means any role). This list should contain only 4 elements as there are only 4 restriction levels. Each elements may contain more than one role, separated by '+' (p.ex: "Manager+Reviewer")
 
-USER_ROLE_SERVICE_URL is a specific service url. This service is used by AC to resolve user groups, which will be considered to determine the permission acess of the user. Service must accept a user identifier (in the URL string) and should return one of the user groups specified in USER_LEVEL. 
+**USER_ROLE_SERVICE_URL** is a specific service url. This service is used by AC to resolve user groups, which will be considered to determine the permission acess of the user. Service must accept a user identifier (in the URL string) and should return one of the user groups specified in USER_LEVEL. 
 
-ONTOLOGY_NAMESPACES establishes a prefix for each ontology/schema namespace, this prefix must also appear on namespaces list in Virtuoso (see Step 1). The first specified ontology must be the one specially created for this project (myOntology in the example), other specified ontologies/schemas must be the ones included on the first one. Generally, RDF and RDFS schemas should be always included.
+**ONTOLOGY_NAMESPACES** establishes a prefix for each ontology/schema namespace, this prefix must also appear on namespaces list in Virtuoso (see Step 1). The first specified ontology must be the one specially created for this project (myOntology in the example), other specified ontologies/schemas must be the ones included on the first one. Generally, RDF and RDFS schemas should be always included.
+
+**MEDIA_URL** is the URL where medias will be accessible at, this can target our Tomcat server media service (as shown in the example) or can target a streaming server such as Lighttpd. Unlike other URLs which can point to localhost if applies, this MUST be the external URL of the server even if its running from the same machine as Tomcat or it is Tomcat itself.
+
+**Note**
+
+If Lighttpd is used, lighttpd.conf file must be properly configured and **server.document-root** variable must target to the same directory as "MEDIA_PATH" of our configuration. 
+
 
 AC requires the next folder and file structure in order to allocate and use its files:
 
@@ -216,6 +215,7 @@ AC requires the next folder and file structure in order to allocate and use its 
     - thumbnail/
     - thumbnail/classes/default.jpg (required. Default thumbnail for all objects. Does not need to fit a specific size)
     - thumbnail/classes/ (optionally, default thumbnail for any classes Ontology class named with prefix, example "foaf:Person.jpg")
+    - tmp/ (required. Empty directory)
 - [ONTOLOGY_PATH] (path to file containing the project's Ontology)
 
 OAI_PATH is an optinal property explained in detail in OAI PMH Support section

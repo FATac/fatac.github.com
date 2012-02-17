@@ -47,17 +47,27 @@ Retorna el fitxer media
     Mètode HTTP: GET
     Retorna: arxiu media
 
+L'identifier pot contenir l'index del perfil si el media és apte per a conversió (com l'àudio i el vídeo), això és un nom d'arxiu amb "_master, o "_1, "_2", etc.
+
 **Exemple GET**
 
 ::
 
-    http://myhost:8080/rest/media/_media_file_123
+    http://myhost:8080/rest/media/myimage_276yt5o9l81cn8.jpg
 
 **Resultat OK**
 
 ::
 
     [Contingut binari de l'arxiu media]
+    
+**Exemple GET (amb perfils)**
+
+::
+
+    http://myhost:8080/rest/media/myvideo_chy9laj842qg3v_master.jpg
+    http://myhost:8080/rest/media/myvideo_chy9laj842qg3v_1.jpg
+    http://myhost:8080/rest/media/myvideo_chy9laj842qg3v_2.jpg
 
 Get format
 ---------------
@@ -94,31 +104,6 @@ Procedeix a la conversió del media (si aplica, d'acord amb allò especificat a 
     Retorna: "success" o "error"
 
 Un cop convertit, es crearà un arxiu "master" (és a dir, una còpia de l'original), i es crearà un arxiu convertit per a cada perfil aplicable. Per accedir a cada media utilitzem el següent servei.
-
-Get (amb perfil)
----------------------
-
-Retorna el media específic d'acord amb el perfil indicat.
-
-::
-
-    Ruta servei: http://{host:port}/{appname}/media/{identifier}/profile/{profile}
-    Mètode HTTP: GET
-    Retorna: arxiu media
-
-**Exemple GET**
-
-::
-
-    http://myhost:8080/rest/media/_media_file_123/profile/master    // retorna l'arxiu original
-    http://myhost:8080/rest/media/_media_file_123/profile/1         // retorna la conversió del media al primer perfil, això és equivalent no especificar cap perfil
-    http://myhost:8080/rest/media/_media_file_123/profile/2         // retorna la conversió del media al segon perfil
-
-**OK Result**
-
-::
-
-    [Contingut binari de l'arxiu media]
 
 
 

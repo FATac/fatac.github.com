@@ -27,7 +27,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
-    <link rel="next" title="Configuration" href="configuration.html" />
+    <link rel="next" title="Migració" href="migracio.html" />
     <link rel="prev" title="Introduction" href="introduction.html" />
 <link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
 
@@ -47,7 +47,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="configuration.html" title="Configuration"
+          <a href="migracio.html" title="Migració"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="introduction.html" title="Introduction"
@@ -75,8 +75,8 @@
   <p class="topless"><a href="introduction.html"
                         title="previous chapter">Introduction</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="configuration.html"
-                        title="next chapter">Configuration</a></p>
+  <p class="topless"><a href="migracio.html"
+                        title="next chapter">Migració</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/install.txt"
@@ -157,7 +157,7 @@ sudo python2.6 distribute_setup.py</pre>
 ./bin/buildout</pre>
 </div>
 <p>..note:</p>
-<div class="highlight-python"><pre>Alguns serveis com Virtuoso i el servidor d'aplicacions Tomcat necessiten una configuració posterior que depén del vostre entorn i necessitats, tal i com es detalla en el apartat `Configuració` d'aquesta mateixa documentació.</pre>
+<div class="highlight-python"><pre>Some services such as Virtuoso and Tomcat need additional configuration which depends on your needs and environment, this is explained further in 'Configuration' section.</pre>
 </div>
 <div class="section" id="run-the-processes-of-the-project-software-stack">
 <h2>Run the processes of the project software stack<a class="headerlink" href="#run-the-processes-of-the-project-software-stack" title="Permalink to this headline">¶</a></h2>
@@ -167,6 +167,7 @@ sudo python2.6 distribute_setup.py</pre>
 <li>Plone (frontend)</li>
 <li>Tomcat (API REST)</li>
 <li>Virtuoso (BBDD)</li>
+<li>Lighttpd (HTTP server - optional)</li>
 </ul>
 </div></blockquote>
 <p>Plone:</p>
@@ -178,6 +179,10 @@ sudo python2.6 distribute_setup.py</pre>
 <p>Virtuoso:</p>
 <div class="highlight-python"><pre>cd (virtuoso path)/var/lib/virtuoso/db/
 ../../../../bin/virtuoso-t -f &amp;</pre>
+</div>
+<p>Lighttpd:</p>
+<div class="highlight-python"><pre>cd /etc/lighttpd/
+lighttpd -D -f lighttpd.conf</pre>
 </div>
 </div>
 </div>
@@ -195,7 +200,7 @@ sudo python2.6 distribute_setup.py</pre>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="configuration.html" title="Configuration"
+          <a href="migracio.html" title="Migració"
              >next</a> |</li>
         <li class="right" >
           <a href="introduction.html" title="Introduction"

@@ -54,7 +54,7 @@ Execute the buildout process::
 
 ..note::
 
-    Alguns serveis com Virtuoso i el servidor d'aplicacions Tomcat necessiten una configuració posterior que depén del vostre entorn i necessitats, tal i com es detalla en el apartat `Configuració` d'aquesta mateixa documentació.
+	Some services such as Virtuoso and Tomcat need additional configuration which depends on your needs and environment, this is explained further in 'Configuration' section.
 
 Run the processes of the project software stack
 ------------------------------------------------
@@ -64,6 +64,7 @@ These are the processes needed by Arts Combinatòries:
  - Plone (frontend)
  - Tomcat (API REST)
  - Virtuoso (BBDD)
+ - Lighttpd (HTTP server - optional)
 
 Plone::
     
@@ -77,3 +78,8 @@ Virtuoso::
 
     cd (virtuoso path)/var/lib/virtuoso/db/
     ../../../../bin/virtuoso-t -f &
+    
+Lighttpd::
+
+	cd /etc/lighttpd/
+	lighttpd -D -f lighttpd.conf
