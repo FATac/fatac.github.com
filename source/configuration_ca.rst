@@ -148,7 +148,8 @@ El primer que hem de fer per a configurar AC és definir l'arxiu de propietats "
 
 	    "THUMBNAIL_WIDTH":250,
 	    "THUMBNAIL_HEIGHT":180,
-	    "MEDIA_CONVERSION_PROFILES":["dv", "mpg", "avi", "aif", "mov"],
+	    "MEDIA_CONVERSION_PROFILES":["dv mpg avi mov", "dv mpg avi mov", "aif wav mp3"],
+	    "MEDIA_PROFILES_DESCRIPTION":["320p", "640p", "128kbps"],
         "MEDIA_AUTOCONVERT":"false",
 	    "LANGUAGE_LIST":["ca", "en", "es", "fr", "it", "de"],							
 	    "USER_LEVEL":["*", "Member", "Manager+Reviewer", "Site Administrator"],	    
@@ -185,7 +186,9 @@ El primer que hem de fer per a configurar AC és definir l'arxiu de propietats "
 
 **THUMBNAIL_WIDTH** i **THUMBNAIL_HEIGHT** determina la mida de les miniatures generades.
 
-**MEDIA_CONVERSION_PROFILES** enumera extensions vídeo/àudio adequats per una conversió, ordenats per número de perfil (p.ex: "dv" és perfil 1, "mpg" és perfil 2, etc.).
+**MEDIA_CONVERSION_PROFILES** enumera extensions vídeo/àudio adequats per una conversió, ordenats per número de perfil (p.ex.: els formats "dv mpg avi mov" són codificats als perfils 1 i 2, "aif wav mp3" són codificats al perfil 3).
+
+**MEDIA_PROFILES_DESCRIPTION** enumera descripcions de perfils. Aquesta informació es pot mostrar en cada URL que apareix a un patró d'objecte (veure Visualització).
 
 **MEDIA_AUTOCONVERT** posat a "true" si cal que cada cop que es pugi un fitxer mèdia, aquest sigui convertit automàticament d'acord amb els perfils i la propietat anterior. En altre cas sempre hi haurà disponible el servei "convert" (veure secció Gestió de Medias).
 

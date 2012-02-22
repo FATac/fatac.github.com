@@ -145,8 +145,9 @@ The first thing we have to do is to configure the 'config.json' file, you may pl
 
 	    "THUMBNAIL_WIDTH":250,
 	    "THUMBNAIL_HEIGHT":180,
-	    "MEDIA_CONVERSION_PROFILES":["dv", "mpg", "avi", "aif", "mov"],
-            "MEDIA_AUTOCONVERT":"false",
+	    "MEDIA_CONVERSION_PROFILES":["dv mpg avi mov", "dv mpg avi mov", "aif wav mp3"],
+	    "MEDIA_PROFILES_DESCRIPTION":["320p", "640p", "128kbps"],
+        "MEDIA_AUTOCONVERT":"false",
 	    "LANGUAGE_LIST":["ca", "en", "es", "fr", "it", "de"],							
 	    "USER_LEVEL":["*", "Member", "Manager+Reviewer", "Site Administrator"],	    
 	
@@ -182,7 +183,9 @@ The first thing we have to do is to configure the 'config.json' file, you may pl
 
 **THUMBNAIL_WIDTH** and **THUMBNAIL_HEIGHT** determines the size of generated thumbnails.
 
-**MEDIA_CONVERSION_PROFILES** enumerates video/audio file extensions suitable for conversion, ordered by profile number (e.g.: "dv" is profile 1, "mpg" is profile 2, etc.).
+**MEDIA_CONVERSION_PROFILES** enumerates video/audio file extensions suitable for conversion, ordered by profile number (e.g.: "dv mpg avi mov" formats are converted with profile 1 and 2, "aif wav mp3" format is converted to profile 3).
+
+**MEDIA_PROFILES_DESCRIPTION** enumerates profiles descriptions. This information can be shown at every media URL that appears in object templates (see Visualization).
 
 **MEDIA_AUTOCONVERT** set to "true" if you require that video/audo files to be converted once uploaded. Otherwise you can use "convert" service (see Managing Media section).
 
@@ -199,7 +202,6 @@ The first thing we have to do is to configure the 'config.json' file, you may pl
 **Note**
 
 If Lighttpd is used, lighttpd.conf file must be properly configured and **server.document-root** variable must target to the same directory as "MEDIA_PATH" of our configuration. 
-
 
 AC requires the next folder and file structure in order to allocate and use its files:
 
