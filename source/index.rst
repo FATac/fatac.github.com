@@ -49,6 +49,7 @@ Contents
    
    introduction_ca
    install_ca
+   migracio
    configuration_ca
    managing_data_ca
    managing_media_ca
