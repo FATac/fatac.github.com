@@ -82,4 +82,10 @@ Virtuoso::
 Lighttpd::
 
 	cd /etc/lighttpd/
-	lighttpd -D -f lighttpd.conf
+	lighttpd -f lighttpd.conf
+
+
+Video services
+==============================
+
+**(i2CAT) TODO: Documentar la instal·lació dels serveis de transcodificació de vídeo**

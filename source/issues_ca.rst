@@ -13,7 +13,7 @@ Canvi de URL del servidor
 
 Si la URL del servidor canvia per qualsevol motiu, cal efectuar alguns canvis:
 
-- Anar a config.json a establir la variable REST_URL amb la URL del nou host.
+- Anar a config.json a establir la variable MEDIA_URL amb la URL del nou host (reiniciar l'aplicació web).
 - Substituir totes les referències existents a la URL anterior amb la nova. Per a fer-ho, utilitzar el servei "replaceUri":
 
 ::
