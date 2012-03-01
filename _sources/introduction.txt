@@ -13,12 +13,12 @@ Key features
 
 Other key features are:
 
-- REST services that allow complete interaction with all project functionalities.
+- REST services that allow complete interaction with all system functionalities.
 - Media (audio, video, image, text) storage and video format conversion capabilities.
 - Scriptable legal protection for medias to accomplish with any license of cultural objects.
 - Support for users and groups, that makes possible to grant roles and permisions.
-- Search capabilities based on Solr_ engine. Fully configurable indexation, filtering and autocomplete features.
-- OAI-PMH compliance to allow LinkedData with other cultural institutions.
+- Search capabilities based on Solr_ engine. Fully configurable indexing, filtering and autocomplete features.
+- OAI-PMH compliance to allow LinkedData with third-parties.
 
 The initial application of this SW is the Fundació Antoni Tàpies cultural archive.
 

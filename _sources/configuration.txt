@@ -492,3 +492,7 @@ Data 'type' clause has not much to do with 'type' defined in previous step. The 
 
 Please note that **text**, **objects** and **media** have the same effect. They resolve the path the same way but resulting value type is supposed to be different. See Visualization Object Thumbnail section to further in **media** and **objects** types.
 
+Step 8: Video Profiles
+============================
+
+To configure video conversion profiles already mentioned in Step 3..... **TODO: I2CAT explicar la configuració dels perfils de vídeo**

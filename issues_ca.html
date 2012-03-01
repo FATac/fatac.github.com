@@ -104,7 +104,7 @@
 <h2>Canvi de URL del servidor<a class="headerlink" href="#canvi-de-url-del-servidor" title="Permalink to this headline">¶</a></h2>
 <p>Si la URL del servidor canvia per qualsevol motiu, cal efectuar alguns canvis:</p>
 <ul class="simple">
-<li>Anar a config.json a establir la variable REST_URL amb la URL del nou host.</li>
+<li>Anar a config.json a establir la variable MEDIA_URL amb la URL del nou host (reiniciar l&#8217;aplicació web).</li>
 <li>Substituir totes les referències existents a la URL anterior amb la nova. Per a fer-ho, utilitzar el servei &#8220;replaceUri&#8221;:</li>
 </ul>
 <div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/replaceUri?uriField=URI_FIELD&amp;oldUri=OLD_URI&amp;newUri=NEW_URI

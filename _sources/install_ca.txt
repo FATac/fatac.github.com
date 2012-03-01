@@ -65,6 +65,7 @@ Els processos necessaris per al bon funcionament del servei són:
  - Plone (frontend)
  - Tomcat (API REST)
  - Virtuoso (BBDD)
+ - Lighttpd (Servidor HTTP per l'streaming - opcional)
 
 Plone::
     
@@ -78,3 +79,13 @@ Virtuoso::
 
     cd (directori virtuoso)/var/lib/virtuoso/db/
     ../../../../bin/virtuoso-t -f &
+
+Lighttpd::
+
+    cd /etc/lighttpd/
+    lighttpd -f lighttpd.conf
+
+Serveis de vídeo
+===============================
+
+**(i2CAT) TODO: Documentar la instal·lació dels serveis de transcodificació de vídeo**

@@ -172,8 +172,8 @@ Returns: JSON data or "error"</pre>
 </div>
 <div class="section" id="search-in-object-template">
 <h2>Search in object template<a class="headerlink" href="#search-in-object-template" title="Permalink to this headline">¶</a></h2>
-<p>As described in Configuration Step 5, a template can have a specific object data type called &#8220;search&#8221;. It indicates that Solr search sould be performed in order to fill that part of the template with data. The aim of this feature is that some objects can relate to many other objects, and we want to be able to perform search and filtering of this particular scope. There are to possible approaches that lead to same result.</p>
-<p>The <strong>first approach</strong>, can be described as: from all other objects related to one specific object. What we do is to map (in mapping.json) the filtering criteria that will be used to scope a particular object group. For example:</p>
+<p>As described in Configuration Step 5, a template can have a specific object data type called &#8220;search&#8221;. It indicates that Solr search should be performed in order to fill that part of the template with data. The aim of this feature is that some objects can relate to many other objects, and we want to be able to perform search and filtering of this particular scope. There are two possible approaches that lead to the same result.</p>
+<p>The <strong>first approach</strong>, can be described as: from all other objects related to one specific object. What we do is to map (in mapping.json) the filtering criterion that will be followed to scope a particular object group. For example:</p>
 <p>(mapping.json)</p>
 <div class="highlight-python"><pre>{
     "data":
@@ -209,7 +209,7 @@ Returns: JSON data or "error"</pre>
         ]
 }</pre>
 </div>
-<p>Which after template process &#8220;James Bond&#8221; object results to following code:</p>
+<p>Which after template process &#8220;James Bond&#8221; object results in following code:</p>
 <div class="highlight-python"><pre>{
             /* ... rest of json */
 
@@ -228,7 +228,7 @@ Returns: JSON data or "error"</pre>
         ]
 }</pre>
 </div>
-<p>Since according to our mapping Solr indexated all related people for each Person, it makes sense to call Solr search filtering by &#8220;RelatedPeople&#8221; and value &#8220;James_Bond_ID&#8221; to get all related objects to this specific object.</p>
+<p>Since according to our mapping Solr indexes all related people for each Person, it makes sense to call Solr search filtering by &#8220;RelatedPeople&#8221; and value &#8220;James_Bond_ID&#8221; to get all related objects to this specific object.</p>
 <div class="highlight-python"><pre>http://internetdomain.org/ac/solr/search?f=RelatedPeople:James_Bond_ID</pre>
 </div>
 <p><strong>OK Result</strong></p>
@@ -327,7 +327,7 @@ HTTP Method: GET
 Returns: jpg image</pre>
 </div>
 <p>Thumbnail length and width can be Configured.</p>
-<p>Image generation will first search for any related image to object. It&#8217;s done by resolving any existing &#8220;objects&#8221; data type in object template, otherwise it tries to resolve any existing &#8220;media&#8221; data type in such template. If no template or none of those data types can be found in template, it generates a generic thumbnail according to the object class. This generic thumbnail must be placed in (MEDIA_PATH)/thumbnails/classes as (Class-name).jpg, where class-name can be the object&#8217;s or one of it&#8217;s superclasses. The last resort for thumbnail generation is &#8220;default.jpg&#8221; placed in mentioned directory.</p>
+<p>Image generation will first search for any related image to object. It&#8217;s done by resolving any existing &#8220;objects&#8221; data type in object template, otherwise it tries to resolve any existing &#8220;media&#8221; data type in such template. If no template or none of those data types can be found in template, it generates a generic thumbnail according to the object class. This generic thumbnail must be placed in (MEDIA_PATH)/thumbnails/classes as (prefix:Class-name).jpg, where class-name can be the object&#8217;s or one of it&#8217;s superclasses. The last resort for thumbnail generation is &#8220;default.jpg&#8221; placed in mentioned directory.</p>
 <p>Thubmnail generation is object recursive, which means that thumbnails of objects related to other objects will be a composition of related objects thumbnails.</p>
 <p>Still, thumbnail generation is customizable. If &#8220;thumbnail&#8221; section is created in the template, this section data will be exclusively used for thumbnail generation.</p>
 <p><strong>Example</strong></p>
@@ -502,7 +502,7 @@ Returns: jpg image</pre>
 <p>Upon call to service</p>
 <div class="highlight-python"><pre>http://internetdomain.org/ac/resource/United_Kingdom/thumbnail</pre>
 </div>
-<p>thumbnails of related Location objects will be generated first, by accessing to their media (if there&#8217;s more than one media url, as shown in example, there&#8217;s an image composition). Next, thumbnail of Country will be generated as a composition of related object thumbnails.</p>
+<p>thumbnails of related Location objects will be generated first, by accessing to their media (if there&#8217;s more than one media url, as shown in example, an image composition is performed). Next, thumbnail of Country will be generated as a composition of related object thumbnails.</p>
 <p>If there are both &#8220;media&#8221; and &#8220;objects&#8221; data types in the template, &#8220;media&#8221; references have priority for thumbnail generation for they are considered to be more reliable for object representation.</p>
 <p>All generated thumbnails are saved in folder (MEDIA_PATH)/thumbnails to avoid regenerating on every access. If you need them to be regenerated, you have to remove their corresponding thumbnail image files.</p>
 </div>

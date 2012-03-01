@@ -27,7 +27,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
-    <link rel="next" title="Configuració" href="configuration_ca.html" />
+    <link rel="next" title="Migració" href="migracio.html" />
     <link rel="prev" title="Introducció" href="introduction_ca.html" />
 <link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
 
@@ -47,7 +47,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="configuration_ca.html" title="Configuració"
+          <a href="migracio.html" title="Migració"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="introduction_ca.html" title="Introducció"
@@ -69,14 +69,15 @@
 <li><a class="reference internal" href="#arrencada-dels-serveis-relacionats-amb-arts-combinatories">Arrencada dels serveis relacionats amb Arts Combinatòries</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#serveis-de-video">Serveis de vídeo</a></li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="introduction_ca.html"
                         title="previous chapter">Introducció</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="configuration_ca.html"
-                        title="next chapter">Configuració</a></p>
+  <p class="topless"><a href="migracio.html"
+                        title="next chapter">Migració</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/install_ca.txt"
@@ -164,6 +165,7 @@ sudo python2.6 distribute_setup.py</pre>
 <li>Plone (frontend)</li>
 <li>Tomcat (API REST)</li>
 <li>Virtuoso (BBDD)</li>
+<li>Lighttpd (Servidor HTTP per l&#8217;streaming - opcional)</li>
 </ul>
 </div></blockquote>
 <p>Plone:</p>
@@ -176,7 +178,15 @@ sudo python2.6 distribute_setup.py</pre>
 <div class="highlight-python"><pre>cd (directori virtuoso)/var/lib/virtuoso/db/
 ../../../../bin/virtuoso-t -f &amp;</pre>
 </div>
+<p>Lighttpd:</p>
+<div class="highlight-python"><pre>cd /etc/lighttpd/
+lighttpd -f lighttpd.conf</pre>
 </div>
+</div>
+</div>
+<div class="section" id="serveis-de-video">
+<h1>Serveis de vídeo<a class="headerlink" href="#serveis-de-video" title="Permalink to this headline">¶</a></h1>
+<p><strong>(i2CAT) TODO: Documentar la instal·lació dels serveis de transcodificació de vídeo</strong></p>
 </div>
 
 
@@ -192,7 +202,7 @@ sudo python2.6 distribute_setup.py</pre>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="configuration_ca.html" title="Configuració"
+          <a href="migracio.html" title="Migració"
              >next</a> |</li>
         <li class="right" >
           <a href="introduction_ca.html" title="Introducció"

@@ -111,7 +111,7 @@
 <h2>Server URL change<a class="headerlink" href="#server-url-change" title="Permalink to this headline">¶</a></h2>
 <p>If server URL is changed by any reason, some changes must be performed:</p>
 <ul class="simple">
-<li>Go to config.json and set REST_URL with the new host URL.</li>
+<li>Go to config.json and set MEDIA_URL with the new host URL (restart web application).</li>
 <li>Replace all existing references from the previous host URL to the new one. To do so, use &#8220;replaceUri&#8221; service:</li>
 </ul>
 <div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/replaceUri?uriField=URI_FIELD&amp;oldUri=OLD_URI&amp;newUri=NEW_URI

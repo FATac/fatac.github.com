@@ -13,7 +13,7 @@ Server URL change
 
 If server URL is changed by any reason, some changes must be performed:
 
-- Go to config.json and set REST_URL with the new host URL.
+- Go to config.json and set MEDIA_URL with the new host URL (restart web application).
 - Replace all existing references from the previous host URL to the new one. To do so, use "replaceUri" service:
 
 ::
