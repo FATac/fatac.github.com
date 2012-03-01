@@ -489,7 +489,7 @@ El tipus de dada dels patrons és diferent del tipus explicat al pas anterior. E
 Adoneu-vos que **text**, **objects** and **media** fan el mateix a la pràctica. La diferència és que el valor que resolen es suposa que és per propòsits diferents. Veure la secció Visualització per a més informació sobre els tipus **media** i **objects**.
 
 Pas 8è: Perfils de vídeo
-============================
+--------------------------------------
 
 Per configurar els perfils de vídeo ja mencionats al pas 3r..... **TODO: I2CAT explicar la configuració dels perfils de vídeo**
 

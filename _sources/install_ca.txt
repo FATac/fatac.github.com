@@ -86,6 +86,6 @@ Lighttpd::
     lighttpd -f lighttpd.conf
 
 Serveis de vídeo
-===============================
+---------------------------------
 
 **(i2CAT) TODO: Documentar la instal·lació dels serveis de transcodificació de vídeo**

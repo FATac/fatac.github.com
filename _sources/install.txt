@@ -86,6 +86,6 @@ Lighttpd::
 
 
 Video services
-==============================
+-----------------------------
 
 **(i2CAT) TODO: Documentar la instal·lació dels serveis de transcodificació de vídeo**
