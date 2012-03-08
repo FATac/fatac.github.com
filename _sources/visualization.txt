@@ -63,7 +63,7 @@ Template processing result of a Person (with template defined at Configuration) 
 		    },
 
             {
-			    "name":"footer",                    
+			    "name":"content",                    
 			    "data":[
 		
 		        	{
@@ -76,6 +76,17 @@ Template processing result of a Person (with template defined at Configuration) 
 		    }
 	    ]
     }
+
+
+Sections layout can take two forms, when there is NO search element:
+
+.. image:: layout1.jpg
+
+and when there is a search element:
+
+.. image:: layout2.jpg
+
+Note that you can add as many sections as you want, as they will be added at the bottom, as represented by "footer" section in above images.
 
 Search in object template
 -------------------------------------

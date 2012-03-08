@@ -46,16 +46,28 @@ Fet això, ens ha d'haver creat un nou directori `fatac.buildout`. Accedim a ell
 
     cd fatac.buildout
 
-Executem el montatge amb aquestes ordres::
+Executem el muntatge amb aquestes ordres::
 
     python2.6 bootstrap.py
-    ./bin/buildout
+    ./bin/buildout    
 
 Esperem fins a que finalitzi. Un cop finalitzar, tindrem tots els serveis llestos per ser arrencats.
+
+Instal·lació automàtica del lighttpd::
+
+	apt-get install lighttpd
+
+Cal afegir les aplicacions web del Tomcat (arxius .WAR a la carpeta "webapps"), que trobareu als llocs següents:
+
+ - Serveis REST d'Arts Combinatòries: https://github.com/FATac/ArtsCombinatoriesRest/blob/develop/WebContent/WEB-INF/ArtsCombinatoriesRest.war
+ - Motor de cerca Solr: http://lucene.apache.org/solr/ (a "Download")
+ - Servidor OAI-PMH: http://code.google.com/p/oaicat/downloads/detail?name=oaicat.war
 
 ..note::
 
     Alguns serveis com Virtuoso i el servidor d'aplicacions Tomcat necessiten una configuració posterior que depén del vostre entorn i necessitats, tal i com es detalla en el apartat `Configuració` d'aquesta mateixa documentació.
+    
+
 
 Arrencada dels serveis relacionats amb Arts Combinatòries
 ----------------------------------------------------------

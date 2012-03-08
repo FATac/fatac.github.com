@@ -51,6 +51,18 @@ Execute the buildout process::
 
     python2.6 bootstrap.py
     ./bin/buildout
+    
+This will process take some time.
+    
+Automatic installation of lighttpd::
+
+	apt-get install lighttpd
+    
+Following Tomcat web applications (.war files) must be added in "webapps" directory:
+
+ - Arts Combinatòries REST services: https://github.com/FATac/ArtsCombinatoriesRest/blob/develop/WebContent/WEB-INF/ArtsCombinatoriesRest.war
+ - Solr search engine: http://lucene.apache.org/solr/ (in "Download")
+ - OAI-PMH Server: http://code.google.com/p/oaicat/downloads/detail?name=oaicat.war
 
 ..note::
 

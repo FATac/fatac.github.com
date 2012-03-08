@@ -157,6 +157,18 @@ sudo python2.6 distribute_setup.py</pre>
 <div class="highlight-python"><pre>python2.6 bootstrap.py
 ./bin/buildout</pre>
 </div>
+<p>This will process take some time.</p>
+<p>Automatic installation of lighttpd:</p>
+<div class="highlight-python"><pre>apt-get install lighttpd</pre>
+</div>
+<p>Following Tomcat web applications (.war files) must be added in &#8220;webapps&#8221; directory:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Arts Combinatòries REST services: <a class="reference external" href="https://github.com/FATac/ArtsCombinatoriesRest/blob/develop/WebContent/WEB-INF/ArtsCombinatoriesRest.war">https://github.com/FATac/ArtsCombinatoriesRest/blob/develop/WebContent/WEB-INF/ArtsCombinatoriesRest.war</a></li>
+<li>Solr search engine: <a class="reference external" href="http://lucene.apache.org/solr/">http://lucene.apache.org/solr/</a> (in &#8220;Download&#8221;)</li>
+<li>OAI-PMH Server: <a class="reference external" href="http://code.google.com/p/oaicat/downloads/detail?name=oaicat.war">http://code.google.com/p/oaicat/downloads/detail?name=oaicat.war</a></li>
+</ul>
+</div></blockquote>
 <p>..note:</p>
 <div class="highlight-python"><pre>Some services such as Virtuoso and Tomcat need additional configuration which depends on your needs and environment, this is explained further in 'Configuration' section.</pre>
 </div>

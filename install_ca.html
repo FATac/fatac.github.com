@@ -149,11 +149,22 @@ sudo python2.6 distribute_setup.py</pre>
 <p>Fet això, ens ha d&#8217;haver creat un nou directori <cite>fatac.buildout</cite>. Accedim a ell:</p>
 <div class="highlight-python"><pre>cd fatac.buildout</pre>
 </div>
-<p>Executem el montatge amb aquestes ordres:</p>
+<p>Executem el muntatge amb aquestes ordres:</p>
 <div class="highlight-python"><pre>python2.6 bootstrap.py
 ./bin/buildout</pre>
 </div>
 <p>Esperem fins a que finalitzi. Un cop finalitzar, tindrem tots els serveis llestos per ser arrencats.</p>
+<p>Instal·lació automàtica del lighttpd:</p>
+<div class="highlight-python"><pre>apt-get install lighttpd</pre>
+</div>
+<p>Cal afegir les aplicacions web del Tomcat (arxius .WAR a la carpeta &#8220;webapps&#8221;), que trobareu als llocs següents:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Serveis REST d&#8217;Arts Combinatòries: <a class="reference external" href="https://github.com/FATac/ArtsCombinatoriesRest/blob/develop/WebContent/WEB-INF/ArtsCombinatoriesRest.war">https://github.com/FATac/ArtsCombinatoriesRest/blob/develop/WebContent/WEB-INF/ArtsCombinatoriesRest.war</a></li>
+<li>Motor de cerca Solr: <a class="reference external" href="http://lucene.apache.org/solr/">http://lucene.apache.org/solr/</a> (a &#8220;Download&#8221;)</li>
+<li>Servidor OAI-PMH: <a class="reference external" href="http://code.google.com/p/oaicat/downloads/detail?name=oaicat.war">http://code.google.com/p/oaicat/downloads/detail?name=oaicat.war</a></li>
+</ul>
+</div></blockquote>
 <p>..note:</p>
 <div class="highlight-python"><pre>Alguns serveis com Virtuoso i el servidor d'aplicacions Tomcat necessiten una configuració posterior que depén del vostre entorn i necessitats, tal i com es detalla en el apartat `Configuració` d'aquesta mateixa documentació.</pre>
 </div>

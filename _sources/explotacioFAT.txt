@@ -31,3 +31,11 @@ Quan ja tenim el projecte baixat, i després de fer les pertinents modificacions
  #. cd /var/plone/artscombinatories/config/
  #. git pull
  #. (Si l'arxiu modificat és "mapping.json" cal reiniciar l'aplicació web "ArtsCombinatoriesRest" del Tomcat)
+ 
+
+ Com accedir als arxius OAI
+ --------------------------------------------
+ 
+ Els arxius per a l'exportació en OAI-PMH es situen al directori especificat a OAI_PATH del config.json (en principi serà "var/plone/fatac.buildout/servers/tomcat/apache-tomcat7.0/webapps/oaicat/WEB-INF/META/").
+ 
+ Cada arxiu conté les dades de cada objecte per tots els tipus d'objectes als quals es fa referencia a "oai-mapping.json".

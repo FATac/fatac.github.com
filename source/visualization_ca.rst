@@ -76,6 +76,16 @@ Utilitzant el patró definit a la Configuració. Un objecte Person específic ti
 		    }
 	    ]
     }
+
+La distribució visual de les seccions pot prendre dues formes, una quan no hi ha cap element "search":
+
+.. image:: layout1.jpg
+
+i una altra quan sí que hi ha element "search":
+
+.. image:: layout2.jpg
+
+Es poden afegir tantes noves seccions com calguin, ja que seran afegides al final de la fitxa, tal com es representa amb la secció "footer" a les imatges anteriors.
     
 ** Nota per a modificar literals Plone **
 
