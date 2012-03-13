@@ -16,7 +16,7 @@ Also, OAI_PATH property must be set with directory path where XML files will be 
 
 OAICat module must be configured the next way:
  
- 1. In file WEB-INF/oaicat.properties
+ 1. In both files WEB-INF/oaicat.properties and WEB-INF/filesys.properties 
  2. Put in **FileSystemOAICatalog.homeDir** the directory path specified at OAI_PATH property
  3. Put in **FileMap2oai_dc.xsltName** the absolute path to XSL file WEB-INF/etdms2dc.xsl (or any other customized XSL)
  4. It might be necessary to configure <context-param><param-name>properties (...) of web.xml, setting in <param-value> the absolute path to oaicat.properties file

@@ -16,7 +16,7 @@ A més, la variable OAI_PATH ha d'indicar la ruta del directori on s'exportaran 
 
 Cal configurar el módul OAICat de la següet manera:
  
- 1. Arxiu WEB-INF/oaicat.properties
+ 1. Arxius WEB-INF/oaicat.properties i WEB-INF/filesys.properties 
  2. Configurar la propietat **FileSystemOAICatalog.homeDir** amb la ruta especificada a OAI_PATH
  3. Configurar la propietat **FileMap2oai_dc.xsltName** amb la ruta absoluta al fitxer XSL de WEB-INF/etdms2dc.xsl (o a qualsevol XSL personalitzat)
  4. Podria ser necessari configurar el <context-param><param-name>properties (...) del web.xml, establint a <param-value> la ruta absoluta al fitxer oaicat.properties (p.ex: "/home/.../tomcat/webapps/WEB-INF/oaicat.properties")
