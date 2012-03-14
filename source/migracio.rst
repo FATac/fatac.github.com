@@ -1,6 +1,10 @@
 Migració
 ====================================
 
+El programa de migració es pot descarregar des de:
+
+ https://github.com/FATac/ArtsCombinatoriesMigracio/blob/develop/migracio.tar.gz
+
 Els paràmetres de la migració són els següents
 
 ./java -jar Migracio.jar <Què migrar> <Url-servidor> <Data-Hora servidor> <DirectoriMedias>
