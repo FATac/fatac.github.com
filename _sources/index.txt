@@ -58,9 +58,14 @@ Contents
    legal_ca
    oai_ca
    issues_ca
-   
-Annex: Serveis vídeo (Castellà) - Link.
 
-..
+**Annexos**
+
+Annex1_: Informació adicional per a l'explotació de la plataforma per part de la Fundació Antoni Tàpies.
+
+Annex2_: Serveis de vídeo.
+
+.. _Annex2: DocumentoTrabajoFAT.pdf
+.. _Annex1: explotacioFAT.html
    
    

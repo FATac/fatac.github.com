@@ -70,7 +70,7 @@ Cal afegir les aplicacions web del Tomcat (arxius .WAR a la carpeta "webapps"), 
 
 
 Arrencada dels serveis relacionats amb Arts Combinatòries
-----------------------------------------------------------
+------------------------------------------------------------
 
 Els processos necessaris per al bon funcionament del servei són:
 

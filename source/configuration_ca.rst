@@ -146,8 +146,8 @@ El primer que hem de fer per a configurar AC és definir l'arxiu de propietats "
     {	
         "__comment_0":"Configuracio diversa",
 
-	    "THUMBNAIL_WIDTH":250,
-	    "THUMBNAIL_HEIGHT":180,
+	    "THUMBNAIL_WIDTH":210,
+	    "THUMBNAIL_HEIGHT":210,
 	    "MEDIA_CONVERSION_PROFILES":["dv mpg avi mov", "dv mpg avi mov", "aif wav mp3"],
 	    "MEDIA_PROFILES_DESCRIPTION":["320p", "640p", "128kbps"],
         "MEDIA_AUTOCONVERT":"false",
