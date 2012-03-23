@@ -497,7 +497,7 @@ Image files in mentioned directory must be named as (prefix:ClassName).jpg.
 
 You can optionally add other image styles by adding .styleName after class name in file name (for instance "my:Person.jpg" plus "my:Person.gray.jpg", "my:Person.small.jpg", etc. ). And call the service using "style" parameter with the style name value assigned.
 
-** OK Example **
+**Example**
 
 ::
 

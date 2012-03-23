@@ -498,7 +498,7 @@ Les imatges del directori mencionat han de ser nombrades com a (prefix:NomClasse
 
 Opcionalment es poden afegir imatges adicionals de diferents estils afegint .nomEstil després del nom de la classe al nom de l'arxiu (Per exemple "my:Person.jpg", més "my:Person.gray.jpg", "my:Person.small.jpg", etc.). I cridar el servei usant el paràmetre "style" amb en nom de l'estil assignat per valor.
 
-** Exemple OK **
+**Exemple**
 
 ::
 
