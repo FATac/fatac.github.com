@@ -63,6 +63,7 @@
 <li><a class="reference internal" href="#object-view">Object view</a></li>
 <li><a class="reference internal" href="#cerca-dins-del-patro-d-objecte">Cerca dins del patró d&#8217;objecte</a></li>
 <li><a class="reference internal" href="#miniatura-d-objecte">Miniatura d&#8217;objecte</a></li>
+<li><a class="reference internal" href="#class-thumbnail">Class thumbnail</a></li>
 <li><a class="reference internal" href="#llista-i-arbre-de-classes">Llista i arbre de classes</a></li>
 </ul>
 </li>
@@ -508,6 +509,20 @@ Retorna: imatge jpg</pre>
 <p>les miniatures dels llocs (Locations) seran generats primer, accedint al seu &#8220;media&#8221; (si hi ha més d&#8217;una url, com a l&#8217;exmeple, es fa una composició). A continuació, la miniatura del país (Country) serà generada com una composició de les miniatures dels llocs relacionats.</p>
 <p>Si hi ha tant dades tipus &#8220;media&#8221; com &#8220;objects&#8221; al patró, el &#8220;media&#8221; tenen prioritat perquè s&#8217;entén que tenen una relació més directa amb l&#8217;objecte.</p>
 <p>Totes les miniatures generades es desen al directori (MEDIA_PATH)/thumbnails per evitar haver-los de regenerar cada cop que es sol·liciten. Si cal que siguin regenerats, caldrà esborrar la imatge de la seva miniatura corresponent.</p>
+</div>
+<div class="section" id="class-thumbnail">
+<h2>Class thumbnail<a class="headerlink" href="#class-thumbnail" title="Permalink to this headline">¶</a></h2>
+<p>Servei que retorna la miniatura de la classe especificada. S&#8217;obté de la seva imatge corresponent ubicada al directori (MEDIA_PATH)/thumbnails/classes.</p>
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/classes/{prefix:nomClasse}/thumbnail?style=ESTIL_OPCIONAL
+Mètode HTTP: GET
+Retorna: imatge jpg</pre>
+</div>
+<p>Les imatges del directori mencionat han de ser nombrades com a (prefix:NomClasse).jpg.</p>
+<p>Opcionalment es poden afegir imatges adicionals de diferents estils afegint .nomEstil després del nom de la classe al nom de l&#8217;arxiu (Per exemple &#8220;my:Person.jpg&#8221;, més &#8220;my:Person.gray.jpg&#8221;, &#8220;my:Person.small.jpg&#8221;, etc.). I cridar el servei usant el paràmetre &#8220;style&#8221; amb en nom de l&#8217;estil assignat per valor.</p>
+<p>** Exemple OK **</p>
+<div class="highlight-python"><pre>http://{host:port}/{appname}/classes/my:Person/thumbnail?style=gray             // retorna thumbnail d'estil "gray"
+http://{host:port}/{appname}/classes/my:Person/thumbnail                                // retorna thumbnail sense estil</pre>
+</div>
 </div>
 <div class="section" id="llista-i-arbre-de-classes">
 <h2>Llista i arbre de classes<a class="headerlink" href="#llista-i-arbre-de-classes" title="Permalink to this headline">¶</a></h2>

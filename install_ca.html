@@ -153,7 +153,10 @@ sudo python2.6 distribute_setup.py</pre>
 <div class="highlight-python"><pre>python2.6 bootstrap.py
 ./bin/buildout</pre>
 </div>
-<p>Esperem fins a que finalitzi. Un cop finalitzar, tindrem tots els serveis llestos per ser arrencats.</p>
+<p>Un cop finalitzat, ens situem a la carpeta contenidora de la carpeta &#8220;fatac.buildout&#8221; i executem:</p>
+<div class="highlight-python"><pre>useradd plone
+chown -R plone:plone fatac.buildout/</pre>
+</div>
 <p>Instal·lació automàtica del lighttpd:</p>
 <div class="highlight-python"><pre>apt-get install lighttpd</pre>
 </div>
@@ -165,9 +168,7 @@ sudo python2.6 distribute_setup.py</pre>
 <li>Servidor OAI-PMH: <a class="reference external" href="http://code.google.com/p/oaicat/downloads/detail?name=oaicat.war">http://code.google.com/p/oaicat/downloads/detail?name=oaicat.war</a></li>
 </ul>
 </div></blockquote>
-<p>..note:</p>
-<div class="highlight-python"><pre>Alguns serveis com Virtuoso i el servidor d'aplicacions Tomcat necessiten una configuració posterior que depén del vostre entorn i necessitats, tal i com es detalla en el apartat `Configuració` d'aquesta mateixa documentació.</pre>
-</div>
+<p><strong>Nota</strong> Alguns serveis com Virtuoso i el servidor d&#8217;aplicacions Tomcat necessiten una configuració posterior que depén del vostre entorn i necessitats, tal i com es detalla en el apartat <cite>Configuració</cite> d&#8217;aquesta mateixa documentació.</p>
 <div class="section" id="arrencada-dels-serveis-relacionats-amb-arts-combinatories">
 <h2>Arrencada dels serveis relacionats amb Arts Combinatòries<a class="headerlink" href="#arrencada-dels-serveis-relacionats-amb-arts-combinatories" title="Permalink to this headline">¶</a></h2>
 <p>Els processos necessaris per al bon funcionament del servei són:</p>
@@ -182,6 +183,7 @@ sudo python2.6 distribute_setup.py</pre>
 <p>Plone:</p>
 <div class="highlight-python"><pre>(directori plone)/bin/instance start</pre>
 </div>
+<p><strong>Nota</strong> La primera vegada cal crear des de <a class="reference external" href="http://urlservidor:8084/">http://urlservidor:8084/</a> el &#8220;Plone site&#8221; i escollir l&#8217;Add-on &#8220;fatac.theme&#8221;.</p>
 <p>Tomcat:</p>
 <div class="highlight-python"><pre>(directori tomcat)/bin/startup.sh</pre>
 </div>

@@ -51,7 +51,10 @@ Executem el muntatge amb aquestes ordres::
     python2.6 bootstrap.py
     ./bin/buildout    
 
-Esperem fins a que finalitzi. Un cop finalitzar, tindrem tots els serveis llestos per ser arrencats.
+Un cop finalitzat, ens situem a la carpeta contenidora de la carpeta "fatac.buildout" i executem::
+
+	useradd plone
+	chown -R plone:plone fatac.buildout/
 
 Instal·lació automàtica del lighttpd::
 
@@ -63,12 +66,8 @@ Cal afegir les aplicacions web del Tomcat (arxius .WAR a la carpeta "webapps"), 
  - Motor de cerca Solr: http://lucene.apache.org/solr/ (a "Download")
  - Servidor OAI-PMH: http://code.google.com/p/oaicat/downloads/detail?name=oaicat.war
 
-..note::
-
-    Alguns serveis com Virtuoso i el servidor d'aplicacions Tomcat necessiten una configuració posterior que depén del vostre entorn i necessitats, tal i com es detalla en el apartat `Configuració` d'aquesta mateixa documentació.
+**Nota** Alguns serveis com Virtuoso i el servidor d'aplicacions Tomcat necessiten una configuració posterior que depén del vostre entorn i necessitats, tal i com es detalla en el apartat `Configuració` d'aquesta mateixa documentació.
     
-
-
 Arrencada dels serveis relacionats amb Arts Combinatòries
 ------------------------------------------------------------
 
@@ -82,6 +81,8 @@ Els processos necessaris per al bon funcionament del servei són:
 Plone::
     
     (directori plone)/bin/instance start
+    
+**Nota** La primera vegada cal crear des de http://urlservidor:8084/ el "Plone site" i escollir l'Add-on "fatac.theme".  
 
 Tomcat::
 

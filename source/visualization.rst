@@ -482,6 +482,29 @@ If there are both "media" and "objects" data types in the template, "media" refe
 All generated thumbnails are saved in folder (MEDIA_PATH)/thumbnails to avoid regenerating on every access. If you need them to be regenerated, you have to remove their corresponding thumbnail image files.
 
 
+Class thumbnail
+-----------------------
+
+Service that return the specified class thumbnail. This is obtained from its corresponding image located in (MEDIA_PATH)/thumbnails/classes folder.
+
+::
+
+    Service path: http://{host:port}/{appname}/classes/{prefix:className}/thumbnail?style=OPTIONAL_STYLE
+    HTTP Method: GET
+    Returns: jpg image
+    
+Image files in mentioned directory must be named as (prefix:ClassName).jpg. 
+
+You can optionally add other image styles by adding .styleName after class name in file name (for instance "my:Person.jpg" plus "my:Person.gray.jpg", "my:Person.small.jpg", etc. ). And call the service using "style" parameter with the style name value assigned.
+
+** OK Example **
+
+::
+
+	http://{host:port}/{appname}/classes/my:Person/thumbnail?style=gray		// return thumbnail of "gray" style
+	http://{host:port}/{appname}/classes/my:Person/thumbnail				// return thumbnail of no style
+
+
 Class list and tree
 -----------------------
 

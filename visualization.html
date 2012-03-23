@@ -63,6 +63,7 @@
 <li><a class="reference internal" href="#object-view">Object view</a></li>
 <li><a class="reference internal" href="#search-in-object-template">Search in object template</a></li>
 <li><a class="reference internal" href="#object-thumbnail">Object thumbnail</a></li>
+<li><a class="reference internal" href="#class-thumbnail">Class thumbnail</a></li>
 <li><a class="reference internal" href="#class-list-and-tree">Class list and tree</a></li>
 </ul>
 </li>
@@ -510,6 +511,20 @@ Returns: jpg image</pre>
 <p>thumbnails of related Location objects will be generated first, by accessing to their media (if there&#8217;s more than one media url, as shown in example, an image composition is performed). Next, thumbnail of Country will be generated as a composition of related object thumbnails.</p>
 <p>If there are both &#8220;media&#8221; and &#8220;objects&#8221; data types in the template, &#8220;media&#8221; references have priority for thumbnail generation for they are considered to be more reliable for object representation.</p>
 <p>All generated thumbnails are saved in folder (MEDIA_PATH)/thumbnails to avoid regenerating on every access. If you need them to be regenerated, you have to remove their corresponding thumbnail image files.</p>
+</div>
+<div class="section" id="class-thumbnail">
+<h2>Class thumbnail<a class="headerlink" href="#class-thumbnail" title="Permalink to this headline">¶</a></h2>
+<p>Service that return the specified class thumbnail. This is obtained from its corresponding image located in (MEDIA_PATH)/thumbnails/classes folder.</p>
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/classes/{prefix:className}/thumbnail?style=OPTIONAL_STYLE
+HTTP Method: GET
+Returns: jpg image</pre>
+</div>
+<p>Image files in mentioned directory must be named as (prefix:ClassName).jpg.</p>
+<p>You can optionally add other image styles by adding .styleName after class name in file name (for instance &#8220;my:Person.jpg&#8221; plus &#8220;my:Person.gray.jpg&#8221;, &#8220;my:Person.small.jpg&#8221;, etc. ). And call the service using &#8220;style&#8221; parameter with the style name value assigned.</p>
+<p>** OK Example **</p>
+<div class="highlight-python"><pre>http://{host:port}/{appname}/classes/my:Person/thumbnail?style=gray             // return thumbnail of "gray" style
+http://{host:port}/{appname}/classes/my:Person/thumbnail                                // return thumbnail of no style</pre>
+</div>
 </div>
 <div class="section" id="class-list-and-tree">
 <h2>Class list and tree<a class="headerlink" href="#class-list-and-tree" title="Permalink to this headline">¶</a></h2>
