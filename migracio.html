@@ -93,7 +93,7 @@
 <h1>Migració<a class="headerlink" href="#migracio" title="Permalink to this headline">¶</a></h1>
 <p>El programa de migració es pot descarregar des de:</p>
 <blockquote>
-<div><a class="reference external" href="https://github.com/FATac/ArtsCombinatoriesMigracio/blob/develop/migracio.tar.gz">https://github.com/FATac/ArtsCombinatoriesMigracio/blob/develop/migracio.tar.gz</a></div></blockquote>
+<div><a class="reference external" href="https://github.com/FATac/ArtsCombinatoriesMigracio/blob/develop/migracio.tar.gz">https://github.com/FATac/ArtsCombinatoriesMigracio/blob/develop/migracio.tar.gz</a> (cal descomprimir-lo)</div></blockquote>
 <p>Els paràmetres de la migració són els següents</p>
 <p>./java -jar Migracio.jar &lt;Què migrar&gt; &lt;Url-servidor&gt; &lt;Data-Hora servidor&gt; &lt;DirectoriMedias&gt;</p>
 <p>La migració es realitza amb els passos següents</p>
@@ -105,6 +105,14 @@
 <div class="highlight-python"><pre>./java -jar Migracio.jar "nomes media" http://urlservidor.com:8080 "" "/directori/medias/"</pre>
 </div>
 <p>Ara no cal especificar la data i hora del servidor, però sí el directori dels medias. Si hi ha massa medias, es pot repetir el Pas 2 repetidament per cada grup de medias. Per assegurar-se que no puja dues vegades el mateix media, cal conservar l&#8217;arxiu &#8220;fitxerspujats.txt&#8221; on el programa va afegint tots els medias que va migrant.</p>
+<p><strong>Important</strong>: A l&#8217;arxiu fitxerspujats.txt es guarda la ruta completa de cada arxiu pujat anteriorment, pertant si un mateix arxiu està ubicat en dos llocs diferents ho interpreta com que són arxius diferents. Cal tenir en compte això alhora de migrar medias des d&#8217;origens diferents (des d&#8217;un dispositiu, carpeta local, etc.). Podria ser necessari editar l&#8217;arxiu per substituir totes les rutes amb el nou origen.</p>
+<p>Per exemple, si tenim una línia de fitxerspujats.txt com:</p>
+<div class="highlight-python"><pre>/home/usuari/els_meus_medias/fotografia399.jpg</pre>
+</div>
+<p>I intentem pujar /media/dispositiu/fotografia399.jpg, s&#8217;interpretarà com una nova fotografia perquè la ruta és diferent. Per tant cal modificar l&#8217;arxiu fitxerspujats.txt perquè quedi com:</p>
+<div class="highlight-python"><pre>/media/dispositiu/fotografia399.jpg</pre>
+</div>
+<p>(Amb un buscar-substituir es fa ràpid)</p>
 </div>
 
 

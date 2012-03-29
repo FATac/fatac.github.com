@@ -32,7 +32,6 @@ Contents
 
    introduction
    install
-   migracio
    configuration
    managing_data
    managing_media
@@ -61,11 +60,14 @@ Contents
 
 **Annexos**
 
-Annex1_: Informació adicional per a l'explotació de la plataforma per part de la Fundació Antoni Tàpies.
+Annex1_: Explicacions sobre migració.
 
-Annex2_: Serveis de vídeo.
+Annex2_: Informació adicional per a l'explotació de la plataforma per part de la Fundació Antoni Tàpies.
 
-.. _Annex2: DocumentoTrabajoFAT.pdf
-.. _Annex1: explotacioFAT.html
+Annex3_: Serveis de vídeo.
+
+.. _Annex3: DocumentoTrabajoFAT.pdf
+.. _Annex2: explotacioFAT.html
+.. _Annex1: migracio.html
    
    
