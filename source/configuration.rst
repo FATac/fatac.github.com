@@ -495,4 +495,71 @@ Please note that **text**, **objects** and **media** have the same effect. They 
 Step 8: Video Profiles
 --------------------------------------
 
-To configure video conversion profiles already mentioned in Step 3..... **TODO: I2CAT explicar la configuració dels perfils de vídeo**
+To configure video conversion profiles already mentioned in Step 3, a profile.xml file must be placed in the WEB-INF directory i.e <webapps-dir>/TapiesWebServices/WEB-INF/profile.xml
+
+This file contains a profile tag for each desired profile in the system. Inside the profile tag three different tags specify the audio, video and human readable description of the profile.
+
+::
+
+	<profile id="" container=""> 
+	<audio codec="" bitrate="" samplerate="" channels=""/>
+	<video codec="" bitrate="" fps="" height="" width="" deinterlace="" brtolerance="" preset=""/>
+	<description> Human readable description </description>
+	</profile>
+
+**Profile**
+
+:ID: it is the identifier of the profile, to be used in the web service.
+:Container: The format of the container file, i.e ogg, webm, etc.
+
+**Audio**
+
+:Codec: Codec used for audio compression, i.e vorbis, mp3. The name of the codecs are the ones used by ffmpeg.
+:Bitrate: Number of bits processed per unit of time. Lower bitrates increases the compression and decreases quality. 100-160 kbit are standard bitrates.
+:Samplerate: Number of samples per second. In digital audio the most common sampling rates are 44.1 kHz, 48 kHz, 96 kHz and 192 kHz.
+:Channels: 1 for mono, 2 for stereo audio
+
+**Video**
+
+:Codec: Codec used for video compression, i.e theora, vpx. The name of the codecs are the ones used by ffmpeg.
+:Bitrate: Number of bits processed per unit of time. Lower bitrates increases the compression and decreases quality.
+:Fps: Number of stores frames per second. 
+:Heigh/Width: Size of the resulting video.
+:Deinterlace: If original video should be deinterlaced.
+:BrtTolerance: bitrate tolerance specifies how far ratecontrol is willing to deviate from the target average bitrate value. Lowering tolerance too much has an adverse effect on quality.
+:Preset: A preset file contains a sequence of options to fine control quality of video. Using the provided default file is ok for most applications.
+
+**Description**
+
+A human readable description for reference.
+
+Following, it is the initial configuration for this file. It configures 3 different profiles for Ogg Video (Ogg container + Vorbis Audio + Theora video) and 1 profile for Ogg Audio.
+
+::
+
+	<TapiesProfiles>
+	
+	<profile id="1" container="ogg"> 
+		<audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/>	
+		<video codec="libtheora" bitrate="1000000" fps="25" height="240" width="320" deinterlace="true" brtolerance="100000" preset="h264presets.txt"/>
+		<description>Profile Ogg (audio:vorbis/video:theora) 320x240</description>
+	</profile>
+	
+	<profile id="2" container="ogg"> 
+		<audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/>	
+		<video codec="libtheora" bitrate="1000000" fps="25" height="480" width="640" deinterlace="true" brtolerance="100000" preset="h264presets.txt"/>
+		<description>Profile Ogg (audio:vorbis/video:theora) 640x480</description>
+	</profile>
+	
+	<profile id="3" container="ogg"> 
+		<audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/>	
+		<video codec="libtheora" bitrate="1000000" fps="25" height="720" width="1280" deinterlace="true" brtolerance="100000" preset="h264presets.txt"/>
+		<description>Profile Ogg (audio:vorbis/video:theora) 1280x720</description>
+	</profile>
+	
+	<profile id="4" container="ogg"> 
+		<audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/>	
+		<description>Profile Ogg (audio:vorbis) audio only</description>
+	</profile>
+	
+	</TapiesProfiles>
