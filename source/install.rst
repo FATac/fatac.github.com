@@ -100,4 +100,65 @@ Lighttpd::
 Video services
 -----------------------------
 
-**(i2CAT) TODO: Documentar la instal·lació dels serveis de transcodificació de vídeo**
+Video services install is made of two parts: first, a java web application and second, a native library that helps on video coding.
+
+1. Web service installation 
+
+Basically, you have to deploy file TapiesWebServices.war on Tomcat application server. This war already have an initial profile configuration (profile.xml file), so no additioanl configuration has to be done. In any case, if new profiles have to be added for supporting other video formats, this information is provided in configuration guide.
+
+2. Xuggler native library installation 
+
+All necessary software is ready in an auto-install program. You only have to execute it (usually with administrator rights to be able to access to the required directories).
+
+::
+
+	sudo sh ./xuggle-xuggler.4.0.1084-i686-pc-linux-gnu.sh
+
+You have to confirm installation by writing 'yes' and you can leave installation directory as default.
+
+2.1 Native libraries checking 
+
+In directory /usr/local/xuggler/bin you can find Xuggler binaries. When executing the ffmpeg binary you will get its version information: 
+
+::
+
+	ffmpeg version 0.8.git-xuggle-4.0.revision.sh, Copyright (c) 2000-2011 the FFmpeg developers
+	  built on Nov 21 2011 09:31:08 with gcc 4.6.1
+	  configuration: --prefix=/usr/local/xuggler --extra-version=xuggle-4.0.revision.sh --extra-cflags=-I/home/javi/Desktop/xuggle-xuggler-modified/build/native/i686-pc-linux-gnu/captive/usr/local/xuggler/include --extra-ldflags=-L/home/javi/Desktop/xuggle-xuggler-modified/build/native/i686-pc-linux-gnu/captive/usr/local/xuggler/lib --enable-shared --enable-gpl --enable-nonfree --enable-version3 --enable-libx264 --enable-libmp3lame --enable-libvorbis --enable-libtheora --enable-libspeex --enable-libvpx --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-pthreads
+	  libavutil    51. 11. 0 / 51. 11. 0
+	  libavcodec   53.  8. 0 / 53.  8. 0
+	  libavformat  53.  6. 0 / 53.  6. 0
+	  libavdevice  53.  2. 0 / 53.  2. 0
+	  libavfilter   2. 27. 0 /  2. 27. 0
+	  libswscale    2.  0. 0 /  2.  0. 0
+	  libpostproc  51.  2. 0 / 51.  2. 0
+	Use -h to get full help or, even better, run 'man ffmpeg'
+
+In case a native library is missing, you should install it. This will depend on the linux distribution being used.
+
+For Ubuntu 11.10 32 bits, no additional libraries has to be installed. 
+
+For Ubuntu 11.10 64 bits, compatibility libraries package has to be installed. 
+
+::
+	
+	sudo apt-get install ia32-libs
+
+
+2.2  Install Xuggler support to Tomcat 
+
+Copy all dependences from directory /usr/local/xuggler/share/java/jars to directory %TOMCAT_HOME%/lib . More specifically the files:
+
+- logback-classic.jar
+- logback-core.jar
+- commons-cli.jar
+- slf4j-api.jar
+- xuggle-xuggler.jar
+
+Finally, you have to configure environment variables to allow Tomcat to find Xuggler libraries. Add the following lines to Tomcat startup file (%TOMCAT_HOME%/bin/startup.sh):
+
+::
+
+	export XUGGLE_HOME=/usr/local/xuggler
+	export LD_LIBRARY_PATH=$XUGGLE_HOME/lib:$LD_LIBRARY_PATH
+	export PATH=$XUGGLE_HOME/bin:$PATH
