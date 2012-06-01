@@ -549,7 +549,91 @@ Returns: "success" or "error"</pre>
 </div>
 <div class="section" id="pas-8e-perfils-de-video">
 <h2>Pas 8è: Perfils de vídeo<a class="headerlink" href="#pas-8e-perfils-de-video" title="Permalink to this headline">¶</a></h2>
-<p>Per configurar els perfils de vídeo ja mencionats al pas 3r..... <strong>TODO: I2CAT explicar la configuració dels perfils de vídeo</strong></p>
+<p>Para configurar els perfils de conversió de vídeo, ja comentats al pas 3. Un fitxer profile.xml ha d&#8217;estar situat al directori WEB de l&#8217;aplicació, i.e &lt;webapps-dir&gt;/TapiesWebServices/WEB-INF/profile.xml</p>
+<p>Aquest fitxer conte una tag profile per cadascun del perfils del sistema. Dintre d&#8217;aquesta tag hi ha tres diferents tags que especifiquen l&#8217;audio, el video i una descripció del perfil.</p>
+<div class="highlight-python"><pre>&lt;profile id="" container=""&gt;
+&lt;audio codec="" bitrate="" samplerate="" channels=""/&gt;
+&lt;video codec="" bitrate="" fps="" height="" width="" deinterlace="" brtolerance="" preset=""/&gt;
+&lt;description&gt; Human readable description &lt;/description&gt;
+&lt;/profile&gt;</pre>
+</div>
+<p><strong>Profile</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">ID:</th><td class="field-body">identificador del perfil que es fa servir al servei web.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Container:</th><td class="field-body">El format del contenidor, i.e ogg, webm, etc.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Audio</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Codec:</th><td class="field-body">Codec utilitzat per la compressió de l&#8217;audio, i.e vorbis, mp3. Els noms dels codecs són els utilitzats pel ffmpeg.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Bitrate:</th><td class="field-body">Nombre de buts processats per unitat de temps. Bitrates baixos incrementent la compressió pero també decreixen la qualitat. 100-160 kbit son els valors estandar.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Samplerate:</th><td class="field-body">Nombre de samples per segond. En audio digital els valors més habituals són 44.1 kHz, 48 kHz, 96 kHz i 192 kHz.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Channels:</th><td class="field-body">1 for mono, 2 for stereo audio</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Video</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Codec:</th><td class="field-body">Codec utilitzat per la compressió de video, i.e theora, vpx. Els noms dels codecs són els utilitzats pel ffmpeg.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Bitrate:</th><td class="field-body">Nombre de bits processats per unitat de temps. Bitrates baixos incrementent la compressió pero també decreixen la qualitat.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Fps:</th><td class="field-body">Nombre de fotogrames per segon.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Heigh/Width:</th><td class="field-body">Mides del video resultant.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Deinterlace:</th><td class="field-body">Si el video original ha de ser desentrallaçat.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">BrtTolerance:</th><td class="field-body">La tolerancia de bitrate especifica quan li permetem al control de rate que es desviï sobre el bitrate mig demanat. Baixar molt aquest valor te un efecte negatiu en la qualitat.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Preset:</th><td class="field-body">Els fitxers de preset contenen una serie de opcions per controlar amb molt de detall la qualitat d&#8217;un video. Utilizar el que es proveix per defecto es valid per moltes aplicacions.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description</strong></p>
+<p>Una descripció del perfil per tindre com referencia.</p>
+<p>A continuació, la configuració inicial d&#8217;aquest fitxer. Configura 3 perfils diferents per video Ogg (Ogg contenidor + Vorbis Audio + Theora video) i un perfil d&#8217;audio Ogg.</p>
+<div class="highlight-python"><pre>&lt;TapiesProfiles&gt;
+
+&lt;profile id="1" container="ogg"&gt;
+        &lt;audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/&gt;
+        &lt;video codec="libtheora" bitrate="1000000" fps="25" height="240" width="320" deinterlace="true" brtolerance="100000" preset="h264presets.txt"/&gt;
+        &lt;description&gt;Profile Ogg (audio:vorbis/video:theora) 320x240&lt;/description&gt;
+&lt;/profile&gt;
+
+&lt;profile id="2" container="ogg"&gt;
+        &lt;audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/&gt;
+        &lt;video codec="libtheora" bitrate="1000000" fps="25" height="480" width="640" deinterlace="true" brtolerance="100000" preset="h264presets.txt"/&gt;
+        &lt;description&gt;Profile Ogg (audio:vorbis/video:theora) 640x480&lt;/description&gt;
+&lt;/profile&gt;
+
+&lt;profile id="3" container="ogg"&gt;
+        &lt;audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/&gt;
+        &lt;video codec="libtheora" bitrate="1000000" fps="25" height="720" width="1280" deinterlace="true" brtolerance="100000" preset="h264presets.txt"/&gt;
+        &lt;description&gt;Profile Ogg (audio:vorbis/video:theora) 1280x720&lt;/description&gt;
+&lt;/profile&gt;
+
+&lt;profile id="4" container="ogg"&gt;
+        &lt;audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/&gt;
+        &lt;description&gt;Profile Ogg (audio:vorbis) audio only&lt;/description&gt;
+&lt;/profile&gt;
+
+&lt;/TapiesProfiles&gt;</pre>
+</div>
 </div>
 </div>
 

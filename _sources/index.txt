@@ -66,8 +66,10 @@ Annex2_: Informació adicional per a l'explotació de la plataforma per part de 
 
 Annex3_: Serveis de vídeo.
 
+Annex4_: Pujar objectes i medias.
+
 .. _Annex3: DocumentoTrabajoFAT.pdf
 .. _Annex2: explotacioFAT.html
 .. _Annex1: migracio.html
-   
+.. _Annex4: pujarObjectes.html   
    

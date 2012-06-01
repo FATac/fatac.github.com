@@ -491,5 +491,71 @@ Adoneu-vos que **text**, **objects** and **media** fan el mateix a la pràctica.
 Pas 8è: Perfils de vídeo
 --------------------------------------
 
-Per configurar els perfils de vídeo ja mencionats al pas 3r..... **TODO: I2CAT explicar la configuració dels perfils de vídeo**
+Para configurar els perfils de conversió de vídeo, ja comentats al pas 3. Un fitxer profile.xml ha d'estar situat al directori WEB de l'aplicació, i.e <webapps-dir>/TapiesWebServices/WEB-INF/profile.xml
 
+Aquest fitxer conte una tag profile per cadascun del perfils del sistema. Dintre d'aquesta tag hi ha tres diferents tags que especifiquen l'audio, el video i una descripció del perfil.
+
+::
+
+	<profile id="" container=""> 
+	<audio codec="" bitrate="" samplerate="" channels=""/>
+	<video codec="" bitrate="" fps="" height="" width="" deinterlace="" brtolerance="" preset=""/>
+	<description> Human readable description </description>
+	</profile>
+
+**Profile**
+
+:ID: identificador del perfil que es fa servir al servei web. 
+:Container: El format del contenidor, i.e ogg, webm, etc.
+
+**Audio**
+
+:Codec: Codec utilitzat per la compressió de l'audio, i.e vorbis, mp3. Els noms dels codecs són els utilitzats pel ffmpeg.
+:Bitrate: Nombre de buts processats per unitat de temps. Bitrates baixos incrementent la compressió pero també decreixen la qualitat. 100-160 kbit son els valors estandar.
+:Samplerate: Nombre de samples per segond. En audio digital els valors més habituals són 44.1 kHz, 48 kHz, 96 kHz i 192 kHz.
+:Channels: 1 for mono, 2 for stereo audio
+
+**Video**
+
+:Codec: Codec utilitzat per la compressió de video, i.e theora, vpx. Els noms dels codecs són els utilitzats pel ffmpeg.
+:Bitrate: Nombre de bits processats per unitat de temps. Bitrates baixos incrementent la compressió pero també decreixen la qualitat. 
+:Fps: Nombre de fotogrames per segon.
+:Heigh/Width: Mides del video resultant. 
+:Deinterlace: Si el video original ha de ser desentrallaçat.
+:BrtTolerance: La tolerancia de bitrate especifica quan li permetem al control de rate que es desviï sobre el bitrate mig demanat. Baixar molt aquest valor te un efecte negatiu en la qualitat. 
+:Preset: Els fitxers de preset contenen una serie de opcions per controlar amb molt de detall la qualitat d'un video. Utilizar el que es proveix per defecto es valid per moltes aplicacions.
+
+**Description**
+
+Una descripció del perfil per tindre com referencia.
+
+A continuació, la configuració inicial d'aquest fitxer. Configura 3 perfils diferents per video Ogg (Ogg contenidor + Vorbis Audio + Theora video) i un perfil d'audio Ogg.
+
+::
+
+	<TapiesProfiles>
+	
+	<profile id="1" container="ogg"> 
+		<audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/>	
+		<video codec="libtheora" bitrate="1000000" fps="25" height="240" width="320" deinterlace="true" brtolerance="100000" preset="h264presets.txt"/>
+		<description>Profile Ogg (audio:vorbis/video:theora) 320x240</description>
+	</profile>
+	
+	<profile id="2" container="ogg"> 
+		<audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/>	
+		<video codec="libtheora" bitrate="1000000" fps="25" height="480" width="640" deinterlace="true" brtolerance="100000" preset="h264presets.txt"/>
+		<description>Profile Ogg (audio:vorbis/video:theora) 640x480</description>
+	</profile>
+	
+	<profile id="3" container="ogg"> 
+		<audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/>	
+		<video codec="libtheora" bitrate="1000000" fps="25" height="720" width="1280" deinterlace="true" brtolerance="100000" preset="h264presets.txt"/>
+		<description>Profile Ogg (audio:vorbis/video:theora) 1280x720</description>
+	</profile>
+	
+	<profile id="4" container="ogg"> 
+		<audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/>	
+		<description>Profile Ogg (audio:vorbis) audio only</description>
+	</profile>
+	
+	</TapiesProfiles>

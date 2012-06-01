@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="FAT Arts Combinatòries 1.0a1 documentation" href="index.html" />
     <link rel="next" title="Managing data" href="managing_data.html" />
-    <link rel="prev" title="Migració" href="migracio.html" />
+    <link rel="prev" title="Requirements" href="install.html" />
 <link type="text/css" href="_static/fatdoc.css" rel="stylesheet">
 
   </head>
@@ -50,7 +50,7 @@
           <a href="managing_data.html" title="Managing data"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="migracio.html" title="Migració"
+          <a href="install.html" title="Requirements"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
       </ul>
@@ -73,8 +73,8 @@
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="migracio.html"
-                        title="previous chapter">Migració</a></p>
+  <p class="topless"><a href="install.html"
+                        title="previous chapter">Requirements</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="managing_data.html"
                         title="next chapter">Managing data</a></p>
@@ -556,7 +556,91 @@ Returns: "success" or "error"</pre>
 </div>
 <div class="section" id="step-8-video-profiles">
 <h2>Step 8: Video Profiles<a class="headerlink" href="#step-8-video-profiles" title="Permalink to this headline">¶</a></h2>
-<p>To configure video conversion profiles already mentioned in Step 3..... <strong>TODO: I2CAT explicar la configuració dels perfils de vídeo</strong></p>
+<p>To configure video conversion profiles already mentioned in Step 3, a profile.xml file must be placed in the WEB-INF directory i.e &lt;webapps-dir&gt;/TapiesWebServices/WEB-INF/profile.xml</p>
+<p>This file contains a profile tag for each desired profile in the system. Inside the profile tag three different tags specify the audio, video and human readable description of the profile.</p>
+<div class="highlight-python"><pre>&lt;profile id="" container=""&gt;
+&lt;audio codec="" bitrate="" samplerate="" channels=""/&gt;
+&lt;video codec="" bitrate="" fps="" height="" width="" deinterlace="" brtolerance="" preset=""/&gt;
+&lt;description&gt; Human readable description &lt;/description&gt;
+&lt;/profile&gt;</pre>
+</div>
+<p><strong>Profile</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">ID:</th><td class="field-body">it is the identifier of the profile, to be used in the web service.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Container:</th><td class="field-body">The format of the container file, i.e ogg, webm, etc.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Audio</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Codec:</th><td class="field-body">Codec used for audio compression, i.e vorbis, mp3. The name of the codecs are the ones used by ffmpeg.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Bitrate:</th><td class="field-body">Number of bits processed per unit of time. Lower bitrates increases the compression and decreases quality. 100-160 kbit are standard bitrates.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Samplerate:</th><td class="field-body">Number of samples per second. In digital audio the most common sampling rates are 44.1 kHz, 48 kHz, 96 kHz and 192 kHz.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Channels:</th><td class="field-body">1 for mono, 2 for stereo audio</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Video</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Codec:</th><td class="field-body">Codec used for video compression, i.e theora, vpx. The name of the codecs are the ones used by ffmpeg.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Bitrate:</th><td class="field-body">Number of bits processed per unit of time. Lower bitrates increases the compression and decreases quality.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Fps:</th><td class="field-body">Number of stores frames per second.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Heigh/Width:</th><td class="field-body">Size of the resulting video.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Deinterlace:</th><td class="field-body">If original video should be deinterlaced.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">BrtTolerance:</th><td class="field-body">bitrate tolerance specifies how far ratecontrol is willing to deviate from the target average bitrate value. Lowering tolerance too much has an adverse effect on quality.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Preset:</th><td class="field-body">A preset file contains a sequence of options to fine control quality of video. Using the provided default file is ok for most applications.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description</strong></p>
+<p>A human readable description for reference.</p>
+<p>Following, it is the initial configuration for this file. It configures 3 different profiles for Ogg Video (Ogg container + Vorbis Audio + Theora video) and 1 profile for Ogg Audio.</p>
+<div class="highlight-python"><pre>&lt;TapiesProfiles&gt;
+
+&lt;profile id="1" container="ogg"&gt;
+        &lt;audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/&gt;
+        &lt;video codec="libtheora" bitrate="1000000" fps="25" height="240" width="320" deinterlace="true" brtolerance="100000" preset="h264presets.txt"/&gt;
+        &lt;description&gt;Profile Ogg (audio:vorbis/video:theora) 320x240&lt;/description&gt;
+&lt;/profile&gt;
+
+&lt;profile id="2" container="ogg"&gt;
+        &lt;audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/&gt;
+        &lt;video codec="libtheora" bitrate="1000000" fps="25" height="480" width="640" deinterlace="true" brtolerance="100000" preset="h264presets.txt"/&gt;
+        &lt;description&gt;Profile Ogg (audio:vorbis/video:theora) 640x480&lt;/description&gt;
+&lt;/profile&gt;
+
+&lt;profile id="3" container="ogg"&gt;
+        &lt;audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/&gt;
+        &lt;video codec="libtheora" bitrate="1000000" fps="25" height="720" width="1280" deinterlace="true" brtolerance="100000" preset="h264presets.txt"/&gt;
+        &lt;description&gt;Profile Ogg (audio:vorbis/video:theora) 1280x720&lt;/description&gt;
+&lt;/profile&gt;
+
+&lt;profile id="4" container="ogg"&gt;
+        &lt;audio codec="libvorbis" bitrate="128000" samplerate="44100" channels="2"/&gt;
+        &lt;description&gt;Profile Ogg (audio:vorbis) audio only&lt;/description&gt;
+&lt;/profile&gt;
+
+&lt;/TapiesProfiles&gt;</pre>
+</div>
 </div>
 </div>
 
@@ -576,7 +660,7 @@ Returns: "success" or "error"</pre>
           <a href="managing_data.html" title="Managing data"
              >next</a> |</li>
         <li class="right" >
-          <a href="migracio.html" title="Migració"
+          <a href="install.html" title="Requirements"
              >previous</a> |</li>
         <li><a href="index.html">FAT Arts Combinatòries 1.0a1 documentation</a> &raquo;</li> 
       </ul>
