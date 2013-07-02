@@ -65,11 +65,14 @@ Per exportar les dades d'acord amb el mapeig anterior, cal utilitzar el servei s
 
 ::
 
-    Ruta servei: http://{host:port}/{appname}/oai
+    Ruta servei: http://{host:port}/{appname}/oai/{regex}
     Mètode HTTP: GET
     Retorna: "success" o "error"
     
-El resultat d'aquesta crida serà un conjunt d'arxius XML localitzats a OAI_PATH
+El resultat d'aquesta crida serà un conjunt d'arxius XML localitzats a OAI_PATH. Si el paràmetre ``regex`` està informat, 
+de tots els ids disponibles només es passaran a XML aquells que el seu id compleixi l'expressió regular informada al 
+paràmetre ``regex``. Per exemple, cridant amb ``regex`` = ``OG218.*`` retornarà tots els que comencin per OG218.
+
 
 OAICat
 ----------------

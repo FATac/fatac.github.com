@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -16,7 +14,7 @@
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '1.0a1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -153,11 +151,13 @@
 <div class="section" id="export">
 <h2>Export<a class="headerlink" href="#export" title="Permalink to this headline">¶</a></h2>
 <p>In order to having our data exported according to our mapping, next service should be used:</p>
-<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/oai
+<div class="highlight-python"><pre>Service path: http://{host:port}/{appname}/oai/{regex}
 HTTP Method: GET
 Returns: "success" or "error"</pre>
 </div>
-<p>This service call will lead to having a set of XML located in OAI_PATH</p>
+<p>This service call will lead to having a set of XML located in OAI_PATH. If the parameter <tt class="docutils literal"><span class="pre">regex</span></tt> is not empty, only the
+items which have an id that matches the regular expression <tt class="docutils literal"><span class="pre">regex</span></tt> are selected to convert to XML. For instance, a
+<tt class="docutils literal"><span class="pre">regex</span></tt> = <tt class="docutils literal"><span class="pre">OG218.*</span></tt> would convert to XML only the items with ids starting with OG218.</p>
 </div>
 <div class="section" id="oaicat">
 <h2>OAICat<a class="headerlink" href="#oaicat" title="Permalink to this headline">¶</a></h2>
@@ -188,7 +188,7 @@ Returns: "success" or "error"</pre>
     </div>
     <div class="footer">
         &copy; Copyright 2011, FAT - UPCnet.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
     </div>
   </body>
 </html>

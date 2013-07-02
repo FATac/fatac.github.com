@@ -63,11 +63,13 @@ In order to having our data exported according to our mapping, next service shou
 
 ::
 
-    Service path: http://{host:port}/{appname}/oai
+    Service path: http://{host:port}/{appname}/oai/{regex}
     HTTP Method: GET
     Returns: "success" or "error"
     
-This service call will lead to having a set of XML located in OAI_PATH 
+This service call will lead to having a set of XML located in OAI_PATH. If the parameter ``regex`` is not empty, only the
+items which have an id that matches the regular expression ``regex`` are selected to convert to XML. For instance, a
+``regex`` = ``OG218.*`` would convert to XML only the items with ids starting with OG218.
 
 OAICat
 ----------------

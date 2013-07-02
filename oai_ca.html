@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -16,7 +14,7 @@
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '1.0a1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -154,11 +152,13 @@
 <div class="section" id="exportacio">
 <h2>Exportació<a class="headerlink" href="#exportacio" title="Permalink to this headline">¶</a></h2>
 <p>Per exportar les dades d&#8217;acord amb el mapeig anterior, cal utilitzar el servei següent:</p>
-<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/oai
+<div class="highlight-python"><pre>Ruta servei: http://{host:port}/{appname}/oai/{regex}
 Mètode HTTP: GET
 Retorna: "success" o "error"</pre>
 </div>
-<p>El resultat d&#8217;aquesta crida serà un conjunt d&#8217;arxius XML localitzats a OAI_PATH</p>
+<p>El resultat d&#8217;aquesta crida serà un conjunt d&#8217;arxius XML localitzats a OAI_PATH. Si el paràmetre <tt class="docutils literal"><span class="pre">regex</span></tt> està informat,
+de tots els ids disponibles només es passaran a XML aquells que el seu id compleixi l&#8217;expressió regular informada al
+paràmetre <tt class="docutils literal"><span class="pre">regex</span></tt>. Per exemple, cridant amb <tt class="docutils literal"><span class="pre">regex</span></tt> = <tt class="docutils literal"><span class="pre">OG218.*</span></tt> retornarà tots els que comencin per OG218.</p>
 </div>
 <div class="section" id="oaicat">
 <h2>OAICat<a class="headerlink" href="#oaicat" title="Permalink to this headline">¶</a></h2>
@@ -189,7 +189,7 @@ Retorna: "success" o "error"</pre>
     </div>
     <div class="footer">
         &copy; Copyright 2011, FAT - UPCnet.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
     </div>
   </body>
 </html>
